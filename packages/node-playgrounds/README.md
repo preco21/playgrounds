@@ -20,7 +20,7 @@ $ npm install
 
 ### Run
 
-Run `nodemon` demon for live-reloading.
+Run `nodemon` demon for _live-reloading_.
 
 ```bash
 $ npm run serve
