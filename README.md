@@ -26,6 +26,8 @@ Run `nodemon` demon for _live-reloading_.
 $ npm run serve
 ```
 
+Then start editing code in `src`!
+
 ### Build
 
 Build all source of `src`.
