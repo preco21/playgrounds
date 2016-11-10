@@ -1,0 +1,41 @@
+{
+  "name": "playground",
+  "version": "0.0.0",
+  "description": "Yay playground!",
+  "author": "Plusb Preco <plusb21@gmail.com>",
+  "private": true,
+  "main": "lib/index.js",
+  "scripts": {
+    "start": "node .",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint .",
+    "build": "npm run clean && npm run babel",
+    "serve": "nodemon --exec node --require babel-register -- src/index.js",
+    "babel": "babel --out-dir lib src",
+    "clean": "rimraf lib"
+  },
+  "engines": {
+    "node": ">= 7"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/preco21/playground#readme",
+  "repository": "preco21/playground",
+  "bugs": {
+    "url": "https://github.com/preco21/playground/issues"
+  },
+  "dependencies": {
+    "babel-polyfill": "^6.16.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.18.0",
+    "babel-eslint": "^7.1.0",
+    "babel-preset-env": "0.0.7",
+    "babel-preset-stage-1": "^6.16.0",
+    "babel-register": "^6.18.0",
+    "eslint": "^3.9.1",
+    "eslint-config-prev": "^2.3.2",
+    "eslint-plugin-import": "^2.2.0",
+    "nodemon": "^1.11.0",
+    "rimraf": "^2.5.4"
+  }
+}
