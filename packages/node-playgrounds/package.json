@@ -15,7 +15,7 @@
     "clean": "rimraf lib"
   },
   "engines": {
-    "node": ">= 7"
+    "node": ">= 6"
   },
   "license": "MIT",
   "homepage": "https://github.com/preco21/playground#readme",

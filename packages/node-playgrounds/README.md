@@ -6,8 +6,6 @@
 
 A simple playground for testing ES2015+ code.
 
-**Node.js v7+ (latest) required.**
-
 ## Install
 
 ```bash
