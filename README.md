@@ -18,7 +18,7 @@ $ npm install
 
 ### Run
 
-Run `nodemon` demon for _live-reloading_.
+Run `nodemon` demon for _live-reloading_, once daemon started then start editing code in `src`!
 
 ```bash
 $ npm run serve 
@@ -33,8 +33,6 @@ $ npm run serve-inspect
 ```
 
 * https://medium.com/@paul_irish/debugging-node-js-nightlies-with-chrome-devtools-7c4a1b95ae27#.9x5t2kauw
-
-Then start editing code in `src`!
 
 ### Build
 
