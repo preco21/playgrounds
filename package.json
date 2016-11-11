@@ -14,9 +14,6 @@
     "babel": "babel --out-dir lib src",
     "clean": "rimraf lib"
   },
-  "engines": {
-    "node": ">= 6"
-  },
   "license": "MIT",
   "homepage": "https://github.com/preco21/playground#readme",
   "repository": "preco21/playground",
