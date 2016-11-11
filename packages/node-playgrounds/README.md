@@ -21,8 +21,18 @@ $ npm install
 Run `nodemon` demon for _live-reloading_.
 
 ```bash
-$ npm run serve
+$ npm run serve 
 ```
+
+### Run with Inspector
+
+If you would like to use [V8 Inspector Integration](https://nodejs.org/api/debugger.html#debugger_v8_inspector_integration_for_node_js), make sure you are on Node.js v6+ then run following command:
+
+```bash
+$ npm run serve-inspect
+```
+
+* https://medium.com/@paul_irish/debugging-node-js-nightlies-with-chrome-devtools-7c4a1b95ae27#.9x5t2kauw
 
 Then start editing code in `src`!
 
