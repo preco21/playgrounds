@@ -10,8 +10,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint .",
     "build": "npm run clean && npm run babel",
-    "serve": "nodemon --exec node --require babel-register -- src/index.js",
-    "serve-inspect": "nodemon --exec node --inspect --require babel-register -- src/index.js",
+    "dev": "nodemon --exec node --require babel-register -- src/index.js",
+    "dev-inspect": "nodemon --exec node --inspect --require babel-register -- src/index.js",
     "babel": "babel --out-dir lib src",
     "clean": "rimraf lib"
   },
