@@ -6,10 +6,11 @@
   "private": true,
   "main": "lib/index.js",
   "scripts": {
+    "prebuild": "npm run clean",
     "start": "node .",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint .",
-    "build": "npm run clean && npm run babel",
+    "build": "npm run babel",
     "dev": "nodemon --exec node --require babel-register -- src/index.js",
     "dev-inspect": "nodemon --exec node --inspect --require babel-register -- src/index.js",
     "babel": "babel --out-dir lib src",
