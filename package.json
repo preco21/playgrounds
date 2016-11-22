@@ -10,10 +10,9 @@
     "start": "node .",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint .",
-    "build": "npm run babel",
+    "build": "babel --out-dir lib src",
     "dev": "nodemon --exec node --require babel-register -- src/index.js",
     "dev-inspect": "nodemon --exec node --inspect --require babel-register -- src/index.js",
-    "babel": "babel --out-dir lib src",
     "clean": "rimraf lib"
   },
   "license": "MIT",
