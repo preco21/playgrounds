@@ -1,7 +1,7 @@
 {
-  "name": "playground",
+  "name": "playgrounds",
   "version": "0.0.0",
-  "description": "Yay playground!",
+  "description": "Yay playgrounds!",
   "author": "Plusb Preco <plusb21@gmail.com>",
   "private": true,
   "main": "lib/index.js",
@@ -16,10 +16,10 @@
     "clean": "rimraf lib"
   },
   "license": "MIT",
-  "homepage": "https://github.com/preco21/playground#readme",
-  "repository": "preco21/playground",
+  "homepage": "https://github.com/preco21/playgrounds#readme",
+  "repository": "preco21/playgrounds",
   "bugs": {
-    "url": "https://github.com/preco21/playground/issues"
+    "url": "https://github.com/preco21/playgrounds/issues"
   },
   "dependencies": {
     "babel-polyfill": "^6.16.0"
