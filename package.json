@@ -31,7 +31,7 @@
     "babel-preset-stage-1": "^6.16.0",
     "babel-register": "^6.18.0",
     "eslint": "^3.9.1",
-    "eslint-config-prev": "^2.3.2",
+    "eslint-config-prev": "^3.0.0",
     "eslint-plugin-import": "^2.2.0",
     "nodemon": "^1.11.0",
     "rimraf": "^2.5.4"
