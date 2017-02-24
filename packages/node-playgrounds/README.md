@@ -18,10 +18,10 @@ $ npm install
 
 ### Run
 
-Run `nodemon` demon for _live-reloading_, once daemon started then start editing code in `src`!
+Run `nodemon` demon for _live-reloading_, once daemon started then start editing `index.js` in `src`!
 
 ```bash
-$ npm run dev 
+$ npm run dev
 ```
 
 ### Run with Inspector
