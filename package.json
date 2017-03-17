@@ -4,7 +4,7 @@
   "description": "Yay playgrounds!",
   "author": "Plusb Preco <plusb21@gmail.com>",
   "private": true,
-  "main": "lib/entry.js",
+  "main": "lib/index.js",
   "scripts": {
     "prebuild": "npm run clean",
     "start": "node .",
