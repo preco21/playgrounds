@@ -9,7 +9,7 @@
     "prebuild": "npm run clean",
     "start": "node .",
     "test": "eslint .",
-    "build": "babel --out-dir lib src",
+    "build": "cross-env NODE_ENV=production babel --out-dir lib src",
     "dev": "cross-env NODE_ENV=development nodemon --exec babel-node -- src/index.js",
     "dev-inspect": "cross-env NODE_ENV=development nodemon --exec babel-node --inspect --debug-brk -- src/index.js",
     "clean": "rimraf lib"
@@ -26,6 +26,7 @@
   "devDependencies": {
     "babel-cli": "^6.18.0",
     "babel-eslint": "^7.1.0",
+    "babel-preset-babili": "^0.0.12",
     "babel-preset-env": "^1.1.0",
     "babel-preset-stage-1": "^6.16.0",
     "cross-env": "^3.1.4",
