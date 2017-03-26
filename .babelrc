@@ -2,5 +2,12 @@
   "presets": [
     ["env", {"targets": {"node": true}}],
     "stage-1"
-  ]
+  ],
+  "env": {
+    "production": {
+      "presets": [
+        "babili"
+      ]
+    }
+  }
 }
