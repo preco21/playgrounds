@@ -3,6 +3,9 @@
     ["env", {"targets": {"node": true}}],
     "stage-1"
   ],
+  "plugins": [
+    "transform-runtime"
+  ],
   "env": {
     "production": {
       "presets": [
