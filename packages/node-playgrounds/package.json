@@ -31,8 +31,8 @@
     "babel-preset-stage-1": "^6.24.1",
     "babel-watch": "^2.0.7",
     "cross-env": "^5.0.0",
-    "eslint": "^4.5.0",
-    "eslint-config-prev": "^6.0.0",
+    "eslint": "^4.12.0",
+    "eslint-config-prev": "^6.7.2",
     "rimraf": "^2.6.1"
   }
 }
