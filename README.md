@@ -6,7 +6,7 @@
 
 > Yay!
 
-A simple playgrounds for testing ES2015+ code.
+A minimal setup for writing ES2015+ code.
 
 ## Install
 
@@ -18,15 +18,15 @@ $ npm install
 
 ## Usage
 
-### Run
+### Development mode
 
-Run `nodemon` demon for _live-reloading_, once daemon started then start editing `index.js` in `src`!
+Following command executes `nodemon` demon for _live-reloading_ and once the daemon started, you can start editing `index.js` in `src`!
 
 ```bash
 $ npm run dev
 ```
 
-### Run with Inspector
+### Development mode with inspector
 
 If you would like to use [V8 Inspector Integration](https://nodejs.org/api/debugger.html#debugger_v8_inspector_integration_for_node_js), make sure you are on Node.js v6+ then run following command:
 
@@ -38,26 +38,24 @@ $ npm run dev-inspect
 
 ### Build
 
-Build all source of `src`.
+Builds the source code with Babel from `src` into `lib`.
 
 ```bash
 $ npm run build
 ```
 
-### Clean
-
-Clean build directory.
-
-```base
-$ npm run clean
-```
-
-### Standalone
-
-**You will need to build before run this command.**
+After building the code, you will be able to run the built code like standalone version of the application:
 
 ```bash
 npm start
+```
+
+### Clean
+
+Cleans build output directory. This command will remove any content inside `lib` folder.
+
+```base
+$ npm run clean
 ```
 
 ## License
