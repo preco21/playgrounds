@@ -8,6 +8,9 @@
 
 A minimal setup for writing ES2015+ code.
 
+* Babel configuration which contains preset `env`, `stage-1` and `minify` (used when in production build).
+* Live-reloading code with `nodemon` and `babel-node`.
+
 ## Install
 
 ```bash
