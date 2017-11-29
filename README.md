@@ -10,6 +10,7 @@ A minimal setup for writing ES2015+ code.
 
 * Babel configuration which contains preset `env`, `stage-1` and `minify` (used when in production build).
 * Live-reloading code with `nodemon` and `babel-node`.
+* Packing your app with `pkg`
 
 ## Install
 
@@ -37,11 +38,9 @@ If you would like to use [V8 Inspector Integration](https://nodejs.org/api/debug
 $ npm run dev-inspect
 ```
 
-* https://medium.com/@paul_irish/debugging-node-js-nightlies-with-chrome-devtools-7c4a1b95ae27#.9x5t2kauw
-
 ### Build
 
-Builds the source code with Babel from `src` into `lib`.
+Builds your source code with Babel from `src` into `lib`.
 
 ```bash
 $ npm run build
@@ -52,6 +51,16 @@ After building the code, you will be able to run the built code like standalone 
 ```bash
 npm start
 ```
+
+### Packaging
+
+You can easily create standalone executables by this command, which generates the executables in `bin` folder:
+
+```bash
+$ npm run package
+```
+
+The generated runnable app can run without any runtime dependencies.
 
 ### Clean
 
