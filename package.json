@@ -10,8 +10,8 @@
     "start": "node .",
     "test": "eslint .",
     "build": "cross-env NODE_ENV=production babel --out-dir lib src",
-    "dev": "cross-env NODE_ENV=development babel-watch src/index.js",
-    "dev-inspect": "cross-env NODE_ENV=development babel-watch --inspect --debug-brk src/index.js",
+    "dev": "cross-env NODE_ENV=development nodemon --exec babel-node -- src/index.js",
+    "dev-inspect": "cross-env NODE_ENV=development nodemon --exec babel-node --inspect --debug-brk -- src/index.js",
     "clean": "rimraf lib"
   },
   "license": "MIT",
@@ -29,10 +29,10 @@
     "babel-preset-env": "^1.6.0",
     "babel-preset-minify": "^0.2.0",
     "babel-preset-stage-1": "^6.24.1",
-    "babel-watch": "^2.0.7",
     "cross-env": "^5.0.0",
     "eslint": "^4.12.0",
     "eslint-config-prev": "^6.7.2",
+    "nodemon": "^1.12.1",
     "rimraf": "^2.6.1"
   }
 }
