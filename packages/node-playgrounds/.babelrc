@@ -9,7 +9,7 @@
   "env": {
     "production": {
       "presets": [
-        "minify"
+        ["minify", {"mangle": false}]
       ]
     }
   }
