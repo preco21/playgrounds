@@ -12,9 +12,10 @@
     "start": "node .",
     "test": "eslint .",
     "build": "cross-env NODE_ENV=production babel --out-dir lib src",
-    "dev": "cross-env NODE_ENV=development nodemon --exec babel-node -- src/index.js",
+    "dev": "cross-env NODE_ENV=development nodemon --exec babel-node src/index.js",
+    "dev-inspect": "cross-env NODE_ENV=development nodemon --exec 'babel-node --inspect' src/index.js",
+    "dev-inspect-brk": "cross-env NODE_ENV=development nodemon --exec 'babel-node --inspect-brk' src/index.js",
     "package": "pkg --out-path bin .",
-    "dev-inspect": "cross-env NODE_ENV=development nodemon --exec babel-node --inspect --debug-brk -- src/index.js",
     "clean": "rimraf lib"
   },
   "license": "MIT",
