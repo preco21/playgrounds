@@ -4,13 +4,14 @@
 [![Build Status](https://travis-ci.org/preco21/playgrounds.svg?branch=master)](https://travis-ci.org/preco21/playgrounds)
 [![Dependency Status](https://dependencyci.com/github/preco21/playgrounds/badge)](https://dependencyci.com/github/preco21/playgrounds)
 
-> Yay!
+> Yay! :rocket:
 
 A minimal setup for writing ES2015+ code.
 
-* Babel configuration which contains preset `env`, `stage-1` and `minify` (used when in production build).
+* Babel configuration that contains preset `env (current)`, `stage-1` and `minify` (used in production build).
 * Live-reloading code with `nodemon` and `babel-node`.
-* Packing your app with `pkg`
+* Debugging with [Chrome DevTools](https://medium.com/@paul_irish/debugging-node-js-nightlies-with-chrome-devtools-7c4a1b95ae27) out of box.
+* Package up your app with `pkg`.
 
 ## Install
 
@@ -24,23 +25,46 @@ $ npm install
 
 ### Development mode
 
-Following command executes `nodemon` demon for _live-reloading_ and once the daemon started, you can start editing `index.js` in `src`!
+This command executes `nodemon` demon for _live-reloading_ experiences. Once the daemon started, you can start editing `index.js` in `src` folder!
 
 ```bash
 $ npm run dev
 ```
 
-### Development mode with inspector
+### Development mode with Chrome DevTools
 
-If you would like to use [V8 Inspector Integration](https://nodejs.org/api/debugger.html#debugger_v8_inspector_integration_for_node_js), make sure you are on Node.js v6+ then run following command:
+You may be heard about [Node.js V8 Inspector Integration](https://nodejs.org/api/debugger.html#debugger_v8_inspector_integration_for_node_js) which allows you to attach your Node.js application to Chrome DevTools for better debugging and profiling. To use this fantastic feature, make sure you are running **Node.js 6+** and **Chrome 60+**, then go to the Chrome inspector page first:
+
+> [chrome://inspect/#devices](chrome://inspect/#devices)
+
+Then click the `Open dedicated DevTools for Node` link to open devtools, run following command:
 
 ```bash
 $ npm run dev-inspect
 ```
 
+Now you can place `debugger` keyword in your code to specify breakpoints:
+
+```js
+function foo(a, b) {
+  return a * b;
+}
+
+const bar = foo(1, 2);
+debugger;
+```
+
+**Note:** You can also use `npm run dev-inspect-brk` to break before the code starts.
+
+#### References
+
+* [Debugging Node.js with Chrome DevTools](https://medium.com/@paul_irish/debugging-node-js-nightlies-with-chrome-devtools-7c4a1b95ae27)
+* [Debugging Node.js with Google Chrome](https://medium.com/the-node-js-collection/debugging-node-js-with-google-chrome-4965b5f910f4)
+* [Can I get node --inspect to open Chrome automatically](https://stackoverflow.com/questions/41398970/can-i-get-node-inspect-to-open-chrome-automatically)
+
 ### Build
 
-Builds your source code with Babel from `src` into `lib`.
+This command builds your source code with Babel from `src` into `lib`.
 
 ```bash
 $ npm run build
@@ -54,17 +78,17 @@ npm start
 
 ### Packaging
 
-You can easily create standalone executables by this command, which generates the executables in `bin` folder:
+You can also create standalone executables with this command, which will generate the executables in `bin` folder:
 
 ```bash
 $ npm run package
 ```
 
-The generated runnable app can run without any runtime dependencies.
+The generated app can be executed without any runtime dependencies.
 
 ### Clean
 
-Cleans build output directory. This command will remove any content inside `lib` folder.
+This command cleans the build output directory. This command will remove any content inside `lib` folder.
 
 ```base
 $ npm run clean
