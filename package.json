@@ -1,7 +1,7 @@
 {
   "name": "playgrounds",
   "version": "0.0.0",
-  "description": "Yay playgrounds!",
+  "description": "An opinionated setup for writing ES2015+ code",
   "author": "Plusb Preco <plusb21@gmail.com>",
   "private": true,
   "main": "lib/index.js",

@@ -4,9 +4,7 @@
 [![Build Status](https://travis-ci.org/preco21/playgrounds.svg?branch=master)](https://travis-ci.org/preco21/playgrounds)
 [![Dependency Status](https://dependencyci.com/github/preco21/playgrounds/badge)](https://dependencyci.com/github/preco21/playgrounds)
 
-> Yay! :rocket:
-
-A minimal setup for writing ES2015+ code.
+> :rocket: An opinionated setup for writing ES2015+ code
 
 * Babel configuration that contains preset `env (current)`, `stage-1` and `minify` (used in production build).
 * Live-reloading code with `nodemon` and `babel-node`.
