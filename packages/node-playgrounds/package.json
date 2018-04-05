@@ -18,6 +18,9 @@
     "package": "pkg --out-path bin .",
     "clean": "rimraf lib"
   },
+  "engines": {
+    "node": ">= 8"
+  },
   "license": "MIT",
   "homepage": "https://github.com/preco21/playgrounds#readme",
   "repository": "preco21/playgrounds",
