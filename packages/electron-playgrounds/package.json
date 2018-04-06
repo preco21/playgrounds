@@ -1,0 +1,83 @@
+{
+  "name": "electron-playgrounds",
+  "version": "0.0.0",
+  "description": "Yet another playgrounds for electron",
+  "author": "Plusb Preco <plusb21@gmail.com>",
+  "private": true,
+  "scripts": {
+    "postinstall": "node scripts/install-app-deps.js",
+    "precommit": "lint-staged",
+    "prepackage": "npm run build",
+    "start": "electron src",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint .",
+    "build": "npm-run-all build:main build:renderer",
+    "build:main": "webpack --progress",
+    "build:renderer": "next build src && next export --outdir src/.build/renderer src",
+    "package": "electron-builder"
+  },
+  "engines": {
+    "node": ">= 9"
+  },
+  "files": [
+    ".build",
+    "package.json",
+    "yarn.lock"
+  ],
+  "dependencies": {
+    "@babel/runtime": "7.0.0-beta.42",
+    "electron-next": "^3.1.4",
+    "next": "^6.0.0-canary.3",
+    "react": "^16.3.1",
+    "react-dom": "^16.3.0"
+  },
+  "devDependencies": {
+    "@babel/core": "7.0.0-beta.42",
+    "@babel/plugin-proposal-export-default-from": "7.0.0-beta.42",
+    "@babel/plugin-proposal-export-namespace-from": "7.0.0-beta.42",
+    "@babel/plugin-transform-runtime": "7.0.0-beta.42",
+    "@babel/preset-env": "7.0.0-beta.42",
+    "@babel/preset-stage-1": "7.0.0-beta.42",
+    "@zeit/next-css": "^0.1.4",
+    "babel-loader": "^8.0.0-beta",
+    "babel-minify-webpack-plugin": "^0.3.1",
+    "babel-plugin-inline-dotenv": "^1.1.2",
+    "babel-plugin-styled-components": "^1.5.1",
+    "clean-webpack-plugin": "^0.1.19",
+    "cross-env": "^5.1.4",
+    "electron": "1.8.4",
+    "electron-builder": "^20.8.1",
+    "eslint": "^4.19.1",
+    "eslint-config-prev": "^7.0.0-beta.10",
+    "execa": "^0.10.0",
+    "globby": "^8.0.1",
+    "husky": "^0.14.3",
+    "lint-staged": "^7.0.2",
+    "next": "^6.0.0-canary.3",
+    "npm-run-all": "^4.1.2",
+    "webpack": "3.10.0"
+  },
+  "app": {
+    "output": "build",
+    "destPath": "src/.build",
+    "sourcePath": "src",
+    "rendererPrefix": ".build/renderer",
+    "cleanPaths": [
+      "src/.build"
+    ]
+  },
+  "build": {
+    "appId": "com.electron.template",
+    "directories": {
+      "buildResources": "resources",
+      "output": "build",
+      "app": "src"
+    }
+  },
+  "lint-staged": {
+    "*.{js,jsx}": [
+      "eslint --fix",
+      "git add"
+    ]
+  }
+}

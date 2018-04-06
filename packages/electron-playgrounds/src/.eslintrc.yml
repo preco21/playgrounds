@@ -1,0 +1,4 @@
+rules:
+  # Disabled due to the issue where cannot have multiple `package.json` for testing dependencies
+  # https://github.com/benmosher/eslint-plugin-import/issues/458
+  import/no-extraneous-dependencies: off
