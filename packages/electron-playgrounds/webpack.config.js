@@ -12,10 +12,10 @@ const {
     sourcePath,
     destPath,
     rendererPrefix,
-    cleanPaths,
+    cleanPaths = [],
+    externals = [],
   } = {},
 } = require('./package.json');
-const {dependencies = {}, devDependencies = {}} = require('./src/package.json');
 
 module.exports = ({dev} = {}) => {
   // Set `BABEL_ENV` for main process
@@ -59,7 +59,7 @@ module.exports = ({dev} = {}) => {
     resolve: {
       extensions: ['.js', '.jsx', '.json'],
     },
-    externals: Object.keys({...dependencies, ...devDependencies})
+    externals: externals
       .map((elem) => ({[elem]: `commonjs ${elem}`}))
       .reduce((res, elem) => ({...res, ...elem}), {}),
     node: {

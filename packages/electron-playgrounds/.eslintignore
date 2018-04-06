@@ -1,10 +1,6 @@
-# Ignore sub-level `node_modules`
-# https://github.com/eslint/eslint/issues/5646
-src/node_modules
-
 # Re-include `.babelrc.js`
 # https://github.com/eslint/eslint/issues/10089
 !.babelrc.js
 
 .next
-.build
+/app

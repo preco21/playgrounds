@@ -1,31 +1,31 @@
 {
   "name": "electron-playgrounds",
+  "productName": "Electron Playgrounds",
   "version": "0.0.0",
   "description": "Yet another playgrounds for electron",
   "author": "Plusb Preco <plusb21@gmail.com>",
   "private": true,
+  "main": "app/index.js",
   "scripts": {
-    "postinstall": "node scripts/install-app-deps.js",
     "precommit": "lint-staged",
     "prepackage": "npm run build",
-    "start": "electron src",
+    "start": "electron app",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint .",
     "build": "npm-run-all build:main build:renderer",
     "build:main": "webpack --progress",
-    "build:renderer": "next build src && next export --outdir src/.build/renderer src",
-    "package": "electron-builder"
+    "build:renderer": "next build src && next export --outdir app/renderer src",
+    "package": "node scripts/package.js"
   },
   "engines": {
     "node": ">= 9"
   },
-  "files": [
-    ".build",
-    "package.json",
-    "yarn.lock"
-  ],
   "dependencies": {
     "@babel/runtime": "7.0.0-beta.42",
+    "devtron": "^1.4.0",
+    "electron-debug": "^1.5.0",
+    "electron-devtools-installer": "^2.2.3",
+    "electron-is-dev": "^0.3.0",
     "electron-next": "^3.1.4",
     "next": "^6.0.0-canary.3",
     "react": "^16.3.1",
@@ -50,28 +50,34 @@
     "eslint": "^4.19.1",
     "eslint-config-prev": "^7.0.0-beta.10",
     "execa": "^0.10.0",
+    "fs-extra": "^5.0.0",
     "globby": "^8.0.1",
     "husky": "^0.14.3",
     "lint-staged": "^7.0.2",
     "next": "^6.0.0-canary.3",
     "npm-run-all": "^4.1.2",
-    "webpack": "3.10.0"
+    "tempy": "^0.2.1",
+    "webpack": "3.10.0",
+    "write-pkg": "^3.1.0"
   },
   "app": {
-    "output": "build",
-    "destPath": "src/.build",
+    "destPath": "app",
     "sourcePath": "src",
-    "rendererPrefix": ".build/renderer",
+    "rendererPrefix": "app/renderer",
     "cleanPaths": [
-      "src/.build"
-    ]
-  },
-  "build": {
-    "appId": "com.electron.template",
-    "directories": {
-      "buildResources": "resources",
-      "output": "build",
-      "app": "src"
+      "app"
+    ],
+    "externals": [
+      "devtron",
+      "electron-debug",
+      "electron-devtools-installer"
+    ],
+    "build": {
+      "appId": "com.electron.template",
+      "directories": {
+        "buildResources": "resources",
+        "output": "build"
+      }
     }
   },
   "lint-staged": {

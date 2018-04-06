@@ -4,6 +4,7 @@ import {
   dialog,
   BrowserWindow,
 } from 'electron';
+import isDev from 'electron-is-dev';
 import {hasForbiddenEnvsOrArgs, installDevExtensions} from './utils/main';
 
 const dev = process.env.NODE_ENV === 'development';
@@ -29,15 +30,6 @@ if (app.makeSingleInstance(() => {
   process.exit(1);
 }
 
-// Handle debug mode
-if (dev) {
-  const electronDebug = require('electron-debug');
-  const {install: installDevtron} = require('devtron');
-
-  electronDebug();
-  installDevtron();
-}
-
 // Quit immediately if there are forbidden stuff
 if (!dev && hasForbiddenEnvsOrArgs()) {
   // eslint-disable-next-line no-console
@@ -51,8 +43,14 @@ app.on('window-all-closed', () => app.quit());
 // Application entry
 app.on('ready', async () => {
   try {
-    // Install devtools extensions
+    // Handle devtools
     if (dev) {
+      const electronDebug = require('electron-debug');
+      electronDebug();
+
+      const {install: installDevtron} = require('devtron');
+      installDevtron();
+
       await installDevExtensions([
         'REACT_DEVELOPER_TOOLS',
         'REDUX_DEVTOOLS',
@@ -74,13 +72,20 @@ app.on('ready', async () => {
     win.on('ready-to-show', () => win.show());
     win.on('closed', () => (win = null));
 
-    const entry = dev
-      ? 'http://localhost:3000'
-      : `file://${resolve(app.getAppPath(), process.env.RENDERER_PREFIX, 'index.html')}`;
-
-    win.loadURL(entry);
+    win.loadURL(resolveEntry());
   } catch (err) {
     dialog.showErrorBox('Error', err.message);
     process.exit(1);
   }
 });
+
+function resolveEntry() {
+  // Dev mode ran by package manager
+  if (dev) {
+    return 'http://localhost:3000';
+  }
+
+  // Normalize app path where can be a local mode or a production
+  const appropriateAppPath = isDev ? process.cwd() : app.getAppPath();
+  return `file://${resolve(appropriateAppPath, process.env.RENDERER_PREFIX, 'index.html')}`;
+}

@@ -4,7 +4,7 @@ npm-debug.log
 yarn-error.log
 
 .next
-.build
+/app
 /build
 
 .env
