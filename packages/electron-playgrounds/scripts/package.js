@@ -1,5 +1,4 @@
 /* eslint-disable no-console */
-
 const {join} = require('path');
 const tempy = require('tempy');
 const {copy} = require('fs-extra');
