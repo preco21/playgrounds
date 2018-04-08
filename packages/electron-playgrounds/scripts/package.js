@@ -52,8 +52,8 @@ function getInstallCommand() {
   return execa('yarn', ['--version'])
     .then(({stdout}) => stdout && stdout.toString().trim())
     .then((isYarnAvailable) => isYarnAvailable
-      ? ['yarn', ['install', '--no-bin-links']]
-      : ['npm', ['install']]);
+      ? ['yarn', ['install', '--no-bin-links', '--no-lockfile']]
+      : ['npm', ['install', '--no-bin-links', '--no-package-lock']]);
 }
 
 function copyDestFiles() {
