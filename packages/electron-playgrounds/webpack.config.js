@@ -14,7 +14,7 @@ const {
     rendererPrefix,
     cleanPaths = [],
     externals = [],
-  } = {},
+  },
 } = require('./package.json');
 
 module.exports = ({dev} = {}) => {
@@ -23,8 +23,11 @@ module.exports = ({dev} = {}) => {
 
   return {
     target: 'electron-main',
-    devtool: dev ? 'eval-source-map' : false,
-    entry: `./${sourcePath}/index.js`,
+    devtool: dev ? 'source-map' : false,
+    entry: [
+      ...dev ? ['source-map-support/register'] : [],
+      `./${sourcePath}/index.js`,
+    ],
     output: {
       path: resolve(__dirname, destPath),
       filename: 'index.js',
@@ -44,10 +47,8 @@ module.exports = ({dev} = {}) => {
     plugins: [
       new CleanPlugin(cleanPaths),
       new DefinePlugin({
-        'process.env': {
-          NODE_ENV: JSON.stringify(dev ? 'development' : 'production'),
-          RENDERER_PREFIX: JSON.stringify(rendererPrefix),
-        },
+        'process.env.NODE_ENV': JSON.stringify(dev ? 'development' : 'production'),
+        __RENDERER_PREFIX__: JSON.stringify(rendererPrefix),
       }),
       ...dev
         ? []
@@ -65,6 +66,9 @@ module.exports = ({dev} = {}) => {
     node: {
       __dirname: false,
       __filename: false,
+    },
+    performance: {
+      hints: false,
     },
   };
 };

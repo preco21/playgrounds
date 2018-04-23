@@ -1,4 +1,4 @@
-export function hasForbiddenEnvsOrArgs() {
+export function checkIfTampered() {
   const forbiddenEnvs = [
     'ELECTRON_ENABLE_LOGGING',
     'ELECTRON_LOG_ASAR_READS',
@@ -32,10 +32,19 @@ export function hasForbiddenEnvsOrArgs() {
     '--vmodule',
   ];
 
-  const hasForbiddenEnvs = forbiddenEnvs.some((env) => process.env[env] !== undefined);
-  const hasForbiddenArgs = process.argv.slice(1).some((arg) => forbiddenArgs.some((forbiddenArg) => forbiddenArg === arg));
+  const {env: envs} = process;
+  const args = process.argv.slice(1);
 
-  return hasForbiddenEnvs || hasForbiddenArgs;
+  const tamperedEnvs = forbiddenEnvs.filter((env) => envs[env] !== undefined);
+  const tamperedArgs = forbiddenArgs.filter((forbiddenArg) => args.some((arg) => forbiddenArg === arg));
+
+  const isValid = tamperedEnvs.length < 1 && tamperedArgs.length < 1;
+
+  return {
+    valid: isValid,
+    tamperedEnvs,
+    tamperedArgs,
+  };
 }
 
 export function installDevExtensions(extentions) {

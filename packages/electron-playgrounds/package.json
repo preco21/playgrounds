@@ -9,12 +9,13 @@
   "scripts": {
     "precommit": "lint-staged",
     "prepackage": "npm run build",
-    "start": "electron app",
+    "start": "electron .",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint .",
     "build": "npm-run-all build:main build:renderer",
     "build:main": "webpack --progress",
     "build:renderer": "next build src && next export --outdir app/renderer src",
+    "dev": "node scripts/serve.js",
     "package": "node scripts/package.js"
   },
   "engines": {
@@ -29,7 +30,8 @@
     "electron-next": "^3.1.4",
     "next": "^6.0.0-canary.3",
     "react": "^16.3.1",
-    "react-dom": "^16.3.0"
+    "react-dom": "^16.3.0",
+    "source-map-support": "^0.5.4"
   },
   "devDependencies": {
     "@babel/core": "7.0.0-beta.42",
@@ -61,6 +63,13 @@
     "write-pkg": "^3.1.0"
   },
   "app": {
+    "build": {
+      "appId": "com.electron.template",
+      "directories": {
+        "buildResources": "resources",
+        "output": "build"
+      }
+    },
     "destPath": "app",
     "sourcePath": "src",
     "rendererPrefix": "app/renderer",
@@ -70,15 +79,8 @@
     "externals": [
       "devtron",
       "electron-debug",
-      "electron-devtools-installer"
-    ],
-    "build": {
-      "appId": "com.electron.template",
-      "directories": {
-        "buildResources": "resources",
-        "output": "build"
-      }
-    }
+      "electron-next"
+    ]
   },
   "lint-staged": {
     "*.{js,jsx}": [

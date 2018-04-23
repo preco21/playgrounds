@@ -4,3 +4,5 @@ env:
 settings:
   import/core-modules:
     - electron
+globals:
+  __RENDERER_PREFIX__: false

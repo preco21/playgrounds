@@ -1,23 +1,11 @@
 const execa = require('execa');
-const {dependencies = {}, devDependencies = {}} = require('./package.json');
 
 const env = process.env.BABEL_ENV || process.env.NODE_ENV || '';
 const isMain = env.startsWith('main');
-// const isDev = env.endsWith('development');
 
 const electronVersion = getElectronVersion();
 
-function getElectronVersionFromDependencyMap(deps = {}) {
-  const [, bareVersion] = Object.entries(deps).find(([key]) => key === 'electron') || [];
-  return bareVersion;
-}
-
 function getElectronVersion() {
-  const depVersion = getElectronVersionFromDependencyMap({...dependencies, ...devDependencies});
-  if (depVersion) {
-    return depVersion;
-  }
-
   const {stdout} = execa.sync('electron', ['--version']);
   return stdout && stdout.toString().trim().slice(1);
 }

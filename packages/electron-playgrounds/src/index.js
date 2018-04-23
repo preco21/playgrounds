@@ -4,10 +4,12 @@ import {
   dialog,
   BrowserWindow,
 } from 'electron';
-import isDev from 'electron-is-dev';
-import {hasForbiddenEnvsOrArgs, installDevExtensions} from './utils/main';
+import isElectronDev from 'electron-is-dev';
+import prepareRenderer from 'electron-next';
+import {checkIfTampered, installDevExtensions} from './main/utils';
 
-const dev = process.env.NODE_ENV === 'development';
+const isDev = process.env.NODE_ENV === 'development';
+const devPort = 3000;
 
 let win = null;
 
@@ -31,9 +33,15 @@ if (app.makeSingleInstance(() => {
 }
 
 // Quit immediately if there are forbidden stuff
-if (!dev && hasForbiddenEnvsOrArgs()) {
+const tampered = checkIfTampered();
+if (!isDev && !tampered.valid) {
   // eslint-disable-next-line no-console
-  console.error('You got forbidden envs or args :p');
+  console.error(`
+  You have forbidden envs or args :p
+    Envs: ${tampered.tamperedEnvs.join() || 'None'}
+    Args: ${tampered.tamperedArgs.join() || 'None'}
+`);
+
   process.exit(1);
 }
 
@@ -43,8 +51,7 @@ app.on('window-all-closed', () => app.quit());
 // Application entry
 app.on('ready', async () => {
   try {
-    // Handle devtools
-    if (dev) {
+    if (isDev) {
       const electronDebug = require('electron-debug');
       electronDebug();
 
@@ -56,6 +63,11 @@ app.on('ready', async () => {
         'REDUX_DEVTOOLS',
       ]);
     }
+
+    await prepareRenderer({
+      development: 'src',
+      production: __RENDERER_PREFIX__,
+    }, devPort);
 
     // Instantiate browser window
     win = new BrowserWindow({
@@ -74,18 +86,18 @@ app.on('ready', async () => {
 
     win.loadURL(resolveEntry());
   } catch (err) {
-    dialog.showErrorBox('Error', err.message);
+    dialog.showErrorBox('Error', err.stack);
     process.exit(1);
   }
 });
 
 function resolveEntry() {
   // Dev mode ran by package manager
-  if (dev) {
-    return 'http://localhost:3000';
+  if (isDev) {
+    return `http://localhost:${devPort}`;
   }
 
   // Normalize app path where can be a local mode or a production
-  const appropriateAppPath = isDev ? process.cwd() : app.getAppPath();
-  return `file://${resolve(appropriateAppPath, process.env.RENDERER_PREFIX, 'index.html')}`;
+  const appropriateAppPath = isElectronDev ? process.cwd() : app.getAppPath();
+  return `file://${resolve(appropriateAppPath, __RENDERER_PREFIX__, 'index.html')}`;
 }
