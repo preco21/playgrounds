@@ -31,7 +31,8 @@
     "next": "^6.0.0-canary.3",
     "react": "^16.3.1",
     "react-dom": "^16.3.0",
-    "source-map-support": "^0.5.4"
+    "source-map-support": "^0.5.4",
+    "styled-components": "^3.2.6"
   },
   "devDependencies": {
     "@babel/core": "7.0.0-beta.42",
