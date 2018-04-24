@@ -1,10 +1,13 @@
 const webpack = require('webpack');
+const exitHook = require('exit-hook');
 const execa = require('execa');
 const webpackConfig = require('../webpack.config');
 
 const compiler = webpack(webpackConfig({dev: true}));
 
 let instance = null;
+
+exitHook(killInstanceIfExists);
 compiler.watch({}, (err, stats) => {
   // eslint-disable-next-line no-console
   console.log(stats.toString({
@@ -17,10 +20,7 @@ compiler.watch({}, (err, stats) => {
     return;
   }
 
-  if (instance) {
-    process.kill(-instance.pid);
-  }
-
+  killInstanceIfExists();
   instance = execa('electron', ['.'], {
     stdin: process.stdin,
     stdout: process.stdout,
@@ -33,3 +33,9 @@ compiler.watch({}, (err, stats) => {
 
   instance.on('exit', () => (instance = null));
 });
+
+function killInstanceIfExists() {
+  if (instance) {
+    process.kill(-instance.pid);
+  }
+}
