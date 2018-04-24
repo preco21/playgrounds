@@ -9,7 +9,7 @@
 * Babel configuration that contains preset `env (current)`, `stage-1` and `minify` (used in production build).
 * Live-reloading code with `nodemon` and `babel-node`.
 * Debugging with [Chrome DevTools](https://medium.com/@paul_irish/debugging-node-js-nightlies-with-chrome-devtools-7c4a1b95ae27) out of box.
-* Package up your app with `pkg`.
+* Package app with `pkg`.
 
 ## Install
 
