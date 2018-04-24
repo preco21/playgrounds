@@ -1,8 +1,8 @@
 {
   "name": "electron-playgrounds",
-  "productName": "Yet another opinionated setup for Electron application",
+  "productName": "Electron Playgrounds",
   "version": "0.0.0",
-  "description": "Yet another playgrounds for electron",
+  "description": "Yet another opinionated setup for Electron application",
   "author": "Plusb Preco <plusb21@gmail.com>",
   "private": true,
   "main": "app/index.js",
