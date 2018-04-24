@@ -23,9 +23,6 @@
   },
   "dependencies": {
     "@babel/runtime": "7.0.0-beta.42",
-    "devtron": "^1.4.0",
-    "electron-debug": "^1.5.0",
-    "electron-devtools-installer": "^2.2.3",
     "electron-is-dev": "^0.3.0",
     "electron-next": "^3.1.4",
     "next": "^6.0.0-canary.6",
@@ -47,9 +44,11 @@
     "babel-plugin-inline-dotenv": "^1.1.2",
     "babel-plugin-styled-components": "^1.5.1",
     "clean-webpack-plugin": "^0.1.19",
-    "cross-env": "^5.1.4",
+    "devtron": "^1.4.0",
     "electron": "1.8.4",
     "electron-builder": "^20.8.1",
+    "electron-debug": "^1.5.0",
+    "electron-devtools-installer": "^2.2.3",
     "eslint": "^4.19.1",
     "eslint-config-prev": "^7.0.0-beta.10",
     "execa": "^0.10.0",
@@ -61,6 +60,7 @@
     "next": "^6.0.0-canary.6",
     "npm-run-all": "^4.1.2",
     "tempy": "^0.2.1",
+    "tree-kill": "^1.2.0",
     "webpack": "3.10.0",
     "write-pkg": "^3.1.0"
   },
@@ -72,9 +72,10 @@
       "app"
     ],
     "externals": [
+      "electron-next",
       "devtron",
       "electron-debug",
-      "electron-next"
+      "electron-devtools-installer"
     ],
     "build": {
       "appId": "com.electron.template",

@@ -1,14 +1,16 @@
-const webpack = require('webpack');
+const {promisify} = require('util');
 const exitHook = require('exit-hook');
+const webpack = require('webpack');
 const execa = require('execa');
+const treeKill = require('tree-kill');
 const webpackConfig = require('../webpack.config');
 
+const treeKillP = promisify(treeKill);
+
+const instances = new Set();
 const compiler = webpack(webpackConfig({dev: true}));
 
-let instance = null;
-
-exitHook(killInstanceIfExists);
-compiler.watch({}, (err, stats) => {
+compiler.watch({}, async (err, stats) => {
   // eslint-disable-next-line no-console
   console.log(stats.toString({
     chunks: false,
@@ -20,22 +22,26 @@ compiler.watch({}, (err, stats) => {
     return;
   }
 
-  killInstanceIfExists();
-  instance = execa('electron', ['.'], {
-    stdin: process.stdin,
-    stdout: process.stdout,
-    stderr: process.stderr,
-    detached: true,
+  await killInstancesIfExists();
+  const instance = execa('electron', ['.'], {
+    stdio: 'inherit',
     env: {
       ELECTRON_ENABLE_LOGGING: true,
     },
   });
 
-  instance.on('exit', () => (instance = null));
+  instances.add(instance);
+  instance.on('exit', () => instances.delete(instance));
 });
 
-function killInstanceIfExists() {
-  if (instance) {
-    process.kill(-instance.pid);
-  }
+exitHook(killInstancesIfExists);
+
+function killInstancesIfExists() {
+  return Promise.all(
+    Array.from(instances)
+      .map(async (inst) => {
+        await treeKillP(inst.pid);
+        instances.delete(inst);
+      }),
+  );
 }
