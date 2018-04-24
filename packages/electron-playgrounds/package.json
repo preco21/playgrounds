@@ -1,6 +1,6 @@
 {
   "name": "electron-playgrounds",
-  "productName": "Electron Playgrounds",
+  "productName": "Yet another opinionated setup for Electron application",
   "version": "0.0.0",
   "description": "Yet another playgrounds for electron",
   "author": "Plusb Preco <plusb21@gmail.com>",
