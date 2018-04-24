@@ -15,6 +15,7 @@
 
 ```bash
 $ git clone https://github.com/preco21/playgrounds.git
+
 $ cd playgrounds
 $ npm install
 ```
@@ -23,7 +24,7 @@ $ npm install
 
 ### Development mode
 
-This command executes `nodemon` demon for _live-reloading_ experiences. Once the daemon started, you can start editing `index.js` in `src` folder!
+This command will run `nodemon` demon for _live-reloading_ experiences. Once the daemon started, you can start editing `index.js` in `src` folder!
 
 ```bash
 $ npm run dev
@@ -62,33 +63,35 @@ debugger;
 
 ### Build
 
-This command builds your source code with Babel from `src` into `lib`.
+This command will build your code with Babel from `src` into `lib`.
 
 ```bash
 $ npm run build
 ```
 
-After building the code, you will be able to run the built code like standalone version of the application:
+After building, you will be able to run app like standalone version of the application:
 
 ```bash
 npm start
 ```
 
+Typically, this is recommended for production.
+
 ### Packaging
 
-You can also create standalone executables with this command, which will generate the executables in `bin` folder:
+You can also create standalone executables with this command and this will generate the executable binaries in `bin` folder:
 
 ```bash
 $ npm run package
 ```
 
-The generated app can be executed without any runtime dependencies.
+This executable binaries is available to run without any runtime dependencies.
 
 ### Clean
 
-This command cleans the build output directory. This command will remove any content inside `lib` folder.
+This command will remove any content inside the output directory which made by `build` command.
 
-```base
+```bash
 $ npm run clean
 ```
 
