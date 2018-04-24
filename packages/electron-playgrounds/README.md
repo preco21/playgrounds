@@ -18,6 +18,8 @@ $ cd electron-playgrounds
 $ npm install
 ```
 
+**Note:** If you are on [Windows Subsystem for Linux](https://en.wikipedia.org/wiki/Windows_Subsystem_for_Linux), make sure you have set the proper environment variable before installing to let electron to use right binary for the platform: `npm_config_platform=win32`.
+
 ## Usage
 
 ### Development mode
