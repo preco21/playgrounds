@@ -78,7 +78,7 @@ app.on('ready', async () => {
       title: 'Yey!',
       show: false,
       autoHideMenuBar: true,
-      backgroundColor: '#fff',
+      backgroundColor: '#F1F5F7',
     });
 
     win.on('ready-to-show', () => win.show());

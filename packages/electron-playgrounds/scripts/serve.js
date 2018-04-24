@@ -18,16 +18,18 @@ compiler.watch({}, (err, stats) => {
   }
 
   if (instance) {
-    instance.kill();
+    process.kill(-instance.pid);
   }
 
-  // https://www.google.com/search?q=node+how+to+kill+process&oq=node+how+to+kill+process&aqs=chrome..69i57j0l5.4222j0j1&sourceid=chrome&ie=UTF-8
   instance = execa('electron', ['.'], {
     stdin: process.stdin,
     stdout: process.stdout,
     stderr: process.stderr,
+    detached: true,
     env: {
       ELECTRON_ENABLE_LOGGING: true,
     },
   });
+
+  instance.on('exit', () => (instance = null));
 });
