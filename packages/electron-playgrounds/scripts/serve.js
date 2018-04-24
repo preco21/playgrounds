@@ -1,8 +1,8 @@
 const {promisify} = require('util');
-const exitHook = require('exit-hook');
 const webpack = require('webpack');
 const execa = require('execa');
 const treeKill = require('tree-kill');
+const exitHook = require('exit-hook');
 const webpackConfig = require('../webpack.config');
 
 const treeKillP = promisify(treeKill);
