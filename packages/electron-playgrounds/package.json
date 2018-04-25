@@ -28,7 +28,6 @@
     "next": "^6.0.0-canary.6",
     "react": "^16.3.1",
     "react-dom": "^16.3.0",
-    "source-map-support": "^0.5.4",
     "styled-components": "^3.2.6"
   },
   "devDependencies": {
@@ -59,6 +58,7 @@
     "lint-staged": "^7.0.2",
     "next": "^6.0.0-canary.6",
     "npm-run-all": "^4.1.2",
+    "source-map-support": "^0.5.4",
     "tempy": "^0.2.1",
     "tree-kill": "^1.2.0",
     "webpack": "3.10.0",
