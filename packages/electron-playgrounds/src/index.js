@@ -67,6 +67,7 @@ app.on('ready', async () => {
       ]);
     }
 
+    process.env.BABEL_ENV = isDev ? 'renderer-development' : 'renderer-production';
     await prepareRenderer({
       development: srcPath,
       production: rendererPath,

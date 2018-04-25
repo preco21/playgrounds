@@ -2,6 +2,7 @@ const execa = require('execa');
 
 const env = process.env.BABEL_ENV || process.env.NODE_ENV || '';
 const isMain = env.startsWith('main');
+const isDev = env.endsWith('development');
 
 const electronVersion = getElectronVersion();
 
@@ -40,7 +41,7 @@ module.exports = {
       : [
         '@babel/plugin-proposal-export-default-from',
         '@babel/plugin-proposal-export-namespace-from',
-        ['babel-plugin-styled-components', {ssr: true}],
+        ['babel-plugin-styled-components', {ssr: true, displayName: isDev}],
       ],
     'babel-plugin-inline-dotenv',
   ],
