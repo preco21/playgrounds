@@ -1,15 +1,18 @@
-import {resolve} from 'path';
 import {
   app,
   dialog,
   BrowserWindow,
 } from 'electron';
-import isElectronDev from 'electron-is-dev';
 import prepareRenderer from 'electron-next';
+import {
+  srcPath,
+  rendererPath,
+  isDev,
+  preloadPath,
+  devServerPort,
+  resolveEntry,
+} from './main/constants';
 import {checkIfTampered, installDevExtensions} from './main/utils';
-
-const isDev = process.env.NODE_ENV === 'development';
-const devPort = 3000;
 
 let win = null;
 
@@ -65,9 +68,9 @@ app.on('ready', async () => {
     }
 
     await prepareRenderer({
-      development: 'src',
-      production: __RENDERER_PREFIX__,
-    }, devPort);
+      development: srcPath,
+      production: rendererPath,
+    }, devServerPort);
 
     // Instantiate browser window
     win = new BrowserWindow({
@@ -75,10 +78,15 @@ app.on('ready', async () => {
       height: 600,
       minWidth: 800,
       minHeight: 600,
-      title: 'Yey!',
-      show: false,
+      title: 'Electron Playgrounds',
+      show: isDev,
       autoHideMenuBar: true,
       backgroundColor: '#F1F5F7',
+      acceptFirstMouse: true,
+      webPreferences: {
+        nodeIntegration: false,
+        preload: preloadPath,
+      },
     });
 
     win.on('ready-to-show', () => win.show());
@@ -90,14 +98,3 @@ app.on('ready', async () => {
     process.exit(1);
   }
 });
-
-function resolveEntry() {
-  // Dev mode ran by package manager
-  if (isDev) {
-    return `http://localhost:${devPort}`;
-  }
-
-  // Normalize app path where can be a local mode or a production
-  const appropriateAppPath = isElectronDev ? process.cwd() : app.getAppPath();
-  return `file://${resolve(appropriateAppPath, __RENDERER_PREFIX__, 'index.html')}`;
-}

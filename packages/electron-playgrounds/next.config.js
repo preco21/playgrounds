@@ -8,12 +8,7 @@ module.exports = (phase) => withCSS({
     // Set `BABEL_ENV` for renderer process
     process.env.BABEL_ENV = phase === PHASE_DEVELOPMENT_SERVER ? 'renderer-development' : 'renderer-production';
 
-    // FIXME: Current version of Electron does not supports object-rest-spread operator.
-    // It could be fixed in next release of Electron.
-    // eslint-disable-next-line no-restricted-properties
-    return Object.assign({}, config, {
-      target: 'electron-renderer',
-    });
+    return config;
   },
   exportPathMap() {
     return globby([`${sourcePath}/pages/**/*.js`, `!${sourcePath}/pages/_document.js`])

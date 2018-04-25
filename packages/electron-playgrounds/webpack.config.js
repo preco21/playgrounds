@@ -5,13 +5,13 @@ const {
     ModuleConcatenationPlugin,
   },
 } = require('webpack');
+const webpackMerge = require('webpack-merge');
 const CleanPlugin = require('clean-webpack-plugin');
 const BabelMinifyPlugin = require('babel-minify-webpack-plugin');
 const {
   app: {
     sourcePath,
     destPath,
-    rendererPrefix,
     cleanPaths = [],
     externals = [],
   },
@@ -21,16 +21,10 @@ module.exports = ({dev} = {}) => {
   // Set `BABEL_ENV` for main process
   process.env.BABEL_ENV = dev ? 'main-development' : 'main-production';
 
-  return {
-    target: 'electron-main',
+  const sharedConfig = {
     devtool: dev ? 'source-map' : false,
-    entry: [
-      ...dev ? ['source-map-support/register'] : [],
-      `./${sourcePath}/index.js`,
-    ],
     output: {
       path: resolve(__dirname, destPath),
-      filename: 'index.js',
     },
     module: {
       rules: [
@@ -45,10 +39,8 @@ module.exports = ({dev} = {}) => {
       ],
     },
     plugins: [
-      new CleanPlugin(cleanPaths),
       new DefinePlugin({
         'process.env.NODE_ENV': JSON.stringify(dev ? 'development' : 'production'),
-        __RENDERER_PREFIX__: JSON.stringify(rendererPrefix),
       }),
       ...dev
         ? []
@@ -71,4 +63,30 @@ module.exports = ({dev} = {}) => {
       hints: false,
     },
   };
+
+  return [
+    webpackMerge({
+      target: 'electron-main',
+      entry: [
+        ...dev ? ['source-map-support/register'] : [],
+        `./${sourcePath}/index.js`,
+      ],
+      output: {
+        filename: 'index.js',
+      },
+      plugins: [
+        new CleanPlugin(cleanPaths),
+      ],
+    }, sharedConfig),
+    webpackMerge({
+      target: 'electron-renderer',
+      entry: [
+        ...dev ? ['source-map-support/register'] : [],
+        `./${sourcePath}/preload.js`,
+      ],
+      output: {
+        filename: 'preload.js',
+      },
+    }, sharedConfig),
+  ];
 };
