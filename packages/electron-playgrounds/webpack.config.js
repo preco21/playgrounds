@@ -80,10 +80,7 @@ module.exports = ({dev} = {}) => {
     }, sharedConfig),
     webpackMerge({
       target: 'electron-renderer',
-      entry: [
-        ...dev ? ['source-map-support/register'] : [],
-        `./${sourcePath}/preload.js`,
-      ],
+      entry: `./${sourcePath}/preload.js`,
       output: {
         filename: 'preload.js',
       },
