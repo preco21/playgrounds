@@ -9,5 +9,5 @@ window.eval = null;
 
 if (process.env.NODE_ENV === 'development') {
   // eslint-disable-next-line no-underscore-dangle
-  window.__devtron = {require, process};
+  window.__devtron = {require: window.require, process};
 }
