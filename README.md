@@ -9,7 +9,7 @@
 * Babel configuration that contains preset `env (current)`, `stage-1` and `minify` (used in production build).
 * Live-reloading code with `nodemon` and `babel-node`.
 * Debugging with [Chrome DevTools](https://medium.com/@paul_irish/debugging-node-js-nightlies-with-chrome-devtools-7c4a1b95ae27) out of box.
-* Package app with `pkg`.
+* Package app to standalone executable via `pkg`.
 
 ## Install
 
@@ -17,8 +17,10 @@
 $ git clone https://github.com/preco21/playgrounds.git
 
 $ cd playgrounds
-$ npm install
+$ npm install # or yarn
 ```
+
+**Prerequisite:** Node.js 8 or higher.
 
 ## Usage
 
@@ -32,7 +34,7 @@ $ npm run dev
 
 ### Development mode with Chrome DevTools
 
-You may be heard about [Node.js V8 Inspector Integration](https://nodejs.org/api/debugger.html#debugger_v8_inspector_integration_for_node_js) which allows you to attach your Node.js application to Chrome DevTools for better debugging and profiling. To use this fantastic feature, make sure you are running **Node.js 6+** and **Chrome 60+**, then go to the Chrome inspector page first:
+You may already know about [Node.js V8 Inspector Integration](https://nodejs.org/api/debugger.html#debugger_v8_inspector_integration_for_node_js) which allows you to attach your Node.js application to Chrome DevTools for better debugging and profiling. To use this fantastic feature, make sure you are running **Node.js 6+** and **Chrome 60+**, then go to the Chrome inspector page first:
 
 > [chrome://inspect/#devices](chrome://inspect/#devices)
 
@@ -75,11 +77,11 @@ After building, you will be able to run app like standalone version of the appli
 npm start
 ```
 
-Typically, this is recommended for production.
+This is typically recommended for production.
 
 ### Packaging
 
-You can also create standalone executables with this command and this will generate the executable binaries in `bin` folder:
+You can also create standalone executables with this command and this will generate the executable binaries in `build` folder:
 
 ```bash
 $ npm run package
