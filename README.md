@@ -71,17 +71,17 @@ This command will build your code with Babel from `src` into `lib`.
 $ npm run build
 ```
 
-After building, you will be able to run app like standalone version of the application:
+After building, you will be able to run the app like a standalone version of the application:
 
 ```bash
 npm start
 ```
 
-This is typically recommended for production.
+This is typically recommended for the production.
 
 ### Packaging
 
-You can also create standalone executables with this command and this will generate the executable binaries in `build` folder:
+You can also package the app as a standalone executable with this command and it will generate the executable binaries in `build` folder:
 
 ```bash
 $ npm run package
