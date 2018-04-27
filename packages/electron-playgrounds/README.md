@@ -4,10 +4,10 @@
 
 > :rocket: Yet another opinionated setup for Electron application
 
-* Some basic stuffs brought from [playgrounds](https://github.com/preco21/playgrounds).
-* Clear and minimal setup to build React based Electron app with `webpack` and `next.js`.
+* Core setup from the original [playgrounds](https://github.com/preco21/playgrounds).
+* Clean and minimal setup to build React based Electron app with `webpack` and `next.js`.
 * Live-reloading (hot) works on both `main` and `renderer` processes.
-* Package app with `electron-builder`.
+* Package executable app via `electron-builder`.
 
 ## Install
 
@@ -17,6 +17,8 @@ $ git clone https://github.com/preco21/electron-playgrounds.git
 $ cd electron-playgrounds
 $ npm install
 ```
+
+**Prerequisite:** Node.js 8 or higher.
 
 **Note:** If you are on [Windows Subsystem for Linux](https://en.wikipedia.org/wiki/Windows_Subsystem_for_Linux), make sure you have set the proper environment variable before installing to let electron to use right binary for the platform: `npm_config_platform=win32`.
 
