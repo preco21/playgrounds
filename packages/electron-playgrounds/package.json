@@ -19,7 +19,7 @@
     "package": "node scripts/package.js"
   },
   "engines": {
-    "node": ">=9"
+    "node": ">=8"
   },
   "dependencies": {
     "@babel/runtime": "7.0.0-beta.44",
