@@ -66,8 +66,9 @@
     "write-pkg": "^3.1.0"
   },
   "app": {
-    "destPath": "app",
-    "sourcePath": "src",
+    "mainSource": "main",
+    "rendererSource": "src",
+    "appDest": "app",
     "cleanPaths": [
       "app"
     ],

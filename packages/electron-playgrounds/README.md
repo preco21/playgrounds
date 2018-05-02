@@ -32,11 +32,11 @@ This command will run internal script to provide _live-reloading_ for `main` pro
 $ npm run dev
 ```
 
-When the dev server has started, you can start editing components in `pages` folder. Also you can edit `index.js` for `main` process. Any changes made within `src` folder will trigger live-reload automatically.
+When the dev server has started, you can start editing components in `pages` folder. Also you can edit `index.js` for `main` process. Any changes made within `main` and `src` folder will trigger live-reload automatically.
 
 ### Build
 
-This command will bundle all the code inside `src` folder to `app` folder with `webpack` and `next.js`.
+This command will bundle the sources to `app` folder with `webpack` and `next.js`.
 
 ```bash
 $ npm run build

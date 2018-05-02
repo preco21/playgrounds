@@ -10,8 +10,8 @@ const CleanPlugin = require('clean-webpack-plugin');
 const BabelMinifyPlugin = require('babel-minify-webpack-plugin');
 const {
   app: {
-    sourcePath,
-    destPath,
+    mainSource,
+    appDest,
     cleanPaths = [],
     externals = [],
   },
@@ -24,13 +24,13 @@ module.exports = ({dev} = {}) => {
   const sharedConfig = {
     devtool: dev ? 'source-map' : false,
     output: {
-      path: resolve(__dirname, destPath),
+      path: resolve(__dirname, appDest),
     },
     module: {
       rules: [
         {
           test: /\.js$/,
-          include: resolve(__dirname, sourcePath),
+          include: resolve(__dirname, mainSource),
           loader: 'babel-loader',
           options: {
             cacheDirectory: dev,
@@ -69,7 +69,7 @@ module.exports = ({dev} = {}) => {
       target: 'electron-main',
       entry: [
         ...dev ? ['source-map-support/register'] : [],
-        `./${sourcePath}/index.js`,
+        `./${mainSource}/index.js`,
       ],
       output: {
         filename: 'index.js',
@@ -80,7 +80,7 @@ module.exports = ({dev} = {}) => {
     }, sharedConfig),
     webpackMerge({
       target: 'electron-renderer',
-      entry: `./${sourcePath}/preload.js`,
+      entry: `./${mainSource}/preload.js`,
       output: {
         filename: 'preload.js',
       },

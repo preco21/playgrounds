@@ -1,10 +1,10 @@
 const withCSS = require('@zeit/next-css');
 const globby = require('globby');
-const {app: {sourcePath}} = require('./package.json');
+const {app: {rendererSource}} = require('./package.json');
 
 module.exports = withCSS({
   exportPathMap() {
-    return globby([`${sourcePath}/pages/**/*.js`, `!${sourcePath}/pages/_document.js`])
+    return globby([`${rendererSource}/pages/**/*.js`, `!${rendererSource}/pages/_document.js`])
       .then((paths) => paths.reduce((res, path) => {
         const [,, pathToken] = path.split(/(pages|\.)/);
         const page = pathToken.replace(/^\/index$/, '/');

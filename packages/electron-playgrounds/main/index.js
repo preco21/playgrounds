@@ -5,14 +5,14 @@ import {
 } from 'electron';
 import prepareRenderer from 'electron-next';
 import {
-  srcPath,
-  rendererPath,
+  rendererSource,
+  rendererTarget,
   isDev,
-  preloadPath,
+  preloadScript,
   devServerPort,
   resolveEntry,
-} from './main/constants';
-import {checkIfTampered, installDevExtensions} from './main/utils';
+} from './constants';
+import {checkIfTampered, installDevExtensions} from './utils';
 
 let win = null;
 
@@ -69,8 +69,8 @@ app.on('ready', async () => {
 
     process.env.BABEL_ENV = isDev ? 'renderer-development' : 'renderer-production';
     await prepareRenderer({
-      development: srcPath,
-      production: rendererPath,
+      development: rendererSource,
+      production: rendererTarget,
     }, devServerPort);
 
     // Instantiate browser window
@@ -86,7 +86,7 @@ app.on('ready', async () => {
       acceptFirstMouse: true,
       webPreferences: {
         nodeIntegration: false,
-        preload: preloadPath,
+        preload: preloadScript,
       },
     });
 
