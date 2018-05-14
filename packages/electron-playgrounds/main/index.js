@@ -87,6 +87,7 @@ app.on('ready', async () => {
       webPreferences: {
         nodeIntegration: false,
         preload: preloadScript,
+        webviewTag: false,
       },
     });
 
