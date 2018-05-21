@@ -11,10 +11,14 @@
     "prepackage": "npm run build",
     "start": "node --require source-map-support/register .",
     "test": "eslint .",
-    "build": "cross-env NODE_ENV=production babel --source-maps --out-dir lib src",
-    "dev": "cross-env NODE_ENV=development nodemon --exec 'node --require @babel/register' src/index.js",
-    "dev-inspect": "cross-env NODE_ENV=development nodemon --exec 'node --require @babel/register --inspect' src/index.js",
-    "dev-inspect-brk": "cross-env NODE_ENV=development nodemon --exec 'node --require @babel/register --inspect-brk' src/index.js",
+    "build":
+      "cross-env NODE_ENV=production babel --source-maps --out-dir lib src",
+    "dev":
+      "cross-env NODE_ENV=development nodemon --exec 'node --require @babel/register' src/index.js",
+    "dev-inspect":
+      "cross-env NODE_ENV=development nodemon --exec 'node --require @babel/register --inspect' src/index.js",
+    "dev-inspect-brk":
+      "cross-env NODE_ENV=development nodemon --exec 'node --require @babel/register --inspect-brk' src/index.js",
     "package": "pkg --out-path build .",
     "clean": "rimraf lib build"
   },
@@ -28,13 +32,11 @@
     "url": "https://github.com/preco21/playgrounds/issues"
   },
   "dependencies": {
-    "@babel/runtime": "^7.0.0-beta.44",
     "source-map-support": "^0.5.4"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0-beta.44",
     "@babel/core": "^7.0.0-beta.44",
-    "@babel/plugin-transform-runtime": "^7.0.0-beta.44",
     "@babel/preset-env": "^7.0.0-beta.44",
     "@babel/preset-stage-1": "^7.0.0-beta.44",
     "@babel/register": "^7.0.0-beta.44",
