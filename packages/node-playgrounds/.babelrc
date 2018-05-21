@@ -3,9 +3,6 @@
     ["@babel/preset-env", {"targets": {"node": "current"}, "loose": true}],
     "@babel/preset-stage-1"
   ],
-  "plugins": [
-    "@babel/plugin-transform-runtime"
-  ],
   "env": {
     "production": {
       "presets": [
