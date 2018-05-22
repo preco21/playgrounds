@@ -1,7 +1,7 @@
 {
   "presets": [
     ["@babel/preset-env", {"targets": {"node": "current"}, "loose": true}],
-    "@babel/preset-stage-1"
+    ["@babel/preset-stage-1", { "decoratorsLegacy": true }]
   ],
   "env": {
     "production": {
