@@ -61,13 +61,12 @@ app.on('ready', async () => {
       const {install: installDevtron} = require('devtron');
       installDevtron();
 
-      await installDevExtensions([
-        'REACT_DEVELOPER_TOOLS',
-        'REDUX_DEVTOOLS',
-      ]);
+      await installDevExtensions(['REACT_DEVELOPER_TOOLS', 'REDUX_DEVTOOLS']);
+
+      // Set `BABEL_ENV` for next.js
+      process.env.BABEL_ENV = 'renderer-development';
     }
 
-    process.env.BABEL_ENV = isDev ? 'renderer-development' : 'renderer-production';
     await prepareRenderer({
       development: rendererSource,
       production: rendererTarget,
