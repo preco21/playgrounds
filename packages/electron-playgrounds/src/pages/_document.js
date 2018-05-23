@@ -17,10 +17,13 @@ export default class _Document extends Document {
 
   render() {
     const {props: {stylesEl}} = this;
-
     return (
       <html>
         <Head>
+          <meta
+            httpEquiv="Content-Security-Policy"
+            content="default-src 'self' http: https:; script-src 'self' 'unsafe-inline' https:; style-src 'self' http: https: 'unsafe-inline'; img-src 'self' http: https: data:"
+          />
           {/* Styles from `next-css` */}
           <link rel="stylesheet" href="/_next/static/style.css" />
           {/* Styles from `styled-components` */}

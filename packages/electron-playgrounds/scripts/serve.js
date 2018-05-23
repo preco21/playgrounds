@@ -27,6 +27,7 @@ compiler.watch({}, async (err, stats) => {
     stdio: 'inherit',
     env: {
       ELECTRON_ENABLE_LOGGING: true,
+      ELECTRON_DISABLE_SECURITY_WARNINGS: true,
     },
   });
 
