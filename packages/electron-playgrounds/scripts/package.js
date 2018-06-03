@@ -9,7 +9,7 @@ const packageJSON = require('../package.json');
 
 const {
   app: {
-    destPath,
+    appDest,
     externals = [],
     files = [],
     build = {},
@@ -59,7 +59,7 @@ function getInstallCommand() {
 function copyDestFiles() {
   console.log('> Copying destination files...');
 
-  return Promise.all([destPath, ...files].map((target) => copy(target, join(tempDir, target))));
+  return Promise.all([appDest, ...files].map((target) => copy(target, join(tempDir, target))));
 }
 
 function processPackageJSON() {
