@@ -29,15 +29,17 @@ const whitelist = [
 
 const tempDir = tempy.directory();
 
-Promise.resolve()
-  .then(copyDestFiles)
-  .then(processPackageJSON)
-  .then(installDependencies)
-  .then(buildApp)
-  .catch((err) => {
+(async () => {
+  try {
+    await copyDestFiles();
+    await processPackageJSON();
+    await installDependencies();
+    await buildApp();
+  } catch (err) {
     console.error(err);
     process.exit(1);
-  });
+  }
+})();
 
 function pick(obj, filter) {
   return Object.entries(obj)
