@@ -90,7 +90,6 @@ function buildApp() {
   return electronBuilder.build({
     config: {
       ...build,
-      asar: false,
       directories: {
         ...build.directories,
         app: tempDir,
