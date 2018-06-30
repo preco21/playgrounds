@@ -19,7 +19,7 @@
     "package": "node scripts/package.js"
   },
   "engines": {
-    "node": ">=8"
+    "node": ">=9"
   },
   "dependencies": {
     "electron-is-dev": "^0.3.0",
