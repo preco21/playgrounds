@@ -7,7 +7,7 @@ const {
 } = require('webpack');
 const webpackMerge = require('webpack-merge');
 const CleanPlugin = require('clean-webpack-plugin');
-const BabelMinifyPlugin = require('babel-minify-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const {
   app: {
     mainSource,
@@ -46,7 +46,7 @@ module.exports = ({dev} = {}) => {
         ? []
         : [
           new ModuleConcatenationPlugin(),
-          new BabelMinifyPlugin(),
+          new UglifyJsPlugin({parallel: true}),
         ],
     ],
     resolve: {
