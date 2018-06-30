@@ -1,18 +1,14 @@
+import './ipc';
+import {app, dialog, BrowserWindow} from 'electron';
+import {checkIfTampered, installDevSuite} from './utils';
+import prepareRenderer from './renderer';
 import {
-  app,
-  dialog,
-  BrowserWindow,
-} from 'electron';
-import prepareRenderer from 'electron-next';
-import {
-  rendererSource,
-  rendererTarget,
   isDev,
   preloadScript,
+  rendererSourceDir,
+  rendererContentDir,
   devServerPort,
-  resolveEntry,
 } from './constants';
-import {checkIfTampered, installDevExtensions} from './utils';
 
 let win = null;
 
@@ -35,12 +31,12 @@ if (app.makeSingleInstance(() => {
   process.exit(1);
 }
 
-// Quit immediately if there are forbidden stuff
+// Quit immediately if forbidden behavior is detected (just simple security)
 const tampered = checkIfTampered();
 if (!isDev && !tampered.valid) {
   // eslint-disable-next-line no-console
   console.error(`
-  You have forbidden envs or args :p
+  You have passed forbidden extra arguments. Please check if you are passing valid arguments.
     Envs: ${tampered.tamperedEnvs.join() || 'None'}
     Args: ${tampered.tamperedArgs.join() || 'None'}
 `);
@@ -55,22 +51,8 @@ app.on('window-all-closed', () => app.quit());
 app.on('ready', async () => {
   try {
     if (isDev) {
-      const electronDebug = require('electron-debug');
-      electronDebug();
-
-      const {install: installDevtron} = require('devtron');
-      installDevtron();
-
-      await installDevExtensions(['REACT_DEVELOPER_TOOLS', 'REDUX_DEVTOOLS']);
-
-      // Set `BABEL_ENV` for next.js
-      process.env.BABEL_ENV = 'renderer-development';
+      await installDevSuite();
     }
-
-    await prepareRenderer({
-      development: rendererSource,
-      production: rendererTarget,
-    }, devServerPort);
 
     // Instantiate browser window
     win = new BrowserWindow({
@@ -84,8 +66,8 @@ app.on('ready', async () => {
       backgroundColor: '#F1F5F7',
       acceptFirstMouse: true,
       webPreferences: {
-        nodeIntegration: false,
         preload: preloadScript,
+        nodeIntegration: false,
         webviewTag: false,
       },
     });
@@ -93,7 +75,14 @@ app.on('ready', async () => {
     win.on('ready-to-show', () => win.show());
     win.on('closed', () => (win = null));
 
-    win.loadURL(resolveEntry());
+    const entry = await prepareRenderer({
+      dev: isDev,
+      sourcePath: rendererSourceDir,
+      destPath: rendererContentDir,
+      port: devServerPort,
+    });
+
+    win.loadURL(entry);
   } catch (err) {
     dialog.showErrorBox('Error', err.stack);
     process.exit(1);

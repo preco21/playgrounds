@@ -1,3 +1,59 @@
+import nanoid from 'nanoid';
+import serializeError from 'serialize-error';
+
+export class PromsieIPC {
+  constructor(ipc) {
+    this.ipc = ipc;
+  }
+
+  on(eventName, handler) {
+    this.ipc.on(eventName, async (event, uuid, ...eventArgs) => {
+      try {
+        const payload = await handler(...eventArgs);
+        event.sender.send(eventName, uuid, null, payload);
+      } catch (err) {
+        event.sender.send(eventName, uuid, serializeError(err));
+      }
+    });
+  }
+
+  send(eventName, ...args) {
+    return new Promise((resolve, reject) => {
+      const uuid = nanoid();
+      const listener = (event, eventUUID, error, payload) => {
+        // Ignore any event that doesn't match to uuid
+        if (eventUUID !== uuid) {
+          return;
+        }
+
+        // Resolve or reject this promise
+        if (error) {
+          reject(deserializeError(error));
+        } else {
+          resolve(payload);
+        }
+
+        // Finally remove only this listener
+        this.ipc.removeListener(eventName, listener);
+      };
+
+      this.ipc.on(eventName, listener);
+      this.ipc.send(eventName, uuid, ...args);
+    });
+  }
+}
+
+export function deserializeError(errorObj) {
+  const error = new Error();
+
+  // eslint-disable-next-line no-restricted-properties
+  return Object.assign(error, errorObj);
+}
+
+export function createPromiseIPC(ipc) {
+  return new PromsieIPC(ipc);
+}
+
 export function checkIfTampered() {
   const forbiddenEnvs = [
     'ELECTRON_ENABLE_LOGGING',
@@ -45,6 +101,24 @@ export function checkIfTampered() {
     tamperedEnvs,
     tamperedArgs,
   };
+}
+
+export async function installDevSuite() {
+  installElectronDebug();
+  installDevtron();
+  await installDevExtensions([
+    'REACT_DEVELOPER_TOOLS',
+  ]);
+}
+
+export function installElectronDebug() {
+  const electronDebug = require('electron-debug');
+  electronDebug();
+}
+
+export function installDevtron() {
+  const {install: _installDevtron} = require('devtron');
+  _installDevtron();
 }
 
 export function installDevExtensions(extentions) {
