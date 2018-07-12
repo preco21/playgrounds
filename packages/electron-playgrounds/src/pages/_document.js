@@ -31,10 +31,12 @@ export default class _Document extends Document {
     return (
       <html>
         <Head>
+          {/* CSP rules */}
           <meta
             httpEquiv="Content-Security-Policy"
-            content="default-src 'self' http: https:; script-src 'self' 'unsafe-inline' https:; style-src 'self' http: https: 'unsafe-inline'; img-src 'self' http: https: data:"
+            content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:"
           />
+
           {/* Styles from `next-css` */}
           <link rel="stylesheet" href="/_next/static/style.css" />
 
