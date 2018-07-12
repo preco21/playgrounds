@@ -1,5 +1,5 @@
 import {ipcMain as _ipc} from 'electron';
-import {createPromiseIPC} from './utils';
+import {createPromiseIPC} from './internals/utils';
 
 const ipc = createPromiseIPC(_ipc);
 

@@ -1,5 +1,5 @@
 import {ipcRenderer as _ipc} from 'electron';
-import {createPromiseIPC} from './utils';
+import {createPromiseIPC} from './internals/utils';
 
 // Expose `ipc` modules
 window.ipc = createPromiseIPC(_ipc);

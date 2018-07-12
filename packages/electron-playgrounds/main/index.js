@@ -1,14 +1,14 @@
 import './ipc';
 import {app, dialog, BrowserWindow} from 'electron';
-import {checkIfTampered, installDevSuite} from './utils';
-import prepareRenderer from './renderer';
+import {checkIfTampered, installDevSuite} from './internals/utils';
+import prepareRenderer from './internals/renderer';
 import {
   isDev,
   preloadScript,
   rendererSourceDir,
   rendererContentDir,
   devServerPort,
-} from './constants';
+} from './internals/constants';
 
 let win = null;
 
