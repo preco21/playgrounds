@@ -21,6 +21,12 @@
   "engines": {
     "node": ">=9"
   },
+  "license": "MIT",
+  "homepage": "https://github.com/preco21/electron-playgrounds#readme",
+  "repository": "preco21/electron-playgrounds",
+  "bugs": {
+    "url": "https://github.com/preco21/electron-playgrounds/issues"
+  },
   "dependencies": {
     "electron-is-dev": "^0.3.0",
     "nanoid": "^1.0.4",
