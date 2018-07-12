@@ -2,6 +2,17 @@ import React from 'react';
 import {ServerStyleSheet} from 'styled-components';
 import Document, {Head, Main, NextScript} from 'next/document';
 
+const disableDragAndDrop = `
+document.addEventListener('dragover', (e) => e.preventDefault());
+document.addEventListener('drop', (e) => e.preventDefault());
+`;
+
+const setNoneOfUISelectable = `
+h1, h2, h3, h4, h5, h6, span, div {
+  cursor: default;
+  -webkit-user-select: none;
+}
+`;
 export default class _Document extends Document {
   static getInitialProps({renderPage}) {
     // Inject `styled-components` styles
@@ -26,6 +37,12 @@ export default class _Document extends Document {
           />
           {/* Styles from `next-css` */}
           <link rel="stylesheet" href="/_next/static/style.css" />
+
+          {/* eslint-disable-next-line react/no-danger */}
+          <script dangerouslySetInnerHTML={{__html: disableDragAndDrop}} />
+          {/* eslint-disable-next-line react/no-danger */}
+          <style dangerouslySetInnerHTML={{__html: setNoneOfUISelectable}} />
+
           {/* Styles from `styled-components` */}
           {stylesEl}
         </Head>
