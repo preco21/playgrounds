@@ -14,14 +14,19 @@ module.exports = withCSS({
     return config;
   },
   exportPathMap() {
-    return globby([`${rendererSource}/pages/**/*.js`, `!${rendererSource}/pages/_document.js`])
-      .then((paths) => paths.reduce((res, path) => {
-        const [,, pathToken] = path.split(/(pages|\.)/);
-        const page = pathToken.replace(/^\/index$/, '/');
-
-        // eslint-disable-next-line no-param-reassign
-        res[page] = {page};
-        return res;
-      }, {}));
+    return globby([`${rendererSource}/pages/**/*.js`])
+      .then((paths) => paths
+        .map((path) => {
+          const [,, pageToken] = path.split(/(pages|\.)/);
+          return pageToken;
+        })
+        .filter((pageToken) => !pageToken.startsWith('/_'))
+        .reduce((res, pageToken) => {
+          const page = pageToken.replace(/^\/index$/, '/');
+          return {
+            ...res,
+            [page]: {page},
+          };
+        }, {}));
   },
 });
