@@ -1,0 +1,57 @@
+{
+  "name": "next-playgrounds",
+  "version": "0.0.0",
+  "description": "An opinionated setup for Next.js",
+  "author": "Plusb Preco <plusb21@gmail.com>",
+  "private": true,
+  "scripts": {
+    "precommit": "lint-staged",
+    "prepackage": "npm run build",
+    "start": "next start src",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint .",
+    "build": "cross-env NODE_ENV=production npm-run-all build:build build:export",
+    "build:build": "next build src",
+    "build:export": "next export --outdir app src",
+    "dev": "cross-env NODE_ENV=development next src",
+    "package": "node scripts/package.js"
+  },
+  "engines": {
+    "node": ">=9"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/preco21/next-playgrounds#readme",
+  "repository": "preco21/next-playgrounds",
+  "bugs": {
+    "url": "https://github.com/preco21/next-playgrounds/issues"
+  },
+  "dependencies": {
+    "prop-types": "^15.6.2",
+    "react": "^16.3.1",
+    "react-dom": "^16.3.0",
+    "styled-components": "^3.2.6"
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-export-default-from": "7.0.0-beta.44",
+    "@babel/plugin-proposal-export-namespace-from": "7.0.0-beta.44",
+    "@zeit/next-css": "^0.2.0",
+    "babel-loader": "8.0.0-beta.1",
+    "babel-plugin-inline-dotenv": "^1.1.2",
+    "babel-plugin-styled-components": "^1.5.1",
+    "cross-env": "^5.2.0",
+    "eslint": "^4.19.1",
+    "eslint-config-prev": "^7.0.0-beta.10",
+    "globby": "^8.0.1",
+    "husky": "^0.14.3",
+    "lint-staged": "^7.0.2",
+    "next": "^6.1.1",
+    "npm-run-all": "^4.1.2",
+    "url-loader": "^1.0.1"
+  },
+  "lint-staged": {
+    "*.{js,jsx}": [
+      "eslint --fix",
+      "git add"
+    ]
+  }
+}

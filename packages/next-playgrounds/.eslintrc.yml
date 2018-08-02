@@ -1,0 +1,8 @@
+extends: prev/react
+env:
+  browser: true
+settings:
+  import/core-modules:
+    - electron
+globals:
+  ipc: false
