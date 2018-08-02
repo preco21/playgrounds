@@ -1,6 +1,9 @@
 const withCSS = require('@zeit/next-css');
 const globby = require('globby');
 
+const pagePaths = ['src/pages/**/*.js'];
+const pageExtension = '.html';
+
 module.exports = withCSS({
   webpack(config) {
     config.module.rules.push({
@@ -13,7 +16,7 @@ module.exports = withCSS({
     return config;
   },
   exportPathMap() {
-    return globby(['src/pages/**/*.js'])
+    return globby(pagePaths)
       .then((paths) => paths
         .map((path) => {
           const [,, pageToken] = path.split(/(pages|\.)/);
@@ -24,7 +27,7 @@ module.exports = withCSS({
           const page = pageToken.replace(/^\/index$/, '/');
           return {
             ...res,
-            [page]: {page},
+            [`${pageToken}${pageExtension}`]: {page},
           };
         }, {}));
   },
