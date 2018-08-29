@@ -74,3 +74,7 @@ If you think the service is no longer needed, you can remove it from the cloud b
 ```bash
 $ serverless remove
 ```
+
+## License
+
+[MIT](https://preco.mit-license.org/)
