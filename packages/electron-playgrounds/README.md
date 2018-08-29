@@ -24,7 +24,7 @@ $ npm install
 
 ## Usage
 
-### Development mode
+### Development
 
 This command will run internal script to provide _live-reloading_ for `main` process. After that, `main` process will run `electron-next` to serve `renderer` process.
 
