@@ -59,7 +59,9 @@ $ serverless logs --tail --function [function-name]
 
 ### Deploy
 
-You can easily deploy your app with Serverless by running this single command:
+You will need to setup credentials first before deploying: [Setting up credentials on AWS](https://serverless.com/framework/docs/providers/aws/guide/credentials/)
+
+Then, you can easily deploy your app with Serverless by running this single command:
 
 ```bash
 $ serverless deploy
