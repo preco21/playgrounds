@@ -64,3 +64,11 @@ You can easily deploy your app with Serverless by running this single command:
 ```bash
 $ serverless deploy
 ```
+
+### Remove
+
+If you think the service is no longer needed, you can remove it from the cloud by running:
+
+```bash
+$ serverless remove
+```
