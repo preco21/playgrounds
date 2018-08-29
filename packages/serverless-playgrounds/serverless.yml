@@ -6,13 +6,6 @@ provider:
   stage: dev
   region: us-east-1
   timeout: 10
-  iamRoleStatements:
-    - Effect: Allow
-      Action:
-        - lambda:InvokeFunction
-      Resource: '*'
-  environment:
-    FUNCTION_NAME_PREFIX: ${self:service}-${self:provider.stage}
 
 plugins:
   - serverless-delete-loggroups
