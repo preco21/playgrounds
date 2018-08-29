@@ -1,0 +1,31 @@
+{
+  "name": "serverless-playgrounds",
+  "version": "1.0.0",
+  "description": "Yet another minimal setup for Serverless app",
+  "author": "Plusb Preco <plusb21@gmail.com>",
+  "private": true,
+  "engines": {
+    "node": ">=8"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/preco21/serverless-playgrounds#readme",
+  "repository": "preco21/serverless-playgrounds",
+  "bugs": {
+    "url": "https://github.com/preco21/serverless-playgrounds/issues"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.304.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
+    "babel-loader": "^8.0.0",
+    "dotenv-webpack": "^1.5.7",
+    "eslint": "^5.1.0",
+    "eslint-config-prev": "^7.0.0",
+    "serverless": "^1.29.2",
+    "serverless-delete-loggroups": "^0.3.1",
+    "serverless-webpack": "^5.2.0",
+    "webpack": "^4.17.1"
+  }
+}
