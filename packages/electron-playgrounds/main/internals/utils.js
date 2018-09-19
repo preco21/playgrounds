@@ -105,7 +105,6 @@ export function checkIfTampered() {
 
 export async function installDevSuite() {
   installElectronDebug();
-  installDevtron();
   await installDevExtensions([
     'REACT_DEVELOPER_TOOLS',
   ]);
@@ -114,11 +113,6 @@ export async function installDevSuite() {
 export function installElectronDebug() {
   const electronDebug = require('electron-debug');
   electronDebug();
-}
-
-export function installDevtron() {
-  const {install: _installDevtron} = require('devtron');
-  _installDevtron();
 }
 
 export function installDevExtensions(extentions) {
