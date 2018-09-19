@@ -1,13 +1,12 @@
 const execa = require('execa');
 
-const electronVersion = getElectronVersion();
-
 function getElectronVersion() {
   const {stdout} = execa.sync('electron', ['--version']);
   return stdout && stdout.toString().trim().slice(1);
 }
 
 module.exports = (api) => {
+  const electronVersion = getElectronVersion();
   const isMain = api.env((envName) => envName.startsWith('main-'));
   const isDev = api.env((envName) => envName.endsWith('-development'));
 
