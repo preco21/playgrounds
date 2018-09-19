@@ -13,32 +13,31 @@ import {
 let win = null;
 
 // Handle single instance
-if (app.makeSingleInstance(() => {
-  if (!win) {
-    return;
-  }
+const shouldLockSingleInstance = app.requestSingleInstanceLock();
+if (shouldLockSingleInstance) {
+  app.on('second-instance', () => {
+    if (!win) {
+      return;
+    }
 
-  if (win.isMinimized()) {
-    win.restore();
-  }
+    if (win.isMinimized()) {
+      win.restore();
+    }
 
-  if (win.isVisible()) {
     win.focus();
-  } else {
-    win.show();
-  }
-})) {
-  process.exit(1);
+  });
+} else {
+  app.quit();
 }
 
 // Quit immediately if forbidden behavior is detected (just simple security)
-const tampered = checkIfTampered();
-if (!isDev && !tampered.valid) {
+const isTampered = checkIfTampered();
+if (!isDev && !isTampered.valid) {
   // eslint-disable-next-line no-console
   console.error(`
   You have passed forbidden extra arguments. Please check if you are passing valid arguments.
-    Envs: ${tampered.tamperedEnvs.join() || 'None'}
-    Args: ${tampered.tamperedArgs.join() || 'None'}
+    Envs: ${isTampered.tamperedEnvs.join() || 'None'}
+    Args: ${isTampered.tamperedArgs.join() || 'None'}
 `);
 
   process.exit(1);
