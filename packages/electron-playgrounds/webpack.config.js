@@ -1,9 +1,6 @@
 const {resolve} = require('path');
 const {
-  DefinePlugin,
-  optimize: {
-    ModuleConcatenationPlugin,
-  },
+  HashedModuleIdsPlugin,
 } = require('webpack');
 const webpackMerge = require('webpack-merge');
 const CleanPlugin = require('clean-webpack-plugin');
@@ -18,11 +15,11 @@ const {
 } = require('./package.json');
 
 module.exports = ({dev} = {}) => {
-  // Set `BABEL_ENV` for main process
-  process.env.BABEL_ENV = dev ? 'main-development' : 'main-production';
+  const env = dev ? 'development' : 'production';
+  process.env.BABEL_ENV = `main-${env}`;
 
   const sharedConfig = {
-    devtool: dev ? 'source-map' : false,
+    mode: env,
     output: {
       path: resolve(__dirname, appDest),
     },
@@ -39,18 +36,15 @@ module.exports = ({dev} = {}) => {
       ],
     },
     plugins: [
-      new DefinePlugin({
-        'process.env.NODE_ENV': JSON.stringify(dev ? 'development' : 'production'),
-      }),
-      ...dev
-        ? []
-        : [
-          new ModuleConcatenationPlugin(),
-          new UglifyJsPlugin({parallel: true}),
-        ],
+      ...dev ? [] : [new HashedModuleIdsPlugin()],
     ],
-    resolve: {
-      extensions: ['.js', '.jsx', '.json'],
+    optimization: {
+      minimizer: [
+        new UglifyJsPlugin({
+          cache: true,
+          parallel: true,
+        }),
+      ],
     },
     externals: externals
       .map((elem) => ({[elem]: `commonjs ${elem}`}))
