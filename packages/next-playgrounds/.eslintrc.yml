@@ -1,8 +1,4 @@
-extends: prev/react
+root: true
+extends: prev
 env:
   browser: true
-settings:
-  import/core-modules:
-    - electron
-globals:
-  ipc: false
