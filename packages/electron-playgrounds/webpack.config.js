@@ -6,6 +6,7 @@ const webpackMerge = require('webpack-merge');
 const nodeExternals = require('webpack-node-externals');
 const CleanPlugin = require('clean-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const DotenvPlugin = require('dotenv-webpack');
 const {
   app: {
     mainSource,
@@ -37,6 +38,7 @@ module.exports = ({dev} = {}) => {
     },
     plugins: [
       ...dev ? [] : [new HashedModuleIdsPlugin()],
+      new DotenvPlugin(),
     ],
     externals: [nodeExternals()],
     node: {

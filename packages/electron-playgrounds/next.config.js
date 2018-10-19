@@ -1,4 +1,5 @@
 const withCSS = require('@zeit/next-css');
+const DotenvPlugin = require('dotenv-webpack');
 const globby = require('globby');
 const {app: {rendererSource}} = require('./package.json');
 
@@ -10,6 +11,8 @@ module.exports = withCSS({
         loader: 'url-loader',
       },
     });
+
+    config.plugins.push(new DotenvPlugin());
 
     return config;
   },
