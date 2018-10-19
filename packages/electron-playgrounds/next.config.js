@@ -1,10 +1,16 @@
 const withCSS = require('@zeit/next-css');
 const DotenvPlugin = require('dotenv-webpack');
-const globby = require('globby');
-const {app: {rendererSource}} = require('./package.json');
 
 module.exports = withCSS({
   webpack(config) {
+    // HACK: Quick fix to resolve the custom babel config in root directory
+    config.module.rules.forEach((rule) => {
+      if (rule.use.loader === 'next-babel-loader') {
+        // eslint-disable-next-line no-param-reassign
+        rule.use.options.cwd = undefined;
+      }
+    });
+
     config.module.rules.push({
       test: /\.(png|jpg|gif|svg|eot|ttf|woff|woff2)$/,
       use: {
@@ -15,21 +21,5 @@ module.exports = withCSS({
     config.plugins.push(new DotenvPlugin());
 
     return config;
-  },
-  exportPathMap() {
-    return globby([`${rendererSource}/pages/**/*.js`])
-      .then((paths) => paths
-        .map((path) => {
-          const [,, pageToken] = path.split(/(pages|\.)/);
-          return pageToken;
-        })
-        .filter((pageToken) => !pageToken.startsWith('/_'))
-        .reduce((res, pageToken) => {
-          const page = pageToken.replace(/^\/index$/, '/');
-          return {
-            ...res,
-            [page]: {page},
-          };
-        }, {}));
   },
 });

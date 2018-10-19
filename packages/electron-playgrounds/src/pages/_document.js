@@ -29,11 +29,8 @@ export default class _Document extends Document {
           {/* CSP rules */}
           <meta
             httpEquiv="Content-Security-Policy"
-            content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:"
+            content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:"
           />
-
-          {/* Styles from `next-css` */}
-          <link rel="stylesheet" href="/_next/static/style.css" />
 
           {/* eslint-disable-next-line react/no-danger */}
           <style dangerouslySetInnerHTML={{__html: setNoneOfUISelectable}} />
