@@ -1,7 +1,7 @@
 const execa = require('execa');
 
 function getElectronVersion() {
-  const {stdout} = execa.sync('electron', ['--version']);
+  const {stdout} = execa.sync('electron', ['--version'], {env: {ELECTRON_RUN_AS_NODE: true}});
   return stdout && stdout.toString().trim().slice(1);
 }
 
