@@ -34,8 +34,14 @@ module.exports = (api) => {
     plugins: [
       '@babel/plugin-proposal-export-default-from',
       '@babel/plugin-proposal-export-namespace-from',
-      ...isMain ? [] : [['babel-plugin-styled-components', {ssr: true, displayName: isDev}]],
-      'babel-plugin-inline-dotenv',
+      ...isMain
+        ? [
+          '@babel/plugin-syntax-dynamic-import',
+          '@babel/plugin-proposal-class-properties',
+        ]
+        : [
+          ['babel-plugin-styled-components', {ssr: true, displayName: isDev}],
+        ],
     ],
   };
 };
