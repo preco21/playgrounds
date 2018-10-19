@@ -72,6 +72,7 @@
     "webpack": "^4.19.1",
     "webpack-cli": "^3.1.0",
     "webpack-merge": "^4.1.4",
+    "webpack-node-externals": "^1.7.2",
     "write-pkg": "^3.1.0"
   },
   "app": {
@@ -82,10 +83,9 @@
       "app"
     ],
     "externals": [
-      "next",
-      "devtron",
-      "electron-debug",
-      "electron-devtools-installer"
+      "electron-is-dev",
+      "nanoid",
+      "serialize-error"
     ],
     "build": {
       "appId": "com.electron.template",

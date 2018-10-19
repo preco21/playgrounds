@@ -3,6 +3,7 @@ const {
   HashedModuleIdsPlugin,
 } = require('webpack');
 const webpackMerge = require('webpack-merge');
+const nodeExternals = require('webpack-node-externals');
 const CleanPlugin = require('clean-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const {
@@ -10,7 +11,6 @@ const {
     mainSource,
     appDest,
     cleanPaths = [],
-    externals = [],
   },
 } = require('./package.json');
 
@@ -38,6 +38,11 @@ module.exports = ({dev} = {}) => {
     plugins: [
       ...dev ? [] : [new HashedModuleIdsPlugin()],
     ],
+    externals: [nodeExternals()],
+    node: {
+      __dirname: false,
+      __filename: false,
+    },
     optimization: {
       minimizer: [
         new UglifyJsPlugin({
@@ -45,13 +50,6 @@ module.exports = ({dev} = {}) => {
           parallel: true,
         }),
       ],
-    },
-    externals: externals
-      .map((elem) => ({[elem]: `commonjs ${elem}`}))
-      .reduce((res, elem) => ({...res, ...elem}), {}),
-    node: {
-      __dirname: false,
-      __filename: false,
     },
     performance: {
       hints: false,
