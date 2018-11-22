@@ -4,7 +4,7 @@
   "author": "Plusb Preco <plusb21@gmail.com>",
   "private": true,
   "scripts": {
-    "bootstrap": "lerna bootstrap --hoist"
+    "bootstrap": "lerna bootstrap"
   },
   "engines": {
     "node": ">=9"
@@ -19,5 +19,8 @@
     "eslint": "^5.9.0",
     "eslint-config-prev": "^7.0.0",
     "lerna": "^3.4.3"
-  }
+  },
+  "workspaces": [
+    "packages/*"
+  ]
 }
