@@ -1,3 +1,13 @@
 .DS_Store
 node_modules
 *.log
+
+/packages/*/.env
+/packages/*/src/.next
+
+/packages/electron-playgrounds/.app
+/packages/next-playgrounds/build
+/packages/node-playgrounds/lib
+/packages/serverless-playgrounds/_meta
+/packages/serverless-playgrounds/.serverless
+/packages/serverless-playgrounds/.webpack

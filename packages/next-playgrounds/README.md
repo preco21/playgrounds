@@ -31,7 +31,7 @@ $ npm run dev
 
 ### Build
 
-This command will start export the static page version of app into `app` folder for production.
+This command will start export the static page version of app into `build` folder for production.
 
 ```bash
 $ npm run build

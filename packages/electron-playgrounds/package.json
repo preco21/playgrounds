@@ -5,7 +5,7 @@
   "description": "Yet another opinionated setup for Electron application",
   "author": "Plusb Preco <plusb21@gmail.com>",
   "private": true,
-  "main": "app/index.js",
+  "main": ".app/index.js",
   "scripts": {
     "precommit": "lint-staged",
     "prepackage": "npm run build",
@@ -14,7 +14,7 @@
     "lint": "eslint .",
     "build": "cross-env NODE_ENV=production npm-run-all build:main build:renderer",
     "build:main": "webpack --progress",
-    "build:renderer": "next build src && next export --outdir app/renderer src",
+    "build:renderer": "next build src && next export --outdir .app/renderer src",
     "dev": "node scripts/serve.js",
     "package": "node scripts/package.js"
   },
@@ -75,11 +75,11 @@
     "write-pkg": "^3.1.0"
   },
   "app": {
-    "appDest": "app",
+    "appDest": ".app",
     "mainSource": "main",
     "rendererSource": "src",
     "cleanPaths": [
-      "app"
+      ".app"
     ],
     "externals": [
       "electron-is-dev",

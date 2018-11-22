@@ -3,6 +3,9 @@
   "description": "List of project templates for a starting point",
   "author": "Plusb Preco <plusb21@gmail.com>",
   "private": true,
+  "scripts": {
+    "bootstrap": "lerna bootstrap --hoist"
+  },
   "engines": {
     "node": ">=9"
   },

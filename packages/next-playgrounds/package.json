@@ -12,7 +12,7 @@
     "lint": "eslint .",
     "build": "cross-env NODE_ENV=production npm-run-all build:build build:export",
     "build:build": "next build src",
-    "build:export": "next export --outdir app src",
+    "build:export": "next export --outdir build src",
     "dev": "cross-env NODE_ENV=development next src",
     "package": "node scripts/package.js"
   },
