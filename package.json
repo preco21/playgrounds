@@ -1,0 +1,20 @@
+{
+  "name": "playgrounds",
+  "description": "List of project templates for a starting point",
+  "author": "Plusb Preco <plusb21@gmail.com>",
+  "private": true,
+  "engines": {
+    "node": ">=9"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/preco21/playgrounds#readme",
+  "repository": "preco21/playgrounds",
+  "bugs": {
+    "url": "https://github.com/preco21/playgrounds/issues"
+  },
+  "devDependencies": {
+    "eslint": "^5.9.0",
+    "eslint-config-prev": "^7.0.0",
+    "lerna": "^3.4.3"
+  }
+}
