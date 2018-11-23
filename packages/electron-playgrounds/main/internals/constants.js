@@ -2,7 +2,7 @@ import {resolve} from 'path';
 import {app} from 'electron';
 import isElectronDev from 'electron-is-dev';
 
-export const appDest = 'app';
+export const appDest = '.app';
 export const rendererSource = 'src';
 export const rendererTarget = 'renderer';
 
