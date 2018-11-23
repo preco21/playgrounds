@@ -5,8 +5,9 @@ const {
 const webpackMerge = require('webpack-merge');
 const nodeExternals = require('webpack-node-externals');
 const CleanPlugin = require('clean-webpack-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const DotenvPlugin = require('dotenv-webpack');
+const WebpackBarPlugin = require('webpackbar');
+const SizePlugin = require('size-plugin');
 const {
   app: {
     mainSource,
@@ -39,19 +40,13 @@ module.exports = ({dev} = {}) => {
     plugins: [
       ...dev ? [] : [new HashedModuleIdsPlugin()],
       new DotenvPlugin(),
+      new WebpackBarPlugin(),
+      new SizePlugin(),
     ],
     externals: [nodeExternals()],
     node: {
       __dirname: false,
       __filename: false,
-    },
-    optimization: {
-      minimizer: [
-        new UglifyJsPlugin({
-          cache: true,
-          parallel: true,
-        }),
-      ],
     },
     performance: {
       hints: false,
