@@ -50,16 +50,21 @@ function pick(obj, filter) {
     }), {});
 }
 
-function getInstallCommand() {
-  return execa('yarn', ['--version'])
-    .then(({stdout}) => stdout && stdout.toString().trim())
-    .then((isYarnAvailable) => isYarnAvailable
-      ? ['yarn', ['install', '--no-bin-links', '--no-lockfile']]
-      : ['npm', ['install', '--no-bin-links', '--no-package-lock']]);
+async function getInstallCommand() {
+  try {
+    const {stdout} = await execa('yarn', ['--version']);
+    if (stdout && Boolean(stdout.toString().trim())) {
+      throw new Error('No yarn output');
+    }
+
+    return ['yarn', ['install', '--no-bin-links', '--no-lockfile']];
+  } catch (err) {
+    return ['npm', ['install', '--no-bin-links', '--no-package-lock']];
+  }
 }
 
 function copyDestFiles() {
-  console.log('> Copying destination files...');
+  console.log('> Copying files to destination...');
 
   return Promise.all([appDest, ...files].map((target) => copy(target, join(tempDir, target))));
 }
@@ -76,14 +81,14 @@ function processPackageJSON() {
   return writePkg(tempDir, withExternals);
 }
 
-function installDependencies() {
+async function installDependencies() {
   console.log('> Installing production dependencies...');
 
-  return getInstallCommand().then((command) =>
-    execa(...command, {
-      cwd: tempDir,
-      stdout: process.stdout,
-    }));
+  const installCommand = await getInstallCommand();
+  return execa(...installCommand, {
+    cwd: tempDir,
+    stdout: process.stdout,
+  });
 }
 
 function buildApp() {
