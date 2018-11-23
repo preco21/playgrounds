@@ -43,7 +43,13 @@ module.exports = ({dev} = {}) => {
       new WebpackBarPlugin(),
       new SizePlugin(),
     ],
-    externals: [nodeExternals()],
+    externals: [
+      nodeExternals(),
+      // NOTE: For monorepo
+      nodeExternals({
+        modulesDir: resolve(__dirname, '../../node_modules'),
+      }),
+    ],
     node: {
       __dirname: false,
       __filename: false,
