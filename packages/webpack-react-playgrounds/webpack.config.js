@@ -9,7 +9,6 @@ const CopyPlugin = require('copy-webpack-plugin');
 const HTMLPlugin = require('html-webpack-plugin');
 const MiniCSSExtractPlugin = require('mini-css-extract-plugin');
 const CrittersPlugin = require('critters-webpack-plugin');
-const PreloadWebpackPlugin = require('preload-webpack-plugin');
 const DotenvPlugin = require('dotenv-webpack');
 const WebpackBarPlugin = require('webpackbar');
 const SizePlugin = require('size-plugin');
