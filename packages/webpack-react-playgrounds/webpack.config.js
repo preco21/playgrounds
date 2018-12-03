@@ -89,10 +89,6 @@ module.exports = (env, argv) => {
       !isDev && new MiniCSSExtractPlugin({
         filename: `[name]${isDev ? '' : '.[contenthash]'}.css`,
       }),
-      !isDev && new PreloadWebpackPlugin({
-        rel: 'preload',
-        include: 'initial',
-      }),
       !isDev && new CrittersPlugin(),
       new DotenvPlugin(),
       new WebpackBarPlugin(),
