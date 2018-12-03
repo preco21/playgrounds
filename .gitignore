@@ -11,3 +11,4 @@ node_modules
 /packages/serverless-playgrounds/_meta
 /packages/serverless-playgrounds/.serverless
 /packages/serverless-playgrounds/.webpack
+/packages/webpack-react-playgrounds/build

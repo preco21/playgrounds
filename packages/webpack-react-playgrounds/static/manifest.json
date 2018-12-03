@@ -1,0 +1,13 @@
+{
+  "background_color": "#daedae",
+  "name": "Webpack React",
+  "short_name": "Webpack React",
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "images/app-icon-144.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    }
+  ]
+}

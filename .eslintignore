@@ -13,3 +13,5 @@ packages/node-playgrounds/lib
 packages/serverless-playgrounds/.serverless
 packages/serverless-playgrounds/.webpack
 
+# For `webpack-react-playgrounds`
+packages/webpack-react-playgrounds/build
