@@ -26,9 +26,6 @@ export default class _Document extends Document {
             content="default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:"
           />
 
-          {/* Styles from `next-css` */}
-          <link rel="stylesheet" href="/_next/static/style.css" />
-
           {/* Styles from `styled-components` */}
           {stylesEl}
         </Head>
