@@ -12,10 +12,7 @@ module.exports = (api) => {
       }],
     ],
     plugins: [
-      '@babel/plugin-proposal-export-default-from',
-      '@babel/plugin-proposal-export-namespace-from',
       ['babel-plugin-styled-components', {ssr: true, displayName: isDev}],
-      'babel-plugin-inline-dotenv',
     ],
   };
 };

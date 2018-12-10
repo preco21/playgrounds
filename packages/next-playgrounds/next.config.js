@@ -1,34 +1,24 @@
+const withPlugins = require('next-compose-plugins');
+const withPurgeCSS = require('next-purgecss');
 const withCSS = require('@zeit/next-css');
-const globby = require('globby');
+const withImages = require('next-images');
+const withFonts = require('next-fonts');
 
-const pagePaths = ['src/pages/**/*.js'];
-const pageExtension = '.html';
-
-module.exports = withCSS({
+module.exports = withPlugins([
+  withPurgeCSS,
+  withCSS,
+  withImages,
+  withFonts,
+], {
   webpack(config) {
-    config.module.rules.push({
-      test: /\.(svg|eot|ttf|woff|woff2)$/,
-      use: {
-        loader: 'url-loader',
-      },
+    // HACK: Quick fix to resolve the custom babel config in root directory
+    config.module.rules.forEach((rule) => {
+      if (rule.use.loader === 'next-babel-loader') {
+        // eslint-disable-next-line no-param-reassign
+        rule.use.options.cwd = undefined;
+      }
     });
 
     return config;
-  },
-  exportPathMap() {
-    return globby(pagePaths)
-      .then((paths) => paths
-        .map((path) => {
-          const [,, pageToken] = path.split(/(pages|\.)/);
-          return pageToken;
-        })
-        .filter((pageToken) => !pageToken.startsWith('/_'))
-        .reduce((res, pageToken) => {
-          const page = pageToken.replace(/^\/index$/, '/');
-          return {
-            ...res,
-            [`${pageToken}${pageExtension}`]: {page},
-          };
-        }, {}));
   },
 });
