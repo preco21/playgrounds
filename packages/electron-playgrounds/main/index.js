@@ -1,6 +1,6 @@
 import './ipc';
 import {app, dialog, BrowserWindow} from 'electron';
-import {checkIfTampered, installDevSuite} from './internals/utils';
+import {installDevSuite} from './internals/utils';
 import prepareRenderer from './internals/renderer';
 import {
   isDev,
@@ -28,19 +28,6 @@ if (shouldLockSingleInstance) {
   });
 } else {
   app.quit();
-}
-
-// Quit immediately if forbidden behavior is detected (just simple security)
-const isTampered = checkIfTampered();
-if (!isDev && !isTampered.valid) {
-  // eslint-disable-next-line no-console
-  console.error(`
-  You have passed forbidden extra arguments. Please check if you are passing valid arguments.
-    Envs: ${isTampered.tamperedEnvs.join() || 'None'}
-    Args: ${isTampered.tamperedArgs.join() || 'None'}
-`);
-
-  process.exit(1);
 }
 
 // Handle quit events
