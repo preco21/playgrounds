@@ -13,7 +13,7 @@ module.exports = withPlugins([
   webpack(config) {
     // HACK: Quick fix to resolve the custom babel config in root directory
     config.module.rules.forEach((rule) => {
-      if (rule.use.loader === 'next-babel-loader') {
+      if (rule.use && rule.use.loader === 'next-babel-loader') {
         // eslint-disable-next-line no-param-reassign
         rule.use.options.cwd = undefined;
       }
