@@ -10,6 +10,17 @@ const treeKillP = promisify(treeKill);
 const instances = new Set();
 const compiler = webpack(webpackConfig({dev: true}));
 
+function killInstancesIfExists() {
+  return Promise.all(
+    Array.from(instances)
+      .map(async (inst) => {
+        await treeKillP(inst.pid);
+        instances.delete(inst);
+      }),
+  );
+}
+
+exitHook(killInstancesIfExists);
 compiler.watch({}, async (err, stats) => {
   // eslint-disable-next-line no-console
   console.log(stats.toString({
@@ -35,14 +46,3 @@ compiler.watch({}, async (err, stats) => {
   instance.on('exit', () => instances.delete(instance));
 });
 
-exitHook(killInstancesIfExists);
-
-function killInstancesIfExists() {
-  return Promise.all(
-    Array.from(instances)
-      .map(async (inst) => {
-        await treeKillP(inst.pid);
-        instances.delete(inst);
-      }),
-  );
-}
