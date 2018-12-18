@@ -1,5 +1,7 @@
 const {resolve} = require('path');
 const DotenvPlugin = require('dotenv-webpack');
+const WebpackBarPlugin = require('webpackbar');
+const SizePlugin = require('size-plugin');
 const slsw = require('serverless-webpack');
 
 module.exports = {
@@ -21,6 +23,8 @@ module.exports = {
   },
   plugins: [
     new DotenvPlugin(),
+    new WebpackBarPlugin(),
+    new SizePlugin(),
   ],
   node: {
     __dirname: false,

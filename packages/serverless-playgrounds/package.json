@@ -29,6 +29,8 @@
     "serverless": "^1.29.2",
     "serverless-delete-loggroups": "^0.3.1",
     "serverless-webpack": "^5.2.0",
-    "webpack": "^4.17.1"
+    "size-plugin": "^1.1.1",
+    "webpack": "^4.17.1",
+    "webpackbar": "^3.1.4"
   }
 }
