@@ -1,7 +1,5 @@
 const {resolve} = require('path');
-const {
-  HashedModuleIdsPlugin,
-} = require('webpack');
+const {HashedModuleIdsPlugin} = require('webpack');
 const webpackMerge = require('webpack-merge');
 const nodeExternals = require('webpack-node-externals');
 const CleanPlugin = require('clean-webpack-plugin');
@@ -38,11 +36,11 @@ module.exports = ({dev} = {}) => {
       ],
     },
     plugins: [
-      ...dev ? [] : [new HashedModuleIdsPlugin()],
+      !dev && new HashedModuleIdsPlugin(),
       new DotenvPlugin(),
       new WebpackBarPlugin(),
       new SizePlugin(),
-    ],
+    ].filter(Boolean),
     externals: [
       nodeExternals(),
       nodeExternals({
