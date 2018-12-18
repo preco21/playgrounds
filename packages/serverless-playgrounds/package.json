@@ -16,7 +16,8 @@
   "dependencies": {
     "@babel/polyfill": "^7.0.0",
     "aws-sdk": "^2.304.0",
-    "is-plain-obj": "^1.1.0"
+    "is-plain-obj": "^1.1.0",
+    "source-map-support": "^0.5.9"
   },
   "devDependencies": {
     "@babel/core": "^7.2.2",
