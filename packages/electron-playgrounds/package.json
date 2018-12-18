@@ -7,15 +7,13 @@
   "private": true,
   "main": ".app/index.js",
   "scripts": {
-    "precommit": "lint-staged",
     "prepackage": "npm run build",
     "start": "electron .",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "eslint .",
+    "dev": "node scripts/serve.js",
     "build": "cross-env NODE_ENV=production npm-run-all build:main build:renderer",
     "build:main": "webpack",
     "build:renderer": "next build src && next export --outdir .app/renderer src",
-    "dev": "node scripts/serve.js",
     "package": "node scripts/package.js"
   },
   "engines": {
@@ -54,13 +52,10 @@
     "electron-builder": "^20.13.4",
     "electron-debug": "^1.5.0",
     "electron-devtools-installer": "^2.2.4",
-    "eslint": "^4.19.1",
-    "eslint-config-prev": "^7.0.0",
     "execa": "^0.10.0",
     "exit-hook": "^2.0.0",
     "file-loader": "^2.0.0",
     "fs-extra": "^5.0.0",
-    "husky": "^0.14.3",
     "lint-staged": "^7.0.2",
     "next": "^7.0.2-canary.26",
     "next-compose-plugins": "^2.1.1",
@@ -98,11 +93,5 @@
         "output": "build"
       }
     }
-  },
-  "lint-staged": {
-    "*.{js,jsx}": [
-      "eslint --fix",
-      "git add"
-    ]
   }
 }

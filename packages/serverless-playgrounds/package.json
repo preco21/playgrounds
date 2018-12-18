@@ -5,10 +5,12 @@
   "author": "Plusb Preco <plusb21@gmail.com>",
   "private": true,
   "scripts": {
+    "start": "npm run dev",
+    "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "serverless offline start",
     "admin": "dynamodb-admin",
-    "setup": "npm-run-all dynamodb:setup",
-    "remove": "npm-run-all dynamodb:remove",
+    "setup": "npm run dynamodb:setup",
+    "remove": "npm run dynamodb:remove",
     "dynamodb:setup": "serverless dynamodb install",
     "dynamodb:remove": "serverless dynamodb remove",
     "dynamodb:start": "serverless dynamodb start"

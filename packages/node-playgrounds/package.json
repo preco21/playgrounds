@@ -10,11 +10,11 @@
     "prebuild": "npm run clean",
     "prepackage": "npm run build",
     "start": "node --require source-map-support/register .",
-    "test": "eslint .",
-    "build": "cross-env NODE_ENV=production babel --source-maps --out-dir lib src",
+    "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "cross-env NODE_ENV=development nodemon --exec 'node --require @babel/register' src/index.js",
     "dev-inspect": "cross-env NODE_ENV=development nodemon --exec 'node --require @babel/register --inspect' src/index.js",
     "dev-inspect-brk": "cross-env NODE_ENV=development nodemon --exec 'node --require @babel/register --inspect-brk' src/index.js",
+    "build": "cross-env NODE_ENV=production babel --source-maps --out-dir lib src",
     "package": "pkg --out-path build .",
     "clean": "rimraf lib build"
   },
@@ -38,8 +38,6 @@
     "@babel/register": "^7.0.0-beta.44",
     "babel-preset-minify": "^0.4.0",
     "cross-env": "^5.1.4",
-    "eslint": "^4.19.1",
-    "eslint-config-prev": "^7.0.0-beta.11",
     "nodemon": "^1.17.3",
     "pkg": "^4.3.1",
     "rimraf": "^2.6.1"
