@@ -15,7 +15,6 @@ module.exports = (api) => {
     plugins: [
       '@babel/plugin-syntax-dynamic-import',
       '@babel/plugin-proposal-class-properties',
-      'babel-plugin-inline-dotenv',
       'react-hot-loader/babel',
       ['babel-plugin-styled-components', {ssr: true, displayName: isDev}],
     ],
