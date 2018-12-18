@@ -1,4 +1,5 @@
 const {resolve} = require('path');
+const nodeExternals = require('webpack-node-externals');
 const DotenvPlugin = require('dotenv-webpack');
 const WebpackBarPlugin = require('webpackbar');
 const SizePlugin = require('size-plugin');
@@ -25,6 +26,12 @@ module.exports = {
     new DotenvPlugin(),
     new WebpackBarPlugin(),
     new SizePlugin(),
+  ],
+  externals: [
+    nodeExternals(),
+    nodeExternals({
+      modulesDir: resolve(__dirname, '../node_modules'),
+    }),
   ],
   node: {
     __dirname: false,
