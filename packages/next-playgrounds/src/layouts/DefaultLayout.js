@@ -10,6 +10,7 @@ export default function DefaultLayout({children, title}) {
     <>
       <Head>
         <title>{title}</title>
+
         <meta name="theme-color" content="#daedae" />
 
         <link rel="icon" sizes="192x192" href={iconImage} />
