@@ -1,5 +1,4 @@
 const {resolve} = require('path');
-const {DefinePlugin} = require('webpack');
 const DotenvPlugin = require('dotenv-webpack');
 const slsw = require('serverless-webpack');
 
@@ -21,9 +20,6 @@ module.exports = {
     ],
   },
   plugins: [
-    new DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(slsw.lib.webpack.isLocal ? 'development' : 'production'),
-    }),
     new DotenvPlugin(),
   ],
   node: {
