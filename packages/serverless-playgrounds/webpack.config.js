@@ -1,4 +1,5 @@
 const {resolve} = require('path');
+const {HashedModuleIdsPlugin} = require('webpack');
 const nodeExternals = require('webpack-node-externals');
 const DotenvPlugin = require('dotenv-webpack');
 const WebpackBarPlugin = require('webpackbar');
@@ -23,10 +24,11 @@ module.exports = {
     ],
   },
   plugins: [
+    !slsw.lib.webpack.isLocal && new HashedModuleIdsPlugin(),
     new DotenvPlugin(),
     new WebpackBarPlugin(),
     new SizePlugin(),
-  ],
+  ].filter(Boolean),
   externals: [
     nodeExternals(),
     nodeExternals({
