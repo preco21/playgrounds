@@ -1,11 +1,9 @@
 const withPlugins = require('next-compose-plugins');
-const withPurgeCSS = require('next-purgecss');
 const withCSS = require('@zeit/next-css');
-const withImages = require('next-images');
 const withFonts = require('next-fonts');
+const withImages = require('./internals/next-images-custom');
 
 module.exports = withPlugins([
-  withPurgeCSS,
   withCSS,
   withImages,
   withFonts,
