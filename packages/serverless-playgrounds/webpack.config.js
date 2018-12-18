@@ -12,7 +12,7 @@ module.exports = {
     rules: [
       {
         test: /\.js$/,
-        include: resolve(__dirname, 'src', '**/*.js'),
+        include: resolve(__dirname, 'src'),
         loader: 'babel-loader',
         options: {
           cacheDirectory: slsw.lib.webpack.isLocal,
