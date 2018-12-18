@@ -1,8 +1,6 @@
-import 'modern-normalize';
-import '../styles/style.css';
+import Head from 'next/head';
 import React from 'react';
 import PropTypes from 'prop-types';
-import Head from 'next/head';
 import iconImage from '../images/icon.png';
 
 export default function DefaultLayout({children, title}) {
