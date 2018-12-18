@@ -45,7 +45,6 @@ module.exports = ({dev} = {}) => {
     ],
     externals: [
       nodeExternals(),
-      // NOTE: For monorepo
       nodeExternals({
         modulesDir: resolve(__dirname, '../../node_modules'),
       }),

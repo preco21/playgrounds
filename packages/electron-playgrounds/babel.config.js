@@ -7,8 +7,8 @@ function getElectronVersion() {
 
 module.exports = (api) => {
   const electronVersion = getElectronVersion();
-  const isMain = api.env((envName) => envName.startsWith('main-'));
-  const isDev = api.env((envName) => envName.endsWith('-development'));
+  const isMain = api.env((envName) => envName.startsWith('main'));
+  const isDev = api.env((envName) => envName.endsWith('development'));
 
   return {
     presets: isMain
