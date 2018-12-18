@@ -5,16 +5,38 @@ provider:
   runtime: nodejs8.10
   stage: dev
   region: us-east-1
+  iamRoleStatements: ${file(config/iam-role-statements.yml):iamRoleStatements}
+  environment:
+    TARGET_REGION: ${self:provider.region}
+    RESOURCE_PREFIX: ${self:custom.resourcePrefix}
+
+resources:
+  - ${file(config/dynamodb-resources.${self:provider.stage}.yml)}
 
 plugins:
   - serverless-delete-loggroups
   - serverless-webpack
+  - serverless-dynamodb-local
+  - serverless-offline
 
 custom:
   webpack:
     includeModules: true
     packager: yarn
+  serverless-offline:
+    port: 4000
+  dynamodb:
+    start:
+      port: 8000
+      inMemory: true
+      migrate: true
+  resourcePrefix: ${self:service}-${self:provider.stage}
 
 functions:
   hello:
     handler: src/index.hello
+    events:
+      - http:
+          path: save
+          method: get
+          cors: true

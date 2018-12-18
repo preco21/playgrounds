@@ -4,6 +4,15 @@
   "description": "Yet another minimal setup for Serverless app",
   "author": "Plusb Preco <plusb21@gmail.com>",
   "private": true,
+  "scripts": {
+    "dev": "serverless offline start",
+    "admin": "dynamodb-admin",
+    "setup": "npm-run-all dynamodb:setup",
+    "remove": "npm-run-all dynamodb:remove",
+    "dynamodb:setup": "serverless dynamodb install",
+    "dynamodb:remove": "serverless dynamodb remove",
+    "dynamodb:start": "serverless dynamodb start"
+  },
   "engines": {
     "node": ">=8"
   },
@@ -26,12 +35,20 @@
     "@babel/preset-env": "^7.2.0",
     "babel-loader": "^8.0.4",
     "dotenv-webpack": "^1.5.7",
+    "dynamodb-admin": "^3.1.0",
     "serverless": "^1.29.2",
     "serverless-delete-loggroups": "^0.3.1",
+    "serverless-dynamodb-local": "^0.2.35",
+    "serverless-offline": "^3.31.3",
     "serverless-webpack": "^5.2.0",
     "size-plugin": "^1.1.1",
     "webpack": "^4.17.1",
     "webpack-node-externals": "^1.7.2",
     "webpackbar": "^3.1.4"
+  },
+  "workspaces": {
+    "nohoist": [
+      "**"
+    ]
   }
 }

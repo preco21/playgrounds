@@ -9,6 +9,7 @@ node_modules
 /packages/next-playgrounds/build
 /packages/node-playgrounds/lib
 /packages/serverless-playgrounds/_meta
+/packages/serverless-playgrounds/.dynamodb
 /packages/serverless-playgrounds/.serverless
 /packages/serverless-playgrounds/.webpack
 /packages/webpack-react-playgrounds/build

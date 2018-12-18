@@ -14,6 +14,7 @@ $ git clone https://github.com/preco21/serverless-playgrounds.git
 
 $ cd serverless-playgrounds
 $ yarn
+$ yarn setup
 ```
 
 ## CLI

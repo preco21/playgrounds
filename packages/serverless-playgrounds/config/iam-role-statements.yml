@@ -1,0 +1,12 @@
+iamRoleStatements:
+  - Effect: Allow
+    Action:
+      - dynamodb:GetItem
+      - dynamodb:PutItem
+      - dynamodb:DeleteItem
+      - dynamodb:Scan
+      - dynamodb:BatchWriteItem
+    Resource:
+      Fn::GetAtt:
+        - DynamoDBTable
+        - Arn
