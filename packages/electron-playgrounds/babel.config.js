@@ -11,37 +11,29 @@ module.exports = (api) => {
   const isDev = api.env((envName) => envName.endsWith('development'));
 
   return {
-    presets: isMain
-      ? [
-        ['@babel/preset-env', {
+    presets: [
+      isMain && ['@babel/preset-env', {
+        targets: {
+          electron: electronVersion,
+        },
+        modules: false,
+        useBuiltIns: 'usage',
+        loose: true,
+      }],
+      !isMain && ['next/babel', {
+        'preset-env': {
           targets: {
             electron: electronVersion,
           },
-          modules: false,
+          useBuiltIns: 'usage',
           loose: true,
-        }],
-      ]
-      : [
-        ['next/babel', {
-          'preset-env': {
-            targets: {
-              electron: electronVersion,
-            },
-            loose: true,
-          },
-        }],
-      ],
+        },
+      }],
+    ],
     plugins: [
-      '@babel/plugin-proposal-export-default-from',
-      '@babel/plugin-proposal-export-namespace-from',
-      ...isMain
-        ? [
-          '@babel/plugin-syntax-dynamic-import',
-          '@babel/plugin-proposal-class-properties',
-        ]
-        : [
-          ['babel-plugin-styled-components', {ssr: true, displayName: isDev}],
-        ],
+      isMain && '@babel/plugin-syntax-dynamic-import',
+      isMain && '@babel/plugin-proposal-class-properties',
+      !isMain && ['babel-plugin-styled-components', {ssr: true, displayName: isDev}],
     ],
   };
 };
