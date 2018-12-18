@@ -24,10 +24,10 @@ export default class _Document extends Document {
 
   render() {
     const shouldEnableHMR = process.env.NODE_ENV === 'development';
-    const nextScriptScriptSource = NextScript.getInlineScriptSource(this.props);
+    const scriptCSPRule = shouldEnableHMR ? '\'unsafe-eval\' \'unsafe-inline\'' : createCSPHashOf(NextScript.getInlineScriptSource(this.props));
     const cspRules = [
       'default-src \'self\'',
-      `script-src 'self' ${shouldEnableHMR ? '\'unsafe-eval\' ' : ''}${createCSPHashOf(nextScriptScriptSource)}`,
+      `script-src 'self' ${scriptCSPRule}`,
       'style-src \'self\' \'unsafe-inline\'',
       'img-src \'self\' data:',
       'font-src \'self\' data:',
