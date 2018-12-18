@@ -12,8 +12,8 @@ const {
     appDest,
     externals = [],
     files = [],
-    build = {},
   } = {},
+  build = {},
 } = packageJSON;
 
 const whitelist = [
