@@ -1,5 +1,7 @@
 module.exports = (api) => {
+  api.cache.using(() => process.env.NODE_ENV);
   const isDev = api.env('development');
+
   return {
     presets: [
       ['next/babel', {
@@ -7,6 +9,7 @@ module.exports = (api) => {
           targets: {
             browsers: 'last 2 version',
           },
+          useBuiltIns: 'usage',
           loose: true,
         },
       }],
