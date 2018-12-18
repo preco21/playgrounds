@@ -8,8 +8,8 @@ const slsw = require('serverless-webpack');
 
 module.exports = {
   target: 'node',
-  devtool: 'source-map',
   mode: slsw.lib.webpack.isLocal ? 'development' : 'production',
+  devtool: 'source-map',
   entry: slsw.lib.entries,
   module: {
     rules: [
