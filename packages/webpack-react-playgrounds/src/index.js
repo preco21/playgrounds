@@ -9,4 +9,3 @@ if (rootEl && rootEl.hasChildNodes()) {
 } else {
   render(<App />, rootEl);
 }
-
