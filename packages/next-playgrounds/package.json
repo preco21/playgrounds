@@ -23,6 +23,7 @@
     "url": "https://github.com/preco21/next-playgrounds/issues"
   },
   "dependencies": {
+    "@babel/polyfill": "^7.0.0",
     "modern-normalize": "^0.5.0",
     "nprogress": "^0.2.0",
     "prop-types": "^15.6.2",
