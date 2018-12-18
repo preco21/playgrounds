@@ -9,6 +9,7 @@ const CopyPlugin = require('copy-webpack-plugin');
 const HTMLPlugin = require('html-webpack-plugin');
 const MiniCSSExtractPlugin = require('mini-css-extract-plugin');
 const CrittersPlugin = require('critters-webpack-plugin');
+const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 const DotenvPlugin = require('dotenv-webpack');
 const WebpackBarPlugin = require('webpackbar');
 const SizePlugin = require('size-plugin');
@@ -34,11 +35,13 @@ const buildConfig = {
   ...packageJSON.config,
 };
 
-module.exports = (env, argv) => {
-  const isDev = argv.mode === 'development';
-  process.env.BABEL_ENV = argv.mode;
+module.exports = (env = {}, argv = {}) => {
+  const mode = env.mode || argv.mode;
+  const isDev = mode === 'development';
+  process.env.BABEL_ENV = mode;
 
   return {
+    mode,
     devtool: isDev ? 'eval-source-map' : undefined,
     entry: `./${buildConfig.source}/index.js`,
     output: {
@@ -89,6 +92,7 @@ module.exports = (env, argv) => {
         filename: `[name]${isDev ? '' : '.[contenthash]'}.css`,
       }),
       !isDev && new CrittersPlugin(),
+      isDev && new HardSourceWebpackPlugin(),
       new DotenvPlugin(),
       new WebpackBarPlugin(),
       new SizePlugin(),
