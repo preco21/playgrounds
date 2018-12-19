@@ -35,7 +35,7 @@ compiler.watch({}, async (err, stats) => {
 
   await killInstancesIfExists();
   const instance = execa('electron', ['--inspect', '.'], {
-    stdout: 'inherit',
+    stdio: 'inherit',
     env: {
       ELECTRON_ENABLE_LOGGING: true,
       ELECTRON_DISABLE_SECURITY_WARNINGS: true,
