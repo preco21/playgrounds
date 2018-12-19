@@ -31,10 +31,10 @@ if (shouldLockSingleInstance) {
 }
 
 // Handle quit events
-app.on('window-all-closed', () => app.quit());
+app.once('window-all-closed', () => app.quit());
 
 // Application entry
-app.on('ready', async () => {
+app.once('ready', async () => {
   try {
     if (isDev) {
       await installDevSuite();
@@ -47,7 +47,7 @@ app.on('ready', async () => {
       minWidth: 800,
       minHeight: 600,
       title: 'Electron Playgrounds',
-      show: isDev,
+      show: false,
       autoHideMenuBar: true,
       backgroundColor: '#F1F5F7',
       acceptFirstMouse: true,
@@ -58,15 +58,14 @@ app.on('ready', async () => {
       },
     });
 
-    win.on('ready-to-show', () => {
-      if (isDev) {
-        win.showInactive();
-      } else {
-        win.show();
-      }
-    });
+    // Show the window immediately in dev mode
+    if (isDev) {
+      win.showInactive();
+    } else {
+      win.once('ready-to-show', () => win.show());
+    }
 
-    win.on('closed', () => (win = null));
+    win.once('closed', () => (win = null));
 
     const entry = await prepareRenderer({
       dev: isDev,
