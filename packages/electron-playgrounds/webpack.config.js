@@ -15,7 +15,7 @@ const {
   },
 } = require('./package.json');
 
-module.exports = (env, argv) => {
+module.exports = (env = {}, argv = {}) => {
   const mode = env.mode || argv.mode;
   const isDev = mode === 'development';
   process.env.BABEL_ENV = `main-${mode}`;
