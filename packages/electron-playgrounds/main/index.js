@@ -59,7 +59,9 @@ app.on('ready', async () => {
     });
 
     win.on('ready-to-show', () => {
-      if (!isDev) {
+      if (isDev) {
+        win.showInactive();
+      } else {
         win.show();
       }
     });
