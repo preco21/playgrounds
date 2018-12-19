@@ -31,10 +31,10 @@ if (shouldLockSingleInstance) {
 }
 
 // Handle quit events
-app.once('window-all-closed', () => app.quit());
+app.on('window-all-closed', () => app.quit());
 
 // Application entry
-app.once('ready', async () => {
+app.on('ready', async () => {
   try {
     if (isDev) {
       await installDevSuite();
