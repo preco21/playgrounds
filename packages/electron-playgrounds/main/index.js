@@ -58,7 +58,12 @@ app.on('ready', async () => {
       },
     });
 
-    win.on('ready-to-show', () => win.show());
+    win.on('ready-to-show', () => {
+      if (!isDev) {
+        win.show();
+      }
+    });
+
     win.on('closed', () => (win = null));
 
     const entry = await prepareRenderer({
@@ -70,7 +75,13 @@ app.on('ready', async () => {
 
     win.loadURL(entry);
   } catch (err) {
-    dialog.showErrorBox('Error', err.stack);
+    if (isDev) {
+      // eslint-disable-next-line no-console
+      console.error(err);
+    } else {
+      dialog.showErrorBox('Error', err.stack);
+    }
+
     process.exit(1);
   }
 });
