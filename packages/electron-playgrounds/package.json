@@ -12,7 +12,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "node scripts/serve.js",
     "build": "cross-env NODE_ENV=production npm-run-all build:main build:renderer",
-    "build:main": "webpack",
+    "build:main": "webpack --mode=production",
     "build:renderer": "next build src && next export --outdir .app/renderer src",
     "package": "node scripts/package.js"
   },
