@@ -5,8 +5,8 @@ import prepareRenderer from './internals/renderer';
 import {
   isDev,
   preloadScript,
-  rendererSourceDir,
-  rendererContentDir,
+  rendererSourcePath,
+  rendererContentPath,
   devServerPort,
 } from './internals/constants';
 
@@ -69,8 +69,8 @@ app.on('ready', async () => {
 
     const entry = await prepareRenderer({
       dev: isDev,
-      sourcePath: rendererSourceDir,
-      destPath: rendererContentDir,
+      sourcePath: rendererSourcePath,
+      destPath: rendererContentPath,
       port: devServerPort,
     });
 
