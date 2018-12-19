@@ -1,11 +1,12 @@
 const {resolve} = require('path');
 const {HashedModuleIdsPlugin} = require('webpack');
-const webpackMerge = require('webpack-merge');
+const {smart: webpackMergeSmart} = require('webpack-merge');
 const nodeExternals = require('webpack-node-externals');
 const CleanPlugin = require('clean-webpack-plugin');
 const DotenvPlugin = require('dotenv-webpack');
 const WebpackBarPlugin = require('webpackbar');
 const SizePlugin = require('size-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 const {
   app: {
     mainSource,
@@ -14,12 +15,14 @@ const {
   },
 } = require('./package.json');
 
-module.exports = ({dev} = {}) => {
-  const env = dev ? 'development' : 'production';
-  process.env.BABEL_ENV = `main-${env}`;
+module.exports = (env, argv) => {
+  const mode = env.mode || argv.mode;
+  const isDev = mode === 'development';
+  process.env.BABEL_ENV = `main-${mode}`;
 
   const sharedConfig = {
-    mode: env,
+    mode,
+    devtool: isDev ? 'eval-source-map' : undefined,
     output: {
       path: resolve(__dirname, appDest),
     },
@@ -30,17 +33,25 @@ module.exports = ({dev} = {}) => {
           include: resolve(__dirname, mainSource),
           loader: 'babel-loader',
           options: {
-            cacheDirectory: dev,
+            cacheDirectory: isDev,
           },
         },
       ],
     },
     plugins: [
-      !dev && new HashedModuleIdsPlugin(),
+      !isDev && new HashedModuleIdsPlugin(),
       new DotenvPlugin(),
       new WebpackBarPlugin(),
       new SizePlugin(),
     ].filter(Boolean),
+    optimization: {
+      minimizer: [
+        new TerserPlugin({
+          cache: true,
+          parallel: true,
+        }),
+      ],
+    },
     externals: [
       nodeExternals(),
       nodeExternals({
@@ -57,12 +68,13 @@ module.exports = ({dev} = {}) => {
   };
 
   return [
-    webpackMerge({
+    webpackMergeSmart({
       target: 'electron-main',
+      devtool: 'source-map',
       entry: [
-        ...dev ? ['source-map-support/register'] : [],
+        isDev && 'source-map-support/register',
         `./${mainSource}/index.js`,
-      ],
+      ].filter(Boolean),
       output: {
         filename: 'index.js',
       },
@@ -70,7 +82,7 @@ module.exports = ({dev} = {}) => {
         new CleanPlugin(cleanPaths),
       ],
     }, sharedConfig),
-    webpackMerge({
+    webpackMergeSmart({
       target: 'electron-renderer',
       entry: `./${mainSource}/preload.js`,
       output: {

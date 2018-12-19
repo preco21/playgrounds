@@ -8,7 +8,7 @@ const webpackConfig = require('../webpack.config');
 const treeKillP = promisify(treeKill);
 
 const instances = new Set();
-const compiler = webpack(webpackConfig({dev: true}));
+const compiler = webpack(webpackConfig({mode: 'development'}));
 
 function killInstancesIfExists() {
   return Promise.all(
@@ -34,8 +34,8 @@ compiler.watch({}, async (err, stats) => {
   }
 
   await killInstancesIfExists();
-  const instance = execa('electron', ['.'], {
-    stdio: 'inherit',
+  const instance = execa('electron', ['--inspect', '.'], {
+    stdout: 'inherit',
     env: {
       ELECTRON_ENABLE_LOGGING: true,
       ELECTRON_DISABLE_SECURITY_WARNINGS: true,
