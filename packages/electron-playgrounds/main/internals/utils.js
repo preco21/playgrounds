@@ -7,7 +7,7 @@ function deserializeError(error) {
   return Object.assign(new Error(error.message), rest);
 }
 
-export class PromsieIPC {
+export class PromiseIPC {
   constructor(ipc, {
     resolveChannelName = (type) => `@ipc__${type}`,
     onIPCError = (err) => console.error('IPC Error: ', err),
@@ -66,7 +66,7 @@ export class PromsieIPC {
 }
 
 export function createPromiseIPC(ipc) {
-  return new PromsieIPC(ipc);
+  return new PromiseIPC(ipc);
 }
 
 export async function installDevSuite() {
