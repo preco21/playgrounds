@@ -13,11 +13,11 @@ Router.events.on('routeChangeError', () => NProgress.done());
 
 export default class _App extends App {
   static getInitialProps({Component, ctx}) {
-    if (Component.getInitialProps) {
-      return Component.getInitialProps(ctx);
-    }
-
-    return {};
+    return {
+      pageProps: Component.getInitialProps
+        ? Component.getInitialProps(ctx)
+        : {},
+    };
   }
 
   render() {
