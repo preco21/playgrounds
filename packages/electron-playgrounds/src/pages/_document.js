@@ -1,42 +1,45 @@
+import {createHash} from 'crypto';
+import Document, {Head, Main, NextScript} from 'next/document';
 import React from 'react';
 import {ServerStyleSheet} from 'styled-components';
-import Document, {Head, Main, NextScript} from 'next/document';
 
-const setNoneOfUISelectable = `
-h1, h2, h3, h4, h5, h6, span, div {
-  cursor: default;
-  -webkit-user-select: none;
+function createCSPHashOf(text) {
+  const hash = createHash('sha256');
+  hash.update(text);
+  return `'sha256-${hash.digest('base64')}'`;
 }
-`;
+
 export default class _Document extends Document {
   static getInitialProps({renderPage}) {
     // Inject `styled-components` styles
     const sheet = new ServerStyleSheet();
     const page = renderPage((Page) => (props) => sheet.collectStyles(<Page {...props} />));
-    const stylesEl = sheet.getStyleElement();
+    const styledEls = sheet.getStyleElement();
 
     return {
       ...page,
-      stylesEl,
+      styledEls,
     };
   }
 
   render() {
-    const {props: {stylesEl}} = this;
+    const shouldEnableHMR = process.env.NODE_ENV === 'development';
+    const scriptCSPRule = shouldEnableHMR ? '\'unsafe-eval\' \'unsafe-inline\'' : createCSPHashOf(NextScript.getInlineScriptSource(this.props));
+    const cspRules = [
+      'default-src \'self\'',
+      `script-src 'self' ${scriptCSPRule}`,
+      'style-src \'self\' \'unsafe-inline\'',
+      'img-src \'self\' data:',
+      'font-src \'self\' data:',
+    ];
+
     return (
       <html>
         <Head>
-          {/* CSP rules */}
-          <meta
-            httpEquiv="Content-Security-Policy"
-            content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:"
-          />
+          <meta key="viewport" name="viewport" content="width=device-width, initial-scale=1, user-scalable=0, maximum-scale=1, minimum-scale=1" />
+          <meta key="csp" httpEquiv="Content-Security-Policy" content={cspRules.join('; ')} />
 
-          {/* eslint-disable-next-line react/no-danger */}
-          <style dangerouslySetInnerHTML={{__html: setNoneOfUISelectable}} />
-
-          {/* Styles from `styled-components` */}
-          {stylesEl}
+          {this.props.styledEls}
         </Head>
         <body>
           <Main />
