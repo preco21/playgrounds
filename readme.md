@@ -1,6 +1,12 @@
 # Playgrounds
 
-> List of project templates for a starting point
+> :rocket: List of random project templates for rapid prototyping
+
+* `electron-playgrounds`
+* `next-playgrounds`
+* `node-playgrounds`
+* `serverless-playgrounds`
+* `webpack-react-playgrounds`
 
 ## License
 
