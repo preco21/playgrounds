@@ -22,7 +22,7 @@ export function createRegisterXProtocol(funcName) {
 }
 
 export const registerFileProtocol = createRegisterXProtocol('registerFileProtocol');
-export const interceptFileProtocol = createRegisterXProtocol('interceptFileProtocol');
+export const registerHTTPProtocol = createRegisterXProtocol('registerHttpProtocol');
 
 // Slice down up until the place where the actual path starts.
 // That omits few more characters for Windows due to the root of the url starts with drive letter (C:/).

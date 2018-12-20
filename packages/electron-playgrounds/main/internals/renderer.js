@@ -1,7 +1,7 @@
 import {app} from 'electron';
 import {join} from 'path';
 import {createServer} from 'http';
-import {parseActualPathFromURI, interceptFileProtocol} from './protocol';
+import {parseActualPathFromURI, registerFileProtocol, registerHTTPProtocol} from './protocol';
 
 export async function devServer(dir, port) {
   // Define `BABEL_ENV` for babel config directly used by `next`
@@ -14,18 +14,25 @@ export async function devServer(dir, port) {
   const server = createServer(nextApp.getRequestHandler());
   server.listen(port, () => app.on('before-quit', () => server.close()));
 
-  return `http://localhost:${port}`;
+  const baseURI = `http://localhost:${port}/`;
+
+  await registerHTTPProtocol('next', (request, cb) => {
+    const {url, ...rest} = request;
+    const actualPath = parseActualPathFromURI(url, true);
+
+    cb({
+      url: join(baseURI, actualPath),
+      ...rest,
+    });
+  });
+
+  return baseURI;
 }
 
-const allowedPaths = ['/_next', '/static'];
 export async function renderStatic(destPath) {
-  await interceptFileProtocol('file', (request, cb) => {
-    const actualPath = parseActualPathFromURI(request.url);
-    const normalizedPath = process.platform === 'win32' ? actualPath.slice(2) : actualPath;
-    const finalPath = allowedPaths.some((path) => normalizedPath.startsWith(path))
-      ? join(destPath, normalizedPath)
-      : actualPath;
-
+  await registerFileProtocol('next', (request, cb) => {
+    const actualPath = parseActualPathFromURI(request.url, true);
+    const finalPath = join(destPath, actualPath);
     cb(finalPath);
   });
 

@@ -49,6 +49,7 @@ module.exports = withPlugins([
   withImagesCustom,
   withFonts,
 ], {
+  assetPrefix: 'next:///',
   webpack(config) {
     // HACK: Quick fix to resolve the custom babel config in root directory
     config.module.rules.forEach((rule) => {
