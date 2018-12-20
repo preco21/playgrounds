@@ -1,7 +1,32 @@
 import nanoid from 'nanoid';
-import serializeError from 'serialize-error';
 
-function deserializeError(error) {
+export function serializeError(obj, seen = [obj]) {
+  return [...Object.keys(obj), 'name', 'message', 'stack', 'code']
+    .reduce((res, key) => {
+      // eslint-disable-next-line prefer-destructuring
+      const value = obj[key];
+
+      if (typeof value === 'function') {
+        return res;
+      }
+
+      if (value && typeof value === 'object') {
+        return {
+          ...res,
+          [key]: seen.includes(value)
+            ? '[Circular]'
+            : serializeError(value, [...seen, value]),
+        };
+      }
+
+      return {
+        ...res,
+        [key]: value,
+      };
+    }, {});
+}
+
+export function deserializeError(error) {
   const {message, ...rest} = error;
   // eslint-disable-next-line no-restricted-properties
   return Object.assign(new Error(error.message), rest);
@@ -65,6 +90,10 @@ export class PromiseIPC {
   }
 }
 
+export function createPromiseIPC(ipc) {
+  return new PromiseIPC(ipc);
+}
+
 const passThroughProxyMethods = ['on', 'send'];
 export function createPromiseIPCProxy(ipc) {
   const promiseIPC = new PromiseIPC(ipc);
@@ -77,10 +106,6 @@ export function createPromiseIPCProxy(ipc) {
       return (...args) => object.send(key, ...args);
     },
   });
-}
-
-export function createPromiseIPC(ipc) {
-  return new PromiseIPC(ipc);
 }
 
 export async function installDevSuite() {
