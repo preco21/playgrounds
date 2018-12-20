@@ -91,7 +91,7 @@
     ]
   },
   "build": {
-    "appId": "com.electron.template",
+    "appId": "com.electron.playgrounds",
     "directories": {
       "buildResources": "resources",
       "output": "build"

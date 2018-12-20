@@ -1,7 +1,7 @@
 {
   "name": "webpack-react-playgrounds",
   "version": "0.0.0",
-  "description": "Webpack react template",
+  "description": "Yet another minimal setup for webpack react app",
   "author": "Plusb Preco <plusb21@gmail.com>",
   "private": true,
   "scripts": {
