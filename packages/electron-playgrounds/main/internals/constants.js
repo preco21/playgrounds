@@ -3,7 +3,7 @@ import {app} from 'electron';
 import isElectronDev from 'electron-is-dev';
 
 export const appDest = '.app';
-export const rendererSource = 'src';
+export const rendererSource = 'renderer';
 export const rendererTarget = 'renderer';
 
 export const isDev = process.env.NODE_ENV === 'development';

@@ -12,8 +12,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "node scripts/serve.js",
     "build": "cross-env NODE_ENV=production npm-run-all build:main build:renderer",
-    "build:main": "webpack --mode=production",
-    "build:renderer": "next build src && next export --outdir .app/renderer src",
+    "build:main": "webpack --mode production",
+    "build:renderer": "next build renderer && next export --outdir .app/renderer renderer",
     "package": "node scripts/package.js"
   },
   "engines": {
@@ -80,7 +80,7 @@
   "app": {
     "appDest": ".app",
     "mainSource": "main",
-    "rendererSource": "src",
+    "rendererSource": "renderer",
     "cleanPaths": [
       ".app"
     ],

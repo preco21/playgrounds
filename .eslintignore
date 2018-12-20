@@ -1,5 +1,5 @@
 # For `electron-playgrounds`
-packages/electron-playgrounds/src/.next
+packages/electron-playgrounds/renderer/.next
 packages/electron-playgrounds/.app
 
 # For `next-playgrounds`

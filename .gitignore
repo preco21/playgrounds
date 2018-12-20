@@ -3,9 +3,10 @@ node_modules
 *.log
 
 /packages/*/.env
-/packages/*/src/.next
 
+/packages/electron-playgrounds/renderer/.next
 /packages/electron-playgrounds/.app
+/packages/next-playgrounds/src/.next
 /packages/next-playgrounds/build
 /packages/node-playgrounds/lib
 /packages/serverless-playgrounds/_meta
