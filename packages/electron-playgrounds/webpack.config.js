@@ -1,5 +1,5 @@
 const {resolve} = require('path');
-// const {HashedModuleIdsPlugin} = require('webpack');
+const {HashedModuleIdsPlugin} = require('webpack');
 const {smart: webpackMergeSmart} = require('webpack-merge');
 const nodeExternals = require('webpack-node-externals');
 const CleanPlugin = require('clean-webpack-plugin');
@@ -51,8 +51,7 @@ module.exports = (env = {}, argv = {}) => {
       ],
     },
     plugins: [
-      // FIXME: `TerserPlugin` conflicts with this plugin.
-      // !isDev && new HashedModuleIdsPlugin(),
+      !isDev && new HashedModuleIdsPlugin(),
       new DotenvPlugin(),
       new WebpackBarPlugin(),
       new SizePlugin(),
@@ -63,6 +62,9 @@ module.exports = (env = {}, argv = {}) => {
           sourceMap: shouldSupportSourceMap,
           cache: true,
           parallel: true,
+          terserOptions: {
+            mangle: false,
+          },
         }),
       ],
     },
