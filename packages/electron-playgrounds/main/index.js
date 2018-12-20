@@ -52,6 +52,7 @@ app.on('ready', async () => {
       backgroundColor: '#F1F5F7',
       acceptFirstMouse: true,
       webPreferences: {
+        contextIsolation: false,
         preload: preloadScript,
         nodeIntegration: false,
         webviewTag: false,
