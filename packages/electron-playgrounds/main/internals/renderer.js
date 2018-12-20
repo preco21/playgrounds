@@ -1,7 +1,7 @@
 import {app} from 'electron';
 import {join} from 'path';
 import {createServer} from 'http';
-import {resolvePathFromURI, registerFileProtocol, registerHTTPProtocol} from './protocol';
+import {resolvePathFromURI, registerFileProtocol} from './protocol';
 
 export async function devServer(dir, port) {
   // Define `BABEL_ENV` for babel config directly used by `next`

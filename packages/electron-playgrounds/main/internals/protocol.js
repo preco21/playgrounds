@@ -1,6 +1,5 @@
 import {protocol} from 'electron';
 import {join} from 'path';
-import {parse} from 'url';
 import {directory} from 'tempy';
 
 const tempDirs = new Map();
@@ -22,7 +21,6 @@ export function createRegisterXProtocol(funcName) {
 }
 
 export const registerFileProtocol = createRegisterXProtocol('registerFileProtocol');
-export const registerHTTPProtocol = createRegisterXProtocol('registerHttpProtocol');
 
 export function resolvePathFromURI(uri, protocolName = 'file') {
   return decodeURIComponent(uri).slice(protocolName.length + 3);
