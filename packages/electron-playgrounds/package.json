@@ -86,7 +86,8 @@
     "externals": [
       "electron-is-dev",
       "nanoid",
-      "serialize-error"
+      "serialize-error",
+      "tempy"
     ]
   },
   "build": {
