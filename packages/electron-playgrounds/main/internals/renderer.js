@@ -14,19 +14,7 @@ export async function devServer(dir, port) {
   const server = createServer(nextApp.getRequestHandler());
   server.listen(port, () => app.on('before-quit', () => server.close()));
 
-  const baseURI = `http://localhost:${port}/`;
-
-  await registerHTTPProtocol('next', (request, cb) => {
-    const {url, ...rest} = request;
-    const actualPath = resolvePathFromURI(url, 'next');
-
-    cb({
-      url: join(baseURI, actualPath),
-      ...rest,
-    });
-  });
-
-  return baseURI;
+  return `http://localhost:${port}/`;
 }
 
 export async function renderStatic(destPath) {

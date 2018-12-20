@@ -1,3 +1,4 @@
+const {PHASE_PRODUCTION_BUILD, PHASE_EXPORT} = require('next/constants');
 const DotenvPlugin = require('dotenv-webpack');
 const withPlugins = require('next-compose-plugins');
 const withCSS = require('@zeit/next-css');
@@ -44,12 +45,20 @@ function withImagesCustom(nextConfig = {}) {
   };
 }
 
+function withElectronProtocolPrefix(nextConfig = {}) {
+  return {
+    ...nextConfig,
+    phases: [PHASE_PRODUCTION_BUILD + PHASE_EXPORT],
+    assetPrefix: 'next:///',
+  };
+}
+
 module.exports = withPlugins([
+  withElectronProtocolPrefix,
   withCSS,
   withImagesCustom,
   withFonts,
 ], {
-  assetPrefix: 'next:///',
   webpack(config) {
     // HACK: Quick fix to resolve the custom babel config in root directory
     config.module.rules.forEach((rule) => {
