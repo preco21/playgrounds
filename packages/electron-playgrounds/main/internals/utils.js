@@ -65,6 +65,20 @@ export class PromiseIPC {
   }
 }
 
+const passThroughProxyMethods = ['on', 'send'];
+export function createPromiseIPCProxy(ipc) {
+  const promiseIPC = new PromiseIPC(ipc);
+  return new Proxy(promiseIPC, {
+    get(object, key) {
+      if (passThroughProxyMethods.includes(key)) {
+        return (...args) => object[key](...args);
+      }
+
+      return (...args) => object.send(key, ...args);
+    },
+  });
+}
+
 export function createPromiseIPC(ipc) {
   return new PromiseIPC(ipc);
 }

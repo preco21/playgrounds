@@ -6,7 +6,7 @@ export default () => (
     <button
       type="button"
       onClick={async () => {
-        const pong = await ipc.send('ping');
+        const pong = await ipc.ping();
         console.log(pong);
       }}
     >
