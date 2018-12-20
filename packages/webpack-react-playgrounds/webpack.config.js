@@ -38,6 +38,7 @@ const buildConfig = {
 module.exports = (env = {}, argv = {}) => {
   const mode = env.mode || argv.mode;
   const isDev = mode === 'development';
+
   process.env.BABEL_ENV = mode;
 
   return {
