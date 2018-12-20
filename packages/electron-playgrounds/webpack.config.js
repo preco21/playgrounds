@@ -1,5 +1,5 @@
 const {resolve} = require('path');
-const {HashedModuleIdsPlugin} = require('webpack');
+// const {HashedModuleIdsPlugin} = require('webpack');
 const {smart: webpackMergeSmart} = require('webpack-merge');
 const nodeExternals = require('webpack-node-externals');
 const CleanPlugin = require('clean-webpack-plugin');
@@ -18,11 +18,23 @@ const {
 module.exports = (env = {}, argv = {}) => {
   const mode = env.mode || argv.mode;
   const isDev = mode === 'development';
+
   process.env.BABEL_ENV = `main-${mode}`;
+
+  const shouldSupportSourceMap = !process.env.NO_SOURCE_MAP_SUPPORT;
+  const chooseSourceMap = () => {
+    if (shouldSupportSourceMap) {
+      return isDev
+        ? 'cheap-module-source-map'
+        : 'nosources-source-map';
+    }
+
+    return undefined;
+  };
 
   const sharedConfig = {
     mode,
-    devtool: isDev ? 'eval-source-map' : undefined,
+    devtool: chooseSourceMap(),
     output: {
       path: resolve(__dirname, appDest),
     },
@@ -39,7 +51,8 @@ module.exports = (env = {}, argv = {}) => {
       ],
     },
     plugins: [
-      !isDev && new HashedModuleIdsPlugin(),
+      // FIXME: `TerserPlugin` conflicts with this plugin.
+      // !isDev && new HashedModuleIdsPlugin(),
       new DotenvPlugin(),
       new WebpackBarPlugin(),
       new SizePlugin(),
@@ -47,6 +60,7 @@ module.exports = (env = {}, argv = {}) => {
     optimization: {
       minimizer: [
         new TerserPlugin({
+          sourceMap: shouldSupportSourceMap,
           cache: true,
           parallel: true,
         }),
@@ -70,9 +84,8 @@ module.exports = (env = {}, argv = {}) => {
   return [
     webpackMergeSmart({
       target: 'electron-main',
-      devtool: 'source-map',
       entry: [
-        isDev && 'source-map-support/register',
+        shouldSupportSourceMap && `./${mainSource}/internals/source-map-support.js`,
         `./${mainSource}/index.js`,
       ].filter(Boolean),
       output: {
@@ -84,7 +97,10 @@ module.exports = (env = {}, argv = {}) => {
     }, sharedConfig),
     webpackMergeSmart({
       target: 'electron-renderer',
-      entry: `./${mainSource}/preload.js`,
+      entry: [
+        shouldSupportSourceMap && `./${mainSource}/internals/source-map-support.js`,
+        `./${mainSource}/preload.js`,
+      ].filter(Boolean),
       output: {
         filename: 'preload.js',
       },
