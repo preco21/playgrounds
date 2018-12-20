@@ -24,17 +24,28 @@ export function createRegisterXProtocol(funcName) {
 export const registerFileProtocol = createRegisterXProtocol('registerFileProtocol');
 export const registerHTTPProtocol = createRegisterXProtocol('registerHttpProtocol');
 
-// Slice down up until the place where the actual path starts.
-// That omits few more characters for Windows due to the root of the url starts with drive letter (C:/).
+export function resolvePathFromURI(uri, protocolName = 'file') {
+  return decodeURIComponent(uri).slice(protocolName.length + 3);
+}
+
+// Slice down up until the place where the absolute path starts.
+// This helper method omits few more characters for Windows due to the root of the url starts with drive letter (C:/).
 // After the processing, you will get normalized path: /filename.txt
-export function parseActualPathFromURI(uri, omitDeviceLetter = false) {
-  return decodeURIComponent(uri)
-    .slice(process.platform === 'win32' ? 8 + (omitDeviceLetter ? 2 : 0) : 7);
+export function resolveActualPathFromURI(uri, {
+  protocolName = 'file',
+  omitDeviceLetter = false,
+} = {}) {
+  const rawPath = resolvePathFromURI(uri, protocolName);
+  const startWithLength = process.platform === 'win32'
+    ? 1 + (omitDeviceLetter ? 2 : 0)
+    : 0;
+
+  return rawPath.slice(startWithLength);
 }
 
 export function addFileProtocol(name, basePath) {
   return registerFileProtocol(name, (request, cb) => {
-    const normalPath = parseActualPathFromURI(request.url, true);
+    const normalPath = resolvePathFromURI(request.url, name);
     const filePath = join(basePath, normalPath);
 
     cb(filePath);
@@ -43,7 +54,7 @@ export function addFileProtocol(name, basePath) {
 
 export function addTempProtocol(name = 'temp') {
   return registerFileProtocol(name, (request, cb) => {
-    const normalPath = parseActualPathFromURI(request.url, true);
+    const normalPath = resolvePathFromURI(request.url, name);
     const tempPath = getTemporaryDirectory(name);
     const targetPath = join(tempPath, normalPath);
 

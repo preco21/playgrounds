@@ -1,7 +1,7 @@
 import {app} from 'electron';
 import {join} from 'path';
 import {createServer} from 'http';
-import {parseActualPathFromURI, registerFileProtocol, registerHTTPProtocol} from './protocol';
+import {resolvePathFromURI, registerFileProtocol, registerHTTPProtocol} from './protocol';
 
 export async function devServer(dir, port) {
   // Define `BABEL_ENV` for babel config directly used by `next`
@@ -18,7 +18,7 @@ export async function devServer(dir, port) {
 
   await registerHTTPProtocol('next', (request, cb) => {
     const {url, ...rest} = request;
-    const actualPath = parseActualPathFromURI(url, true);
+    const actualPath = resolvePathFromURI(url, 'next');
 
     cb({
       url: join(baseURI, actualPath),
@@ -31,7 +31,7 @@ export async function devServer(dir, port) {
 
 export async function renderStatic(destPath) {
   await registerFileProtocol('next', (request, cb) => {
-    const actualPath = parseActualPathFromURI(request.url, true);
+    const actualPath = resolvePathFromURI(request.url, 'next');
     const finalPath = join(destPath, actualPath);
     cb(finalPath);
   });
