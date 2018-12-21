@@ -53,6 +53,7 @@ app.on('ready', async () => {
       acceptFirstMouse: true,
       webPreferences: {
         contextIsolation: false,
+        enableRemoteModule: false,
         preload: preloadScript,
         nodeIntegration: false,
         webviewTag: false,
