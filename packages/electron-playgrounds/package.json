@@ -7,7 +7,7 @@
   "private": true,
   "main": ".app/index.js",
   "scripts": {
-    "prepackage": "npm run build",
+    "prepackage": "yarn run build",
     "start": "electron .",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "node scripts/serve.js",
