@@ -101,6 +101,7 @@ function buildApp() {
         ...build.directories,
         app: tempDir,
       },
+      asar: !process.env.DISABLE_ASAR,
     },
   });
 }
