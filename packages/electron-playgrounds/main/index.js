@@ -5,9 +5,6 @@ import prepareRenderer from './internals/renderer';
 import {
   isDev,
   preloadScript,
-  rendererSourcePath,
-  rendererContentPath,
-  devServerPort,
 } from './internals/constants';
 
 let win = null;
@@ -67,11 +64,7 @@ app.on('ready', async () => {
 
     win.once('closed', () => (win = null));
 
-    const entry = await prepareRenderer({
-      sourcePath: rendererSourcePath,
-      destPath: rendererContentPath,
-      port: devServerPort,
-    });
+    const entry = await prepareRenderer();
 
     win.loadURL(entry);
   } catch (err) {

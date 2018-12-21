@@ -77,6 +77,7 @@
     "appDest": ".app",
     "mainSource": "main",
     "rendererSource": "renderer",
+    "devServerPort": 3000,
     "cleanPaths": [
       ".app"
     ],

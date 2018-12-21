@@ -36,8 +36,6 @@ module.exports = (env = {}, argv = {}) => {
   const mode = env.mode || argv.mode;
   const isDev = mode === 'development';
 
-  process.env.BABEL_ENV = `main-${mode}`;
-
   const shouldSupportSourceMap = !process.env.NO_SOURCE_MAP_SUPPORT;
   const chooseSourceMap = () => {
     if (shouldSupportSourceMap) {
@@ -62,6 +60,7 @@ module.exports = (env = {}, argv = {}) => {
           include: resolve(__dirname, mainSource),
           loader: 'babel-loader',
           options: {
+            envName: `main-${mode}`,
             cacheDirectory: isDev,
           },
         },

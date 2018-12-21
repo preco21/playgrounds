@@ -53,23 +53,41 @@ function withElectronProtocolPrefix(nextConfig = {}) {
   };
 }
 
+function withBabelPatch(nextConfig = {}, {phase} = {}) {
+  return {
+    ...nextConfig,
+    webpack(config, options) {
+      const {webpack} = nextConfig;
+      const env = phase === PHASE_PRODUCTION_BUILD ? 'production' : 'development';
+
+      // HACK: Quick fix to resolve the custom babel config in root directory
+      config.module.rules.forEach((rule) => {
+        if (rule.use && rule.use.loader === 'next-babel-loader') {
+          // eslint-disable-next-line no-param-reassign
+          rule.use.options.cwd = undefined;
+          // eslint-disable-next-line no-param-reassign
+          rule.use.options.envName = `renderer-${env}`;
+        }
+      });
+
+      if (typeof webpack === 'function') {
+        return webpack(config, options);
+      }
+
+      return config;
+    },
+  };
+}
+
 module.exports = withPlugins([
   withElectronProtocolPrefix,
+  withBabelPatch,
   withCSS,
   withImagesCustom,
   withFonts,
 ], {
   webpack(config) {
-    // HACK: Quick fix to resolve the custom babel config in root directory
-    config.module.rules.forEach((rule) => {
-      if (rule.use && rule.use.loader === 'next-babel-loader') {
-        // eslint-disable-next-line no-param-reassign
-        rule.use.options.cwd = undefined;
-      }
-    });
-
     config.plugins.push(new DotenvPlugin());
-
     return config;
   },
 });
