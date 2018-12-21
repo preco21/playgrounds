@@ -52,7 +52,7 @@ function pick(obj, filter) {
 async function getInstallCommand() {
   try {
     const {stdout} = await execa('yarn', ['--version']);
-    if (stdout && Boolean(stdout.toString().trim())) {
+    if (!stdout || !stdout.toString().trim()) {
       throw new Error('No yarn output');
     }
 
