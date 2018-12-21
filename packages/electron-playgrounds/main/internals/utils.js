@@ -1,4 +1,5 @@
 import nanoid from 'nanoid';
+import {isDev} from './constants';
 
 export function serializeError(obj, seen = [obj]) {
   return [...Object.keys(obj), 'name', 'message', 'stack', 'code']
@@ -108,11 +109,13 @@ export function createPromiseIPCProxy(ipc) {
   });
 }
 
-export async function installDevSuite() {
-  installElectronDebug();
-  await installDevExtensions([
-    'REACT_DEVELOPER_TOOLS',
-  ]);
+export async function installDevSuiteIfNeeded() {
+  if (isDev) {
+    installElectronDebug();
+    await installDevExtensions([
+      'REACT_DEVELOPER_TOOLS',
+    ]);
+  }
 }
 
 export function installElectronDebug() {

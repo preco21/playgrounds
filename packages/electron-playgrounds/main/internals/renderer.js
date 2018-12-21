@@ -2,6 +2,7 @@ import {app} from 'electron';
 import {join} from 'path';
 import {createServer} from 'http';
 import {resolvePathFromURI, registerFileProtocol} from './protocol';
+import {isDev} from './constants';
 
 export async function devServer(dir, port) {
   // Define `BABEL_ENV` for babel config directly used by `next`
@@ -28,7 +29,7 @@ export async function renderStatic(destPath) {
 }
 
 export default function prepareRenderer({
-  dev = false,
+  dev = isDev,
   sourcePath,
   destPath,
   port,

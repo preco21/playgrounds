@@ -1,6 +1,6 @@
 import './ipc';
 import {app, dialog, BrowserWindow} from 'electron';
-import {installDevSuite} from './internals/utils';
+import {installDevSuiteIfNeeded} from './internals/utils';
 import prepareRenderer from './internals/renderer';
 import {
   isDev,
@@ -36,9 +36,7 @@ app.on('window-all-closed', () => app.quit());
 // Application entry
 app.on('ready', async () => {
   try {
-    if (isDev) {
-      await installDevSuite();
-    }
+    await installDevSuiteIfNeeded();
 
     // Instantiate browser window
     win = new BrowserWindow({
@@ -70,7 +68,6 @@ app.on('ready', async () => {
     win.once('closed', () => (win = null));
 
     const entry = await prepareRenderer({
-      dev: isDev,
       sourcePath: rendererSourcePath,
       destPath: rendererContentPath,
       port: devServerPort,
