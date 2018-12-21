@@ -85,6 +85,6 @@ app.on('ready', async () => {
       dialog.showErrorBox('Error', err.stack);
     }
 
-    process.exit(1);
+    app.exit(1);
   }
 });
