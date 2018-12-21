@@ -17,15 +17,15 @@ const {
   },
 } = require('./package.json');
 
-function nodeExternalsWithMonoRepoSupport(opts = {}) {
+function nodeExternalsWithMonoRepoSupport({dev, ...opts} = {}) {
   const whitelist = (moduleName) => externalsWhitelist.some((name) => moduleName.startsWith(name));
   return [
     nodeExternals({
-      whitelist,
+      whitelist: dev ? [] : whitelist,
       ...opts,
     }),
     nodeExternals({
-      whitelist,
+      whitelist: dev ? [] : whitelist,
       modulesDir: resolve(__dirname, '../../node_modules'),
       ...opts,
     }),
@@ -89,7 +89,7 @@ module.exports = (env = {}, argv = {}) => {
         }),
       ],
     },
-    externals: nodeExternalsWithMonoRepoSupport(),
+    externals: nodeExternalsWithMonoRepoSupport({dev: isDev}),
     node: {
       __dirname: false,
       __filename: false,
