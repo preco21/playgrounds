@@ -117,6 +117,10 @@ module.exports = (env = {}, argv = {}) => {
       output: {
         filename: 'preload.js',
       },
+      resolve: {
+        // Disable accepting browser version of modules
+        aliasFields: [],
+      },
     }, sharedConfig),
   ];
 };
