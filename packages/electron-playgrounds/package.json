@@ -81,10 +81,11 @@
     "cleanPaths": [
       ".app"
     ],
-    "externals": [],
     "externalsWhitelist": [
-      "@babel/polyfill",
-      "core-js"
+      "core-js",
+      "regenerator-runtime",
+      "nanoid",
+      "tempy"
     ]
   },
   "build": {

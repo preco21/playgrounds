@@ -12,8 +12,24 @@ const {
     mainSource,
     appDest,
     cleanPaths = [],
+    externalsWhitelist = [],
   },
 } = require('./package.json');
+
+function nodeExternalsWithMonoRepoSupport(opts = {}) {
+  const whitelist = (moduleName) => externalsWhitelist.some((name) => moduleName.startsWith(name));
+  return [
+    nodeExternals({
+      whitelist,
+      ...opts,
+    }),
+    nodeExternals({
+      whitelist,
+      modulesDir: resolve(__dirname, '../../node_modules'),
+      ...opts,
+    }),
+  ];
+}
 
 module.exports = (env = {}, argv = {}) => {
   const mode = env.mode || argv.mode;
@@ -68,12 +84,7 @@ module.exports = (env = {}, argv = {}) => {
         }),
       ],
     },
-    externals: [
-      nodeExternals(),
-      nodeExternals({
-        modulesDir: resolve(__dirname, '../../node_modules'),
-      }),
-    ],
+    externals: nodeExternalsWithMonoRepoSupport(),
     node: {
       __dirname: false,
       __filename: false,
