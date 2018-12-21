@@ -46,6 +46,7 @@
     "babel-loader": "^8.0.2",
     "babel-plugin-styled-components": "^1.5.1",
     "clean-webpack-plugin": "^1.0.0",
+    "cpy": "^7.0.1",
     "cross-env": "^5.2.0",
     "dotenv-webpack": "^1.5.7",
     "electron": "^4.0.0",
@@ -71,6 +72,7 @@
     "webpack-cli": "^3.1.2",
     "webpack-merge": "^4.1.4",
     "webpack-node-externals": "^1.7.2",
+    "webpack-stats-plugin": "^0.2.1",
     "webpackbar": "^3.1.3",
     "write-pkg": "^3.1.0"
   },
@@ -82,10 +84,9 @@
       ".app"
     ],
     "externalsWhitelist": [
+      "@babel/polyfill",
       "core-js",
-      "regenerator-runtime",
-      "nanoid",
-      "tempy"
+      "regenerator-runtime"
     ]
   },
   "build": {

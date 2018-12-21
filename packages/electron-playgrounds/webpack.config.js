@@ -7,6 +7,7 @@ const DotenvPlugin = require('dotenv-webpack');
 const WebpackBarPlugin = require('webpackbar');
 const SizePlugin = require('size-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
+const {StatsWriterPlugin} = require('webpack-stats-plugin');
 const {
   app: {
     mainSource,
@@ -68,6 +69,10 @@ module.exports = (env = {}, argv = {}) => {
     },
     plugins: [
       !isDev && new HashedModuleIdsPlugin(),
+      !isDev && new StatsWriterPlugin({
+        filename: 'stats.json',
+        fields: ['modules'],
+      }),
       new DotenvPlugin(),
       new WebpackBarPlugin(),
       new SizePlugin(),

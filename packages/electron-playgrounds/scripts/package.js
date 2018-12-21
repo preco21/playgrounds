@@ -1,31 +1,30 @@
 /* eslint-disable no-console */
 const {join} = require('path');
+const {promises: {readFile}} = require('fs');
 const tempy = require('tempy');
-const {copy} = require('fs-extra');
-const writePkg = require('write-pkg');
+const cpy = require('cpy');
 const execa = require('execa');
+const writePkg = require('write-pkg');
 const electronBuilder = require('electron-builder');
 const packageJSON = require('../package.json');
 
 const {
   app: {
     appDest,
-    externals = [],
-    files = [],
+    resources = [],
+    packagePropsWhitelist = [
+      'name',
+      'productName',
+      'version',
+      'description',
+      'author',
+      'private',
+      'main',
+      'dependencies',
+    ],
   } = {},
   build = {},
 } = packageJSON;
-
-const whitelist = [
-  'name',
-  'productName',
-  'version',
-  'description',
-  'author',
-  'private',
-  'main',
-  'dependencies',
-];
 
 const tempDir = tempy.directory();
 
@@ -64,18 +63,38 @@ async function getInstallCommand() {
 }
 
 function copyDestFiles() {
-  console.log('> Copying files to destination...');
+  console.log('> Copying resources to destination...');
 
-  return Promise.all([appDest, ...files].map((target) => copy(target, join(tempDir, target))));
+  return cpy(
+    [appDest, `!${join(appDest, 'stats.json')}`, ...resources],
+    tempDir,
+    {parents: true},
+  );
 }
 
-function processPackageJSON() {
+async function getAllRequiredModules() {
+  const raw = await readFile(join(appDest, 'stats.json'));
+  const stats = JSON.parse(raw);
+
+  return stats.modules
+    .map((entry) => entry.identifier)
+    .filter((identifier) => identifier.startsWith('external'))
+    .map((final) => /^external\s"(.+)"/.exec(final)[1]);
+}
+
+async function getMinimalDependenciesToInclude(deps) {
+  const requiredModules = await getAllRequiredModules();
+  return pick(deps, requiredModules);
+}
+
+async function processPackageJSON() {
   console.log('> Processing package.json...');
 
-  const {dependencies, ...rest} = pick(packageJSON, whitelist);
+  const {dependencies = {}, ...rest} = pick(packageJSON, packagePropsWhitelist);
+  const externals = await getMinimalDependenciesToInclude(dependencies);
   const withExternals = {
     ...rest,
-    dependencies: dependencies && pick(dependencies, externals),
+    dependencies: externals,
   };
 
   return writePkg(tempDir, withExternals);
