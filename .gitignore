@@ -6,6 +6,7 @@ node_modules
 
 /packages/electron-playgrounds/renderer/.next
 /packages/electron-playgrounds/.app
+/packages/electron-playgrounds/build
 /packages/next-playgrounds/src/.next
 /packages/next-playgrounds/build
 /packages/node-playgrounds/lib
