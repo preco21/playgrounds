@@ -17,7 +17,7 @@
     "package": "node scripts/package.js"
   },
   "engines": {
-    "node": ">=9"
+    "node": ">=10"
   },
   "license": "MIT",
   "homepage": "https://github.com/preco21/electron-playgrounds#readme",
