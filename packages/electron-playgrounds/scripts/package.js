@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 const {join} = require('path');
-const {promises: {readFile}} = require('fs');
+const {promises: {readdir, readFile}} = require('fs');
 const tempy = require('tempy');
 const cpy = require('cpy');
 const execa = require('execa');
@@ -66,20 +66,30 @@ function copyDestFiles() {
   console.log('> Copying resources to destination...');
 
   return cpy(
-    [appDest, `!${join(appDest, 'stats.json')}`, ...resources],
+    [appDest, `!${join(appDest, '*.stats.json')}`, ...resources],
     tempDir,
     {parents: true},
   );
 }
 
-async function getAllRequiredModules() {
-  const raw = await readFile(join(appDest, 'stats.json'));
-  const stats = JSON.parse(raw);
+async function readStatsFiles(path, filter = /stats\.json$/) {
+  const filesInDest = await readdir(path);
+  const statsFileNames = filesInDest.filter((name) => filter.test(name));
+  const statsFiles = await Promise.all(statsFileNames.map((name) => readFile(join(path, name))));
 
-  return stats.modules
-    .map((entry) => entry.identifier)
-    .filter((identifier) => identifier.startsWith('external'))
-    .map((final) => /^external\s"(.+)"/.exec(final)[1]);
+  return statsFiles.map((raw) => JSON.parse(raw));
+}
+
+async function getAllRequiredModules() {
+  const statsFiles = await readStatsFiles(appDest);
+  const requiredModulesSet = statsFiles.map(
+    (stats) => stats.modules
+      .map((entry) => entry.identifier)
+      .filter((identifier) => identifier.startsWith('external'))
+      .map((final) => /^external\s"(.+)"/.exec(final)[1]),
+  );
+
+  return requiredModulesSet.reduce((res, elem) => [...res, ...elem], []);
 }
 
 async function getMinimalDependenciesToInclude(deps) {

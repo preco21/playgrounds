@@ -68,10 +68,6 @@ module.exports = (env = {}, argv = {}) => {
     },
     plugins: [
       !isDev && new HashedModuleIdsPlugin(),
-      !isDev && new StatsWriterPlugin({
-        filename: 'stats.json',
-        fields: ['modules'],
-      }),
       new DotenvPlugin(),
       new WebpackBarPlugin(),
       new SizePlugin(),
@@ -110,7 +106,11 @@ module.exports = (env = {}, argv = {}) => {
       },
       plugins: [
         new CleanPlugin(cleanPaths),
-      ],
+        !isDev && new StatsWriterPlugin({
+          filename: 'index.stats.json',
+          fields: ['modules'],
+        }),
+      ].filter(Boolean),
     }, sharedConfig),
     webpackMergeSmart({
       target: 'electron-renderer',
@@ -121,6 +121,12 @@ module.exports = (env = {}, argv = {}) => {
       output: {
         filename: 'preload.js',
       },
+      plugins: [
+        !isDev && new StatsWriterPlugin({
+          filename: 'preload.stats.json',
+          fields: ['modules'],
+        }),
+      ].filter(Boolean),
       resolve: {
         // Disable accepting browser version of modules
         aliasFields: [],
