@@ -48,7 +48,8 @@ app.on('ready', async () => {
       acceptFirstMouse: true,
       webPreferences: {
         contextIsolation: false,
-        enableRemoteModule: false,
+        // FIXME: When disabled, it shows untraceable error.
+        enableRemoteModule: true,
         preload: preloadScript,
         nodeIntegration: false,
         webviewTag: false,
