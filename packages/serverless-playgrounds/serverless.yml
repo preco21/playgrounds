@@ -37,6 +37,6 @@ functions:
     handler: src/index.hello
     events:
       - http:
-          path: save
+          path: hello
           method: get
           cors: true
