@@ -21,12 +21,6 @@
   "engines": {
     "node": ">=8"
   },
-  "license": "MIT",
-  "homepage": "https://github.com/preco21/playgrounds#readme",
-  "repository": "preco21/playgrounds",
-  "bugs": {
-    "url": "https://github.com/preco21/playgrounds/issues"
-  },
   "dependencies": {
     "source-map-support": "^0.5.4"
   },

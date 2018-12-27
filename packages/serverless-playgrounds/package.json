@@ -18,12 +18,6 @@
   "engines": {
     "node": ">=8"
   },
-  "license": "MIT",
-  "homepage": "https://github.com/preco21/serverless-playgrounds#readme",
-  "repository": "preco21/serverless-playgrounds",
-  "bugs": {
-    "url": "https://github.com/preco21/serverless-playgrounds/issues"
-  },
   "dependencies": {
     "@babel/polyfill": "^7.0.0",
     "aws-sdk": "^2.304.0",

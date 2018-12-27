@@ -16,12 +16,6 @@
   "engines": {
     "node": ">=9"
   },
-  "license": "MIT",
-  "homepage": "https://github.com/preco21/next-playgrounds#readme",
-  "repository": "preco21/next-playgrounds",
-  "bugs": {
-    "url": "https://github.com/preco21/next-playgrounds/issues"
-  },
   "dependencies": {
     "@babel/polyfill": "^7.0.0",
     "modern-normalize": "^0.5.0",
