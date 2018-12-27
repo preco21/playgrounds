@@ -4,7 +4,9 @@
   "author": "Plusb Preco <plusb21@gmail.com>",
   "private": true,
   "scripts": {
-    "bootstrap": "lerna bootstrap"
+    "bootstrap": "lerna bootstrap",
+    "lint": "eslint .",
+    "clean": "rm -rf node_modules && lerna clean"
   },
   "engines": {
     "node": ">=9"
