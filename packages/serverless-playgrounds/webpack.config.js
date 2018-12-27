@@ -32,7 +32,7 @@ module.exports = {
   externals: [
     nodeExternals(),
     nodeExternals({
-      modulesDir: resolve(__dirname, '../node_modules'),
+      modulesDir: resolve(__dirname, '../../node_modules'),
     }),
   ],
   node: {
