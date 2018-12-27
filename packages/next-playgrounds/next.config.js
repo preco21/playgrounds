@@ -15,7 +15,7 @@ function withImagesCustom(nextConfig = {}) {
       } = nextConfig;
 
       config.module.rules.push({
-        test: /\.(jpe?g|png|gif|ico|webp)$/,
+        test: /\.(jpe?g|png|gif|ico|webp|svg)$/,
         loader: 'url-loader',
         options: {
           limit: inlineImageLimit,
@@ -23,15 +23,6 @@ function withImagesCustom(nextConfig = {}) {
           publicPath: `${assetPrefix}/_next/static/images/`,
           outputPath: `${isServer ? '../' : ''}static/images/`,
           name: '[name]-[hash].[ext]',
-        },
-      });
-
-      config.module.rules.push({
-        test: /\.svg$/,
-        loader: 'svg-url-loader',
-        options: {
-          limit: inlineImageLimit,
-          noquotes: true,
         },
       });
 

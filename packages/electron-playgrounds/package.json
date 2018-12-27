@@ -55,7 +55,6 @@
     "next-fonts": "^0.16.0",
     "npm-run-all": "^4.1.2",
     "size-plugin": "^1.0.1",
-    "svg-url-loader": "^2.3.2",
     "terser-webpack-plugin": "^1.1.0",
     "tree-kill": "^1.2.0",
     "url-loader": "^1.1.2",
