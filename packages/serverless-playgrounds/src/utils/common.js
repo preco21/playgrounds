@@ -2,59 +2,10 @@ import isPlainObject from 'is-plain-obj';
 
 export class LambdaError extends Error {
   isLambdaError = true;
-}
-
-export function createLambdaError(name, describe, statusCode = 500, responseType = 'json') {
-  const error = new LambdaError(name);
-  error.describe = describe;
-  error.statusCode = statusCode;
-  error.responseType = responseType;
-
-  return error;
-}
-
-export function composeLambdaErrorToPayload(error) {
-  if (error.isLambdaError) {
-    return {
-      statusCode: error.statusCode,
-      headers: {
-        ...createContentTypeHeader(error.responseType === 'json' ? 'application/json' : 'text/plain'),
-        ...createDirtyCORSHeader(),
-      },
-      body: error.responseType === 'json'
-        ? JSON.stringify({
-          error: {
-            type: error.message,
-            ...error.describe,
-          },
-        })
-        : error.message,
-    };
-  }
-
-  return {
-    statusCode: 500,
-    headers: {
-      ...createContentTypeHeader('application/json'),
-      ...createDirtyCORSHeader(),
-    },
-    body: JSON.stringify({message: 'An unexpected error has occurred'}),
-  };
-}
-
-export function lambdaHandler(func, {
-  mapPayload = (payload) => payload,
-  mapError = (error) => composeLambdaErrorToPayload(error),
-} = {}) {
-  return async (...args) => {
-    try {
-      const payload = await func(...args);
-      return mapPayload(payload);
-    } catch (err) {
-      console.error(err);
-      return mapError(err);
-    }
-  };
+  type = 'LambdaError';
+  statusCode = 500;
+  mimeType = 'application/json';
+  data = {};
 }
 
 export function createContentTypeHeader(type) {
@@ -67,6 +18,58 @@ export function createDirtyCORSHeader() {
   return {
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Credentials': true,
+  };
+}
+
+export function mapLamdaDefaultPayload({body, ...rest}) {
+  return {
+    statusCode: 200,
+    headers: {
+      ...createContentTypeHeader('application/json'),
+      ...createDirtyCORSHeader(),
+    },
+    body: JSON.stringify({
+      data: body,
+    }),
+    ...rest,
+  };
+}
+
+export function mapLambdaErrorToPayload(error) {
+  if (!error.isLambdaError) {
+    const defaultLambdaError = new LambdaError('An unexpected error has occurred');
+    return mapLambdaErrorToPayload(defaultLambdaError);
+  }
+
+  return {
+    statusCode: error.statusCode,
+    headers: {
+      ...createContentTypeHeader(error.mimeType),
+      ...createDirtyCORSHeader(),
+    },
+    body: JSON.stringify({
+      error: {
+        type: error.type,
+        message: error.message,
+        ...error.data,
+      },
+    }),
+  };
+}
+
+export function lambdaHandler(func, {
+  mapPayload = (payload) => mapLamdaDefaultPayload(payload),
+  mapError = (error) => mapLambdaErrorToPayload(error),
+} = {}) {
+  return async (...args) => {
+    try {
+      const payload = await func(...args);
+      return mapPayload(payload);
+    } catch (err) {
+      // TODO: Use more reliable solution for logging.
+      console.error(err);
+      return mapError(err);
+    }
   };
 }
 
