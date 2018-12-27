@@ -1,5 +1,4 @@
 import 'modern-normalize';
-import '../styles/style.css';
 import App, {Container} from 'next/app';
 import React from 'react';
 

@@ -1,3 +1,5 @@
+import '../styles/style.css';
+import '../styles/nprogress.css';
 import Head from 'next/head';
 import React from 'react';
 import PropTypes from 'prop-types';

@@ -1,6 +1,4 @@
 import 'modern-normalize';
-import '../styles/style.css';
-import '../styles/nprogress.css';
 import NProgress from 'nprogress';
 import App, {Container} from 'next/app';
 import Router from 'next/router';
