@@ -1,7 +1,7 @@
 import {ipcRenderer as _ipc} from 'electron';
-import {createPromiseIPCProxy} from './internals/utils';
+import {createPromiseIPCProxy} from './internals/ipc';
 
-// Expose `ipc` modules
+// Expose `ipc` modules for renderer
 window.ipc = createPromiseIPCProxy(_ipc);
 
 // Disable `eval` when production

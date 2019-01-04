@@ -1,21 +1,34 @@
 import {join} from 'path';
 import {resolvePathFromURI, registerFileProtocol} from './protocol';
-import {isDev, devServerPort, rendererContentPath} from './constants';
+import {isDev, rendererContentPath} from './constants';
 
-export async function renderStatic(destPath) {
+export async function renderStatic(destPath, routeName) {
   await registerFileProtocol('next', (request, cb) => {
     const actualPath = resolvePathFromURI(request.url, 'next');
     const finalPath = join(destPath, actualPath);
     cb(finalPath);
   });
 
-  return `file://${join(destPath, 'index.html')}`;
+  return `file://${join(destPath, routeName, 'index.html')}`;
 }
 
-export default function prepareRenderer({
-  dev = isDev,
-  port = devServerPort,
-  destPath = rendererContentPath,
+export function renderDevelopment(host, port, routeName) {
+  return `http://${host}:${port}/${routeName}`;
+}
+
+export async function loadRoute(win, routeName, {
+  devServerHost = 'localhost',
+  devServerPort = 3000,
+  staticRendererPath = rendererContentPath,
+  openDevToolsInDevMode = true,
 } = {}) {
-  return dev ? `http://localhost:${port}/` : renderStatic(destPath);
+  const entry = await (isDev
+    ? renderDevelopment(devServerHost, devServerPort, routeName)
+    : renderStatic(staticRendererPath, routeName));
+
+  win.loadURL(entry);
+
+  if (openDevToolsInDevMode && isDev) {
+    win.openDevTools({mode: 'detach'});
+  }
 }

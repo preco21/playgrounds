@@ -98,7 +98,7 @@ module.exports = (env = {}, argv = {}) => {
     webpackMergeSmart({
       target: 'electron-main',
       entry: [
-        shouldSupportSourceMap && `./${mainSource}/internals/source-map-support.js`,
+        shouldSupportSourceMap && `./${mainSource}/common/source-map-support.js`,
         `./${mainSource}/index.js`,
       ].filter(Boolean),
       output: {
@@ -115,7 +115,7 @@ module.exports = (env = {}, argv = {}) => {
     webpackMergeSmart({
       target: 'electron-renderer',
       entry: [
-        shouldSupportSourceMap && `./${mainSource}/internals/source-map-support.js`,
+        shouldSupportSourceMap && `./${mainSource}/common/source-map-support.js`,
         `./${mainSource}/preload.js`,
       ].filter(Boolean),
       output: {

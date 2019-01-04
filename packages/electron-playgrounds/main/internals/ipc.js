@@ -1,5 +1,4 @@
 import nanoid from 'nanoid';
-import {isDev} from './constants';
 
 export function serializeError(obj, seen = [obj]) {
   return [...Object.keys(obj), 'name', 'message', 'stack', 'code']
@@ -95,35 +94,15 @@ export function createPromiseIPC(ipc) {
   return new PromiseIPC(ipc);
 }
 
-const passThroughProxyMethods = ['on', 'send'];
 export function createPromiseIPCProxy(ipc) {
   const promiseIPC = new PromiseIPC(ipc);
   return new Proxy(promiseIPC, {
     get(object, key) {
-      if (passThroughProxyMethods.includes(key)) {
+      if (['on', 'send'].includes(key)) {
         return (...args) => object[key](...args);
       }
 
       return (...args) => object.send(key, ...args);
     },
   });
-}
-
-export async function installDevSuiteIfNeeded() {
-  if (isDev) {
-    installElectronDebug();
-    await installDevExtensions([
-      'REACT_DEVELOPER_TOOLS',
-    ]);
-  }
-}
-
-export function installElectronDebug() {
-  const electronDebug = require('electron-debug');
-  electronDebug();
-}
-
-export function installDevExtensions(extentions) {
-  const {default: installExtension, ...devtools} = require('electron-devtools-installer');
-  return Promise.all(extentions.map((name) => installExtension(devtools[name])));
 }
