@@ -6,7 +6,6 @@ module.exports = (api) => {
         targets: {
           node: true,
         },
-        modules: false,
         useBuiltIns: 'usage',
         loose: true,
       }],
