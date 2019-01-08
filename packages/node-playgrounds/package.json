@@ -5,17 +5,14 @@
   "author": "Plusb Preco <plusb21@gmail.com>",
   "private": true,
   "main": "lib/index.js",
-  "bin": "lib/index.js",
   "scripts": {
     "prebuild": "npm run clean",
-    "prepackage": "npm run build",
     "start": "node --require source-map-support/register .",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "cross-env NODE_ENV=development nodemon --exec 'node --require @babel/register' src/index.js",
     "dev-inspect": "cross-env NODE_ENV=development nodemon --exec 'node --require @babel/register --inspect' src/index.js",
     "dev-inspect-brk": "cross-env NODE_ENV=development nodemon --exec 'node --require @babel/register --inspect-brk' src/index.js",
     "build": "cross-env NODE_ENV=production babel --source-maps --out-dir lib src",
-    "package": "pkg --out-path build .",
     "clean": "rimraf lib build"
   },
   "engines": {
@@ -34,7 +31,6 @@
     "@babel/register": "^7.0.0",
     "cross-env": "^5.2.0",
     "nodemon": "^1.18.9",
-    "pkg": "^4.3.5",
     "rimraf": "^2.6.3"
   }
 }
