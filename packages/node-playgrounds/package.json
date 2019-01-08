@@ -4,22 +4,22 @@
   "description": "An opinionated setup for writing ES2015+ code",
   "author": "Plusb Preco <plusb21@gmail.com>",
   "private": true,
-  "main": "lib/index.js",
+  "main": "build/index.js",
   "scripts": {
     "prebuild": "npm run clean",
-    "start": "node --require source-map-support/register .",
+    "start": "node --require esm --require source-map-support/register .",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "cross-env NODE_ENV=development nodemon --exec 'node --require @babel/register' src/index.js",
-    "dev-inspect": "cross-env NODE_ENV=development nodemon --exec 'node --require @babel/register --inspect' src/index.js",
-    "dev-inspect-brk": "cross-env NODE_ENV=development nodemon --exec 'node --require @babel/register --inspect-brk' src/index.js",
-    "build": "cross-env NODE_ENV=production babel --source-maps --out-dir lib src",
-    "clean": "rimraf lib build"
+    "dev": "cross-env NODE_ENV=development nodemon --exec 'node --require esm --require @babel/register' src/index.js",
+    "dev-inspect": "cross-env NODE_ENV=development nodemon --exec 'node --nolazy --inspect-brk --require esm --require @babel/register' src/index.js",
+    "build": "cross-env NODE_ENV=production babel --source-maps --out-dir build src",
+    "clean": "rimraf build"
   },
   "engines": {
     "node": ">=10"
   },
   "dependencies": {
     "@babel/polyfill": "^7.2.5",
+    "esm": "^3.0.84",
     "source-map-support": "^0.5.9"
   },
   "devDependencies": {
