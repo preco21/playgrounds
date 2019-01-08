@@ -79,6 +79,9 @@
       "@babel/polyfill",
       "core-js",
       "regenerator-runtime"
+    ],
+    "resources": [
+      "static"
     ]
   },
   "build": {

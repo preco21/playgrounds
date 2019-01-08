@@ -1,6 +1,6 @@
 import {join} from 'path';
 import {resolvePathFromURI, registerFileProtocol} from './protocol';
-import {isDev, rendererContentPath} from './constants';
+import {isDev, rendererContent} from './constants';
 
 export async function renderStatic(destPath, routeName) {
   await registerFileProtocol('next', (request, cb) => {
@@ -19,7 +19,7 @@ export function renderDevelopment(host, port, routeName) {
 export async function loadRoute(win, routeName, {
   devServerHost = 'localhost',
   devServerPort = 3000,
-  staticRendererPath = rendererContentPath,
+  staticRendererPath = rendererContent,
   openDevToolsInDevMode = true,
 } = {}) {
   const entry = await (isDev
