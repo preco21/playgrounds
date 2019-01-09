@@ -9,8 +9,8 @@
     "prebuild": "npm run clean",
     "start": "node --require source-map-support/register .",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "cross-env NODE_ENV=development nodemon --exec 'node --require @babel/register' src/index.js",
-    "dev-inspect": "cross-env NODE_ENV=development nodemon --exec 'node --nolazy --inspect-brk --require @babel/register' src/index.js",
+    "dev": "cross-env NODE_ENV=development nodemon --require @babel/register src/index.js",
+    "dev-inspect": "cross-env NODE_ENV=development nodemon --nolazy --inspect-brk --require @babel/register src/index.js",
     "build": "cross-env NODE_ENV=production babel --source-maps --out-dir build src",
     "clean": "rimraf build"
   },
