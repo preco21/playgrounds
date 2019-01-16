@@ -1,6 +1,6 @@
 {
   "name": "serverless-playgrounds",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "description": "Yet another minimal setup for Serverless app",
   "author": "Plusb Preco <plusb21@gmail.com>",
   "private": true,
