@@ -10,36 +10,39 @@ function createCSPHashOf(text) {
 }
 
 export default class _Document extends Document {
-  static getInitialProps({renderPage}) {
-    // Inject `styled-components` styles
+  static async getInitialProps(ctx) {
     const sheet = new ServerStyleSheet();
-    const page = renderPage((Page) => (props) => sheet.collectStyles(<Page {...props} />));
-    const styledEls = sheet.getStyleElement();
 
+    const originalRenderPage = ctx.renderPage;
+    ctx.renderPage = () => originalRenderPage({
+      enhanceApp(App) {
+        return (props) => sheet.collectStyles(<App {...props} />);
+      },
+    });
+
+    const initialProps = await Document.getInitialProps(ctx);
     return {
-      ...page,
-      styledEls,
+      ...initialProps,
+      styles: [...initialProps.styles, ...sheet.getStyleElement()],
     };
   }
 
   render() {
-    const shouldEnableHMR = process.env.NODE_ENV === 'development';
-    const scriptCSPRule = shouldEnableHMR ? '\'unsafe-eval\' \'unsafe-inline\'' : createCSPHashOf(NextScript.getInlineScriptSource(this.props));
+    const isDev = process.env.NODE_ENV === 'development';
+    const scriptCSPRule = isDev ? '\'unsafe-eval\' \'unsafe-inline\'' : createCSPHashOf(NextScript.getInlineScriptSource(this.props));
     const cspRules = [
       'default-src \'self\'',
       `script-src 'self' ${scriptCSPRule}`,
       'style-src \'self\' \'unsafe-inline\'',
       'img-src \'self\' data:',
       'font-src \'self\' data:',
-    ];
+    ].join(';');
 
     return (
       <html>
         <Head>
           <meta key="viewport" name="viewport" content="width=device-width, initial-scale=1, user-scalable=0, maximum-scale=1, minimum-scale=1" />
-          <meta key="csp" httpEquiv="Content-Security-Policy" content={cspRules.join('; ')} />
-
-          {this.props.styledEls}
+          <meta key="csp" httpEquiv="Content-Security-Policy" content={cspRules} />
         </Head>
         <body>
           <Main />

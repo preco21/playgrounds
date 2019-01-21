@@ -1,3 +1,6 @@
 extends: prev/react
 env:
   browser: true
+rules:
+  no-param-reassign: off
+  prefer-destructuring: off
