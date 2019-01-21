@@ -12,10 +12,10 @@ Router.events.on('routeChangeComplete', () => NProgress.done());
 Router.events.on('routeChangeError', () => NProgress.done());
 
 export default class _App extends App {
-  static getInitialProps({Component, ctx}) {
+  static async getInitialProps({Component, ctx}) {
     return {
       pageProps: Component.getInitialProps
-        ? Component.getInitialProps(ctx)
+        ? await Component.getInitialProps(ctx)
         : {},
     };
   }
