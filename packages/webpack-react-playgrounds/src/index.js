@@ -1,11 +1,35 @@
 import './styles/style.css';
 import React from 'react';
 import {hydrate, render} from 'react-dom';
-import App from './components/App';
+import {renderToString} from 'react-dom/server';
+import {BrowserRouter as Router, StaticRouter} from 'react-router-dom';
+import {Routes} from './pages/_routes';
 
-const rootEl = document.getElementById('__root');
-if (rootEl && rootEl.hasChildNodes()) {
-  hydrate(<App />, rootEl);
-} else {
-  render(<App />, rootEl);
+function Root() {
+  return (
+    <Router>
+      <Routes />
+    </Router>
+  );
 }
+
+function RootServer({path}) {
+  return (
+    <StaticRouter location={path}>
+      <Routes />
+    </StaticRouter>
+  );
+}
+
+if (typeof window !== 'undefined') {
+  const rootEl = document.getElementById('__root__');
+  if (rootEl && rootEl.hasChildNodes()) {
+    hydrate(<Root />, rootEl);
+  } else {
+    render(<Root />, rootEl);
+  }
+}
+
+export default (params) => renderToString(
+  <RootServer {...params} />,
+);

@@ -14,25 +14,31 @@
     "@babel/polyfill": "^7.0.0",
     "react": "^16.7.0-alpha.2",
     "react-dom": "^16.7.0-alpha.2",
-    "react-hot-loader": "^4.5.1"
+    "react-hot-loader": "^4.5.1",
+    "react-imported-component": "^5.4.0",
+    "react-router-dom": "^4.3.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.1.6",
+    "@babel/core": "^7.2.2",
     "@babel/plugin-proposal-class-properties": "^7.1.0",
     "@babel/plugin-syntax-dynamic-import": "^7.0.0",
-    "@babel/preset-env": "^7.1.6",
+    "@babel/preset-env": "^7.2.3",
     "@babel/preset-react": "^7.0.0",
-    "babel-loader": "^8.0.4",
+    "autodll-webpack-plugin": "^0.4.2",
+    "babel-loader": "^8.0.5",
+    "case-sensitive-paths-webpack-plugin": "^2.1.2",
     "clean-webpack-plugin": "^1.0.0",
     "copy-webpack-plugin": "^4.6.0",
     "critters-webpack-plugin": "^2.0.1",
     "css-loader": "^1.0.0",
     "dotenv-webpack": "^1.5.7",
     "file-loader": "^2.0.0",
+    "friendly-errors-webpack-plugin": "^1.7.0",
     "hard-source-webpack-plugin": "^0.13.1",
     "html-webpack-plugin": "^3.2.0",
     "mini-css-extract-plugin": "^0.4.5",
     "optimize-css-assets-webpack-plugin": "^5.0.1",
+    "prerender-loader": "^1.2.0",
     "size-plugin": "^1.0.1",
     "style-loader": "^0.22.1",
     "terser-webpack-plugin": "^1.1.0",
@@ -53,7 +59,11 @@
     ],
     "serve": {
       "port": 3000,
-      "host": "0.0.0.0"
-    }
+      "host": "localhost"
+    },
+    "paths": [
+      "/",
+      "/second"
+    ]
   }
 }

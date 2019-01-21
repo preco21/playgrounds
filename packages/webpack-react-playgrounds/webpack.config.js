@@ -13,6 +13,8 @@ const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 const DotenvPlugin = require('dotenv-webpack');
 const WebpackBarPlugin = require('webpackbar');
 const SizePlugin = require('size-plugin');
+const FriendlyErrorWebpackPlugin = require('friendly-errors-webpack-plugin');
+const AutoDllPlugin = require('autodll-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const packageJSON = require('./package.json');
@@ -30,8 +32,9 @@ const buildConfig = {
   ],
   serve: {
     port: 3000,
-    host: '0.0.0.0',
+    host: 'localhost',
   },
+  paths: ['/'],
   ...packageJSON.config,
 };
 
@@ -39,15 +42,14 @@ module.exports = (env = {}, argv = {}) => {
   const mode = env.mode || argv.mode;
   const isDev = mode === 'development';
 
-  process.env.BABEL_ENV = mode;
-
   return {
     mode,
-    devtool: isDev ? 'eval-source-map' : undefined,
+    devtool: isDev ? 'cheap-module-source-map' : 'nosources-source-map',
     entry: `./${buildConfig.source}/index.js`,
     output: {
-      path: resolve(__dirname, buildConfig.dest),
       filename: `[name]${isDev ? '' : '.[chunkhash]'}.js`,
+      path: resolve(__dirname, buildConfig.dest),
+      libraryTarget: 'umd',
     },
     module: {
       rules: [
@@ -56,6 +58,7 @@ module.exports = (env = {}, argv = {}) => {
           include: resolve(__dirname, buildConfig.source),
           loader: 'babel-loader',
           options: {
+            envName: mode,
             cacheDirectory: isDev,
           },
         },
@@ -78,13 +81,27 @@ module.exports = (env = {}, argv = {}) => {
     plugins: [
       !isDev && new CleanPlugin(buildConfig.clean),
       new CopyPlugin(buildConfig.copy),
-      new HTMLPlugin({
-        template: `${buildConfig.source}/document.ejs`,
+      ...buildConfig.paths.map((path) => new HTMLPlugin({
+        filename: `${path === '/' ? '' : `${path.slice(1)}/`}index.html`,
+        template: isDev
+          ? `${buildConfig.source}/document.ejs`
+          : `!!prerender-loader?${JSON.stringify({string: true, params: {path}})}!${buildConfig.source}/document.ejs`,
         minify: !isDev && {
           removeComments: true,
           collapseWhitespace: true,
           minifyCSS: true,
           minifyJS: true,
+        },
+      })),
+      isDev && new AutoDllPlugin({
+        inject: true,
+        filename: '[name]_[hash].js',
+        path: './dll',
+        entry: {
+          vendor: [
+            'react',
+            'react-dom',
+          ],
         },
       }),
       !isDev && new HashedModuleIdsPlugin(),
@@ -95,14 +112,16 @@ module.exports = (env = {}, argv = {}) => {
       !isDev && new CrittersPlugin(),
       isDev && new HardSourceWebpackPlugin(),
       new DotenvPlugin(),
-      new WebpackBarPlugin(),
-      new SizePlugin(),
+      isDev && new FriendlyErrorWebpackPlugin(),
+      !isDev && new WebpackBarPlugin(),
+      !isDev && new SizePlugin(),
     ].filter(Boolean),
     optimization: {
       minimizer: [
         new TerserPlugin({
-          cache: true,
           parallel: true,
+          sourceMap: true,
+          cache: true,
         }),
         new OptimizeCSSAssetsPlugin(),
       ],
@@ -114,6 +133,7 @@ module.exports = (env = {}, argv = {}) => {
       overlay: {
         errors: true,
       },
+      quiet: true,
       stats: {
         colors: true,
       },
