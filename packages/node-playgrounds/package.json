@@ -10,7 +10,7 @@
     "start": "node --require source-map-support/register .",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "cross-env NODE_ENV=development nodemon --exec 'babel-node src/index.js'",
-    "dev-inspect": "cross-env NODE_ENV=development nodemon --exec 'babel-node --nolazy --inspect-brk src/index.js'",
+    "dev:inspect": "cross-env NODE_ENV=development nodemon --exec 'babel-node --nolazy --inspect-brk src/index.js'",
     "build": "cross-env NODE_ENV=production babel --source-maps --out-dir build src",
     "clean": "rimraf build"
   },
