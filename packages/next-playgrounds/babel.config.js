@@ -10,7 +10,6 @@ module.exports = (api) => {
             browsers: 'last 2 version',
           },
           useBuiltIns: 'usage',
-          loose: true,
         },
       }],
     ],
