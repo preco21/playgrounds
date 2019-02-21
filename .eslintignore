@@ -7,7 +7,7 @@ packages/next-playgrounds/src/.next
 packages/next-playgrounds/build
 
 # For `node-playgrounds`
-packages/node-playgrounds/lib
+packages/node-playgrounds/build
 
 # For `serverless-playgrounds`
 packages/serverless-playgrounds/.serverless
