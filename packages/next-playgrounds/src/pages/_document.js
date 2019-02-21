@@ -36,6 +36,7 @@ export default class _Document extends Document {
       'style-src \'self\' \'unsafe-inline\'',
       'img-src \'self\' data:',
       'font-src \'self\' data:',
+      `connect-src 'self' https: http: ${isDev ? 'ws:' : ''}`,
     ].join(';');
 
     return (
