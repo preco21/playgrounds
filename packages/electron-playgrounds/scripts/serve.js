@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 const {promisify} = require('util');
 const {createServer} = require('http');
+const next = require('next');
 const webpack = require('webpack');
 const execa = require('execa');
 const treeKill = require('tree-kill');
@@ -11,7 +12,6 @@ const packageJSON = require('../package.json');
 const treeKillP = promisify(treeKill);
 
 const instances = new Set();
-const compiler = webpack(webpackConfig({mode: 'development'}));
 
 const {
   app: {
@@ -34,6 +34,8 @@ function killInstancesIfExists() {
   await devServer(rendererSource, devServerPort);
 
   exitHook(killInstancesIfExists);
+
+  const compiler = webpack(webpackConfig({mode: 'development'}));
   compiler.watch({}, async (err, stats) => {
     console.log(stats.toString({
       chunks: false,
@@ -60,13 +62,14 @@ function killInstancesIfExists() {
 })();
 
 async function devServer(dir, port) {
-  const next = require('next');
   const nextApp = next({dev: true, dir});
-  await nextApp.prepare();
-
   const server = createServer(nextApp.getRequestHandler());
-  server.listen(port);
 
-  return `http://localhost:${port}/`;
+  await new Promise((resolve, reject) => {
+    server.on('error', reject);
+    server.on('listening', () => resolve());
+    server.listen(port);
+  });
+
+  await nextApp.prepare();
 }
-
