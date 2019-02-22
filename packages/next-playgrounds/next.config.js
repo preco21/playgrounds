@@ -1,30 +1,38 @@
+const {PHASE_PRODUCTION_BUILD} = require('next/constants');
 const DotenvPlugin = require('dotenv-webpack');
 const withPlugins = require('next-compose-plugins');
 const withCSS = require('@zeit/next-css');
+const withImages = require('next-images');
 const withFonts = require('next-fonts');
 
-function withImagesCustom(nextConfig = {}) {
+function withCustomBabelConfig({webpack, ...nextConfig} = {}, {phase} = {}) {
   return {
     ...nextConfig,
     webpack(config, options) {
-      const {isServer} = options;
-      const {
-        inlineImageLimit = 8192,
-        assetPrefix = '',
-        webpack,
-      } = nextConfig;
+      config.module.rules.forEach((rule) => {
+        if (rule.use && rule.use.loader === 'next-babel-loader') {
+          // eslint-disable-next-line no-param-reassign
+          rule.use.options.cwd = undefined;
 
-      config.module.rules.push({
-        test: /\.(jpe?g|png|gif|ico|webp|svg)$/,
-        loader: 'url-loader',
-        options: {
-          limit: inlineImageLimit,
-          fallback: 'file-loader',
-          publicPath: `${assetPrefix}/_next/static/images/`,
-          outputPath: `${isServer ? '../' : ''}static/images/`,
-          name: '[name]-[hash].[ext]',
-        },
+          const env = phase === PHASE_PRODUCTION_BUILD ? 'production' : 'development';
+          rule.use.options.envName = env;
+        }
       });
+
+      if (typeof webpack === 'function') {
+        return webpack(config, options);
+      }
+
+      return config;
+    },
+  };
+}
+
+function withDotenv({webpack, ...nextConfig} = {}) {
+  return {
+    ...nextConfig,
+    webpack(config, options) {
+      config.plugins.push(new DotenvPlugin());
 
       if (typeof webpack === 'function') {
         return webpack(config, options);
@@ -37,20 +45,8 @@ function withImagesCustom(nextConfig = {}) {
 
 module.exports = withPlugins([
   withCSS,
-  withImagesCustom,
+  withImages,
   withFonts,
-], {
-  webpack(config) {
-    // HACK: Quick fix to resolve the custom babel config in root directory
-    config.module.rules.forEach((rule) => {
-      if (rule.use && rule.use.loader === 'next-babel-loader') {
-        // eslint-disable-next-line no-param-reassign
-        rule.use.options.cwd = undefined;
-      }
-    });
-
-    config.plugins.push(new DotenvPlugin());
-
-    return config;
-  },
-});
+  withCustomBabelConfig,
+  withDotenv,
+]);
