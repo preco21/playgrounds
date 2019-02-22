@@ -70,7 +70,7 @@ module.exports = (env = {}, argv = {}) => {
       !isDev && new HashedModuleIdsPlugin(),
       new DotenvPlugin(),
       new WebpackBarPlugin(),
-      new SizePlugin(),
+      !isDev && new SizePlugin(),
     ].filter(Boolean),
     optimization: {
       minimizer: [
@@ -105,7 +105,7 @@ module.exports = (env = {}, argv = {}) => {
         filename: 'index.js',
       },
       plugins: [
-        new CleanPlugin(cleanPaths),
+        new CleanPlugin(cleanPaths, {verbose: false}),
         !isDev && new StatsWriterPlugin({
           filename: 'index.stats.json',
           fields: ['modules'],

@@ -6,3 +6,5 @@ settings:
     - electron
 globals:
   ipc: false
+rules:
+  no-param-reassign: off

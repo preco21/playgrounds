@@ -31,7 +31,6 @@ module.exports = (api) => {
       }],
     ].filter(Boolean),
     plugins: [
-      isMain && '@babel/plugin-syntax-dynamic-import',
       isMain && '@babel/plugin-proposal-class-properties',
       !isMain && ['babel-plugin-styled-components', {ssr: true, displayName: isDev}],
     ].filter(Boolean),
