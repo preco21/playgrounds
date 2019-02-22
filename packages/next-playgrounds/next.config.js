@@ -11,11 +11,10 @@ function withCustomBabelConfig({webpack, ...nextConfig} = {}, {phase} = {}) {
     webpack(config, options) {
       config.module.rules.forEach((rule) => {
         if (rule.use && rule.use.loader === 'next-babel-loader') {
-          // eslint-disable-next-line no-param-reassign
           rule.use.options.cwd = undefined;
-
-          const env = phase === PHASE_PRODUCTION_BUILD ? 'production' : 'development';
-          rule.use.options.envName = env;
+          rule.use.options.envName = phase === PHASE_PRODUCTION_BUILD
+            ? 'production'
+            : 'development';
         }
       });
 
