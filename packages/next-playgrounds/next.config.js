@@ -9,12 +9,12 @@ function withCustomBabelConfig({webpack, ...nextConfig} = {}, {phase} = {}) {
   return {
     ...nextConfig,
     webpack(config, options) {
+      const env = phase === PHASE_PRODUCTION_BUILD ? 'production' : 'development';
+
       config.module.rules.forEach((rule) => {
         if (rule.use && rule.use.loader === 'next-babel-loader') {
           rule.use.options.cwd = undefined;
-          rule.use.options.envName = phase === PHASE_PRODUCTION_BUILD
-            ? 'production'
-            : 'development';
+          rule.use.options.envName = env;
         }
       });
 
