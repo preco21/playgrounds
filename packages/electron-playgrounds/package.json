@@ -7,6 +7,7 @@
   "private": true,
   "main": ".app/index.js",
   "scripts": {
+    "postinstall": "electron-rebuild",
     "prepackage": "yarn run build",
     "start": "electron .",
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -46,6 +47,7 @@
     "electron-builder": "^20.13.4",
     "electron-debug": "^1.5.0",
     "electron-devtools-installer": "^2.2.4",
+    "electron-rebuild": "^1.8.4",
     "execa": "^0.10.0",
     "exit-hook": "^2.0.0",
     "file-loader": "^2.0.0",
@@ -89,5 +91,10 @@
       "buildResources": "resources",
       "output": "build"
     }
+  },
+  "workspaces": {
+    "nohoist": [
+      "**"
+    ]
   }
 }
