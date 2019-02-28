@@ -38,6 +38,7 @@
     "@babel/plugin-proposal-class-properties": "^7.1.0",
     "@babel/preset-env": "^7.1.0",
     "@zeit/next-css": "^1.0.1",
+    "@zeit/webpack-asset-relocator-loader": "^0.1.12",
     "babel-loader": "^8.0.2",
     "babel-plugin-styled-components": "^1.10.0",
     "clean-webpack-plugin": "^1.0.0",
@@ -73,9 +74,6 @@
     "mainSource": "main",
     "rendererSource": "renderer",
     "devServerPort": 3000,
-    "cleanPaths": [
-      ".app"
-    ],
     "externalsWhitelist": [
       "@babel/polyfill",
       "core-js",

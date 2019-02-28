@@ -9,28 +9,13 @@ const SizePlugin = require('size-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const {StatsWriterPlugin} = require('webpack-stats-plugin');
 const {
+  dependencies = {},
   app: {
     mainSource,
     appDest,
-    cleanPaths = [],
-    externalsWhitelist = [],
+    cleanPaths = [appDest],
   },
 } = require('./package.json');
-
-function nodeExternalsWithMonoRepoSupport({dev, ...opts} = {}) {
-  const whitelist = (moduleName) => externalsWhitelist.some((name) => moduleName.startsWith(name));
-  return [
-    nodeExternals({
-      whitelist: dev ? [] : whitelist,
-      ...opts,
-    }),
-    nodeExternals({
-      whitelist: dev ? [] : whitelist,
-      modulesDir: resolve(__dirname, '../../node_modules'),
-      ...opts,
-    }),
-  ];
-}
 
 module.exports = (env = {}, argv = {}) => {
   const mode = env.mode || argv.mode;
@@ -64,7 +49,15 @@ module.exports = (env = {}, argv = {}) => {
             cacheDirectory: isDev,
           },
         },
-      ],
+        !isDev && {
+          test: /\.(m?js|node)$/,
+          parser: {amd: false},
+          loader: '@zeit/webpack-asset-relocator-loader',
+          options: {
+            outputAssetBase: 'res',
+          },
+        },
+      ].filter(Boolean),
     },
     plugins: [
       !isDev && new HashedModuleIdsPlugin(),
@@ -84,7 +77,11 @@ module.exports = (env = {}, argv = {}) => {
         }),
       ],
     },
-    externals: nodeExternalsWithMonoRepoSupport({dev: isDev}),
+    externals: nodeExternals({
+      whitelist: isDev
+        ? []
+        : (moduleName) => Object.keys(dependencies).some((name) => name === moduleName),
+    }),
     node: {
       __dirname: false,
       __filename: false,
@@ -127,9 +124,10 @@ module.exports = (env = {}, argv = {}) => {
           fields: ['modules'],
         }),
       ].filter(Boolean),
+      // Disable accepting browser version of modules
       resolve: {
-        // Disable accepting browser version of modules
         aliasFields: [],
+        mainFields: ['module', 'main'],
       },
     }, sharedConfig),
   ];
