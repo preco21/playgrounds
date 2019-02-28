@@ -20,16 +20,6 @@ const {
   } = {},
 } = packageJSON;
 
-function killInstancesIfExists() {
-  return Promise.all(
-    Array.from(instances)
-      .map(async (inst) => {
-        await treeKillP(inst.pid);
-        instances.delete(inst);
-      }),
-  );
-}
-
 (async () => {
   await devServer(rendererSource, devServerPort);
 
@@ -60,6 +50,16 @@ function killInstancesIfExists() {
     instance.on('exit', () => instances.delete(instance));
   });
 })();
+
+function killInstancesIfExists() {
+  return Promise.all(
+    Array.from(instances)
+      .map(async (inst) => {
+        await treeKillP(inst.pid);
+        instances.delete(inst);
+      }),
+  );
+}
 
 async function devServer(dir, port) {
   const nextApp = next({dev: true, dir});

@@ -20,4 +20,3 @@ app.on('window-all-closed', () => app.quit());
   await initializeMainIPC();
   await openMainWindow();
 })();
-
