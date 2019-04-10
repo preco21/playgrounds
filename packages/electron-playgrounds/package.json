@@ -5,7 +5,7 @@
   "description": "Yet another opinionated setup for Electron application",
   "author": "Plusb Preco <plusb21@gmail.com>",
   "private": true,
-  "main": ".app/index.js",
+  "main": "build/index.js",
   "scripts": {
     "postinstall": "electron-rebuild",
     "prepackage": "yarn run build",
@@ -14,7 +14,7 @@
     "dev": "node scripts/serve.js",
     "build": "npm-run-all build:main build:renderer",
     "build:main": "webpack --mode production",
-    "build:renderer": "next build renderer && next export --outdir .app/renderer renderer",
+    "build:renderer": "next build renderer && next export --outdir build/renderer renderer",
     "package": "node scripts/package.js"
   },
   "engines": {
@@ -57,39 +57,30 @@
     "next-fonts": "^0.16.0",
     "next-images": "^1.0.4",
     "npm-run-all": "^4.1.2",
-    "size-plugin": "^1.0.1",
-    "terser-webpack-plugin": "^1.1.0",
     "tree-kill": "^1.2.0",
     "url-loader": "^1.1.2",
     "webpack": "^4.28.2",
     "webpack-cli": "^3.1.2",
     "webpack-merge": "^4.1.4",
-    "webpack-node-externals": "^1.7.2",
-    "webpack-stats-plugin": "^0.2.1",
     "webpackbar": "^3.1.3",
     "write-pkg": "^3.1.0"
-  },
-  "app": {
-    "appDest": ".app",
-    "mainSource": "main",
-    "rendererSource": "renderer",
-    "devServerPort": 3000,
-    "externalsWhitelist": [
-      "@babel/polyfill",
-      "core-js",
-      "regenerator-runtime"
-    ],
-    "resources": [
-      "static"
-    ]
   },
   "build": {
     "appId": "com.electron.playgrounds",
     "directories": {
-      "buildResources": "resources",
-      "output": "build"
+      "buildResources": "resources"
+    },
+    "mac": {
+      "target": "zip"
     }
   },
+  "resources": [
+    "static"
+  ],
+  "externals": [
+    "electron-debug",
+    "electron-devtools-installer"
+  ],
   "workspaces": {
     "nohoist": [
       "**"

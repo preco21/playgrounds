@@ -2245,6 +2245,11 @@
   resolved "https://registry.yarnpkg.com/@zeit/webpack-asset-relocator-loader/-/webpack-asset-relocator-loader-0.1.12.tgz#a9c52fcfeb5449479052e70547fd3d7a478a1bb8"
   integrity sha512-mKiIAeUAh/TYjBcvTiU1I76jF94g9jHdAktk5MXktgW6UuYAQ5RUz7c3OPPqMrs0n5PeCPwlYDjQaYnVSviN1g==
 
+"@zeit/webpack-asset-relocator-loader@^0.3.7":
+  version "0.3.7"
+  resolved "https://registry.yarnpkg.com/@zeit/webpack-asset-relocator-loader/-/webpack-asset-relocator-loader-0.3.7.tgz#982058d282b0be0c42b01f262dae733223948f7b"
+  integrity sha512-M8JvAk978E4R9QduH9rDGNfOh6YH3lJaQbvkpcBidv0OmXJcLPbb01AW5OheRddT3lwn3Shd1aGjSyJe7QuIaA==
+
 JSONStream@^1.0.4, JSONStream@^1.3.4:
   version "1.3.5"
   resolved "https://registry.yarnpkg.com/JSONStream/-/JSONStream-1.3.5.tgz#3208c1f08d3a4d99261ab64f92302bc15e111ca0"
@@ -11642,19 +11647,6 @@ size-plugin@^1.0.1:
     pretty-bytes "^5.1.0"
     util.promisify "^1.0.0"
 
-size-plugin@^1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/size-plugin/-/size-plugin-1.1.1.tgz#2d9e44752e552e15c6c558cb10966858b4a0e5b3"
-  integrity sha512-32k0gfNVkP8bHYtA1zmgsko6kKRuB97l480rmnUxQe9jHabYSx29psB2eFXb9dlqQww0T1E/cqV2D1fXaFnjfQ==
-  dependencies:
-    chalk "^2.4.1"
-    escape-string-regexp "^1.0.5"
-    glob "^7.1.2"
-    gzip-size "^5.0.0"
-    minimatch "^3.0.4"
-    pretty-bytes "^5.1.0"
-    util.promisify "^1.0.0"
-
 slash@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/slash/-/slash-1.0.0.tgz#c41f2f6c39fc16d1cd17ad4b5d896114ae470d55"
@@ -13247,11 +13239,6 @@ webpack-sources@1.3.0, webpack-sources@^1.0.1, webpack-sources@^1.1.0, webpack-s
   dependencies:
     source-list-map "^2.0.0"
     source-map "~0.6.1"
-
-webpack-stats-plugin@^0.2.1:
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/webpack-stats-plugin/-/webpack-stats-plugin-0.2.1.tgz#1f5bac13fc25d62cbb5fd0ff646757dc802b8595"
-  integrity sha512-OYMZLpZrK/qLA79NE4kC4DCt85h/5ipvWJcsefKe9MMw0qU4/ck/IJg+4OmWA+5EfrZZpHXDq92IptfYDWVfkw==
 
 webpack@4.29.0:
   version "4.29.0"

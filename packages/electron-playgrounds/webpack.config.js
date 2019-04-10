@@ -1,45 +1,36 @@
 const {resolve} = require('path');
 const {HashedModuleIdsPlugin} = require('webpack');
 const {smart: webpackMergeSmart} = require('webpack-merge');
-const nodeExternals = require('webpack-node-externals');
 const CleanPlugin = require('clean-webpack-plugin');
 const DotenvPlugin = require('dotenv-webpack');
 const WebpackBarPlugin = require('webpackbar');
-const SizePlugin = require('size-plugin');
-const TerserPlugin = require('terser-webpack-plugin');
-const {StatsWriterPlugin} = require('webpack-stats-plugin');
-const {
-  dependencies = {},
-  app: {
-    mainSource,
-    appDest,
-    cleanPaths = [appDest],
-  },
-} = require('./package.json');
+const {dependencies = {}, externals = []} = require('./package.json');
+
+const mainSource = 'main';
+const appDest = 'build';
+const cleanPaths = [appDest];
+
+const dependenciesToExclude = Object.keys(dependencies).filter((name) => externals.includes(name));
+
+function optional(arr = []) {
+  return arr.filter(Boolean);
+}
 
 module.exports = (env = {}, argv = {}) => {
   const mode = env.mode || argv.mode;
   const isDev = mode === 'development';
 
-  const shouldSupportSourceMap = !process.env.NO_SOURCE_MAP_SUPPORT;
-  const chooseSourceMap = () => {
-    if (shouldSupportSourceMap) {
-      return isDev
-        ? 'cheap-module-source-map'
-        : 'nosources-source-map';
-    }
-
-    return undefined;
-  };
+  const shouldSupportSourceMap = process.env.NO_SOURCE_MAP_SUPPORT !== 'true';
+  const selectSourceMap = () => isDev ? 'cheap-module-source-map' : 'nosources-source-map';
 
   const sharedConfig = {
     mode,
-    devtool: chooseSourceMap(),
+    devtool: shouldSupportSourceMap ? selectSourceMap() : undefined,
     output: {
       path: resolve(__dirname, appDest),
     },
     module: {
-      rules: [
+      rules: optional([
         {
           test: /\.js$/,
           include: resolve(__dirname, mainSource),
@@ -50,38 +41,27 @@ module.exports = (env = {}, argv = {}) => {
           },
         },
         !isDev && {
-          test: /\.(m?js|node)$/,
+          test: /\.(js|mjs|node)$/,
           parser: {amd: false},
           loader: '@zeit/webpack-asset-relocator-loader',
           options: {
             outputAssetBase: 'res',
           },
         },
-      ].filter(Boolean),
+      ]),
     },
-    plugins: [
+    plugins: optional([
       !isDev && new HashedModuleIdsPlugin(),
       new DotenvPlugin(),
       new WebpackBarPlugin(),
-      !isDev && new SizePlugin(),
-    ].filter(Boolean),
+    ]),
     optimization: {
-      minimizer: [
-        new TerserPlugin({
-          sourceMap: shouldSupportSourceMap,
-          cache: true,
-          parallel: true,
-          terserOptions: {
-            mangle: false,
-          },
-        }),
-      ],
+      minimize: false,
     },
-    externals: nodeExternals({
-      whitelist: isDev
-        ? []
-        : (moduleName) => Object.keys(dependencies).some((name) => name === moduleName),
-    }),
+    externals: dependenciesToExclude.reduce((res, name) => ({
+      ...res,
+      [name]: `commonjs ${name}`,
+    }), {}),
     node: {
       __dirname: false,
       __filename: false,
@@ -89,41 +69,32 @@ module.exports = (env = {}, argv = {}) => {
     performance: {
       hints: false,
     },
+    stats: 'errors-only',
   };
 
   return [
     webpackMergeSmart({
       target: 'electron-main',
-      entry: [
+      entry: optional([
         shouldSupportSourceMap && `./${mainSource}/common/source-map-support.js`,
         `./${mainSource}/index.js`,
-      ].filter(Boolean),
+      ]),
       output: {
         filename: 'index.js',
       },
       plugins: [
         new CleanPlugin(cleanPaths, {verbose: false}),
-        !isDev && new StatsWriterPlugin({
-          filename: 'index.stats.json',
-          fields: ['modules'],
-        }),
-      ].filter(Boolean),
+      ],
     }, sharedConfig),
     webpackMergeSmart({
       target: 'electron-renderer',
-      entry: [
+      entry: optional([
         shouldSupportSourceMap && `./${mainSource}/common/source-map-support.js`,
         `./${mainSource}/preload.js`,
-      ].filter(Boolean),
+      ]),
       output: {
         filename: 'preload.js',
       },
-      plugins: [
-        !isDev && new StatsWriterPlugin({
-          filename: 'preload.stats.json',
-          fields: ['modules'],
-        }),
-      ].filter(Boolean),
       // Disable accepting browser version of modules
       resolve: {
         aliasFields: [],

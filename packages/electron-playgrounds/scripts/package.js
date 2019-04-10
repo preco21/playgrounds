@@ -1,6 +1,4 @@
 /* eslint-disable no-console */
-const {join} = require('path');
-const {promises: {readdir, readFile}} = require('fs');
 const tempy = require('tempy');
 const cpy = require('cpy');
 const execa = require('execa');
@@ -9,36 +7,27 @@ const electronBuilder = require('electron-builder');
 const packageJSON = require('../package.json');
 
 const {
-  app: {
-    appDest,
-    resources = [],
-    packagePropsWhitelist = [
-      'name',
-      'productName',
-      'version',
-      'description',
-      'author',
-      'private',
-      'main',
-      'dependencies',
-    ],
-  } = {},
+  dependencies = {},
   build = {},
+  resources = [],
+  externals = [],
+  packagePropsWhitelist = [
+    'name',
+    'productName',
+    'version',
+    'description',
+    'author',
+    'private',
+    'main',
+    'dependencies',
+  ],
+  ...restPackageJSON
 } = packageJSON;
 
-const tempDir = tempy.directory();
+const appDest = 'build';
 
-(async () => {
-  try {
-    await copyDestFiles();
-    await processPackageJSON();
-    await installDependencies();
-    await buildApp();
-  } catch (err) {
-    console.error(err);
-    process.exit(1);
-  }
-})();
+const tempDir = tempy.directory();
+const dependenciesToExclude = Object.keys(dependencies).filter((name) => externals.includes(name));
 
 function pick(obj, filter) {
   return Object.entries(obj)
@@ -49,69 +38,40 @@ function pick(obj, filter) {
     }), {});
 }
 
-async function getInstallCommand() {
-  try {
-    const {stdout} = await execa('yarn', ['--version']);
-    if (!stdout || !stdout.toString().trim()) {
-      throw new Error('No yarn output');
-    }
-
-    return ['yarn', ['install', '--no-bin-links', '--no-lockfile']];
-  } catch (err) {
-    return ['npm', ['install', '--no-bin-links', '--no-package-lock']];
-  }
+function rebuildPackageJSON() {
+  const rebuiltPackageJSON = pick(restPackageJSON, packagePropsWhitelist);
+  const deps = pick(dependencies, dependenciesToExclude);
+  return {
+    ...rebuiltPackageJSON,
+    dependencies: deps,
+  };
 }
 
-function copyDestFiles() {
+async function copyDestFiles() {
   console.log('> Copying resources to destination...');
-
-  return cpy(
-    [appDest, `!${join(appDest, '*.stats.json')}`, ...resources],
-    tempDir,
-    {parents: true},
-  );
-}
-
-async function readStatsFiles(path, filter = /stats\.json$/) {
-  const filesInDest = await readdir(path);
-  const statsFileNames = filesInDest.filter((name) => filter.test(name));
-  const statsFiles = await Promise.all(statsFileNames.map((name) => readFile(join(path, name))));
-
-  return statsFiles.map((raw) => JSON.parse(raw));
-}
-
-async function getAllRequiredModules() {
-  const statsFiles = await readStatsFiles(appDest);
-  const requiredModulesSet = statsFiles.map(
-    (stats) => stats.modules
-      .map((entry) => entry.identifier)
-      .filter((identifier) => identifier.startsWith('external'))
-      .map((final) => /^external\s"(.+)"/.exec(final)[1]),
-  );
-
-  return requiredModulesSet.reduce((res, elem) => [...res, ...elem], []);
-}
-
-async function getMinimalDependenciesToInclude(deps) {
-  const requiredModules = await getAllRequiredModules();
-  return pick(deps, requiredModules);
+  await cpy([appDest, ...resources], tempDir, {parents: true});
 }
 
 async function processPackageJSON() {
   console.log('> Processing package.json...');
-
-  const {dependencies = {}, ...rest} = pick(packageJSON, packagePropsWhitelist);
-  const externals = await getMinimalDependenciesToInclude(dependencies);
-  const withExternals = {
-    ...rest,
-    dependencies: externals,
-  };
-
-  return writePkg(tempDir, withExternals);
+  await writePkg(tempDir, rebuildPackageJSON());
 }
 
-async function installDependencies() {
-  console.log('> Installing production dependencies...');
+async function getInstallCommand() {
+  try {
+    const {stdout} = await execa('yarn', ['--version']);
+    if (!stdout || !stdout.toString().trim()) {
+      throw new Error('No yarn output detected');
+    }
+
+    return ['yarn', ['install', '--production', '--no-bin-links', '--no-lockfile']];
+  } catch (err) {
+    return ['npm', ['install', '--production', '--no-bin-links', '--no-package-lock']];
+  }
+}
+
+async function installPackages() {
+  console.log('> Installing dependencies...');
 
   const installCommand = await getInstallCommand();
   return execa(...installCommand, {
@@ -130,7 +90,20 @@ function buildApp() {
         ...build.directories,
         app: tempDir,
       },
-      asar: !process.env.DISABLE_ASAR,
+      asar: process.env.DISABLE_ASAR !== 'true',
     },
   });
 }
+
+(async () => {
+  try {
+    console.log(tempDir);
+    await copyDestFiles();
+    await processPackageJSON();
+    await installPackages();
+    await buildApp();
+  } catch (err) {
+    console.error(err);
+    process.exit(1);
+  }
+})();
