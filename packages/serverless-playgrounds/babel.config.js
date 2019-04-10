@@ -8,7 +8,6 @@ module.exports = (api) => {
         },
         modules: false,
         useBuiltIns: 'usage',
-        loose: true,
       }],
     ],
     plugins: [
