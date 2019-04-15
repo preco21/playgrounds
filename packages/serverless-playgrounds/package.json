@@ -22,8 +22,8 @@
     "node": ">=8"
   },
   "dependencies": {
-    "@babel/polyfill": "^7.4.3",
     "aws-sdk": "^2.437.0",
+    "core-js": "^3.0.1",
     "is-plain-obj": "^1.1.0",
     "source-map-support": "^0.5.12"
   },

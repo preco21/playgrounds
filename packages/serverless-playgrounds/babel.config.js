@@ -10,6 +10,7 @@ module.exports = (api) => {
         },
         modules: isScript && 'auto',
         useBuiltIns: 'usage',
+        corejs: 3,
       }],
     ],
     plugins: [
