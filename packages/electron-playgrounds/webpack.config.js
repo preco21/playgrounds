@@ -1,5 +1,4 @@
 const {resolve} = require('path');
-const {HashedModuleIdsPlugin} = require('webpack');
 const {smart: webpackMergeSmart} = require('webpack-merge');
 const CleanPlugin = require('clean-webpack-plugin');
 const DotenvPlugin = require('dotenv-webpack');
@@ -50,14 +49,10 @@ module.exports = (env = {}, argv = {}) => {
         },
       ]),
     },
-    plugins: optional([
-      !isDev && new HashedModuleIdsPlugin(),
+    plugins: [
       new DotenvPlugin(),
       new WebpackBarPlugin(),
-    ]),
-    optimization: {
-      minimize: false,
-    },
+    ],
     externals: dependenciesToExclude.reduce((res, name) => ({
       ...res,
       [name]: `commonjs ${name}`,
@@ -65,6 +60,9 @@ module.exports = (env = {}, argv = {}) => {
     node: {
       __dirname: false,
       __filename: false,
+    },
+    optimization: {
+      minimize: false,
     },
     performance: {
       hints: false,
