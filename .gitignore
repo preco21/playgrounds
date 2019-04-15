@@ -14,4 +14,5 @@ node_modules
 /packages/serverless-playgrounds/.dynamodb
 /packages/serverless-playgrounds/.serverless
 /packages/serverless-playgrounds/.webpack
+packages/serverless-playgrounds/.serverless.json
 /packages/webpack-react-playgrounds/build

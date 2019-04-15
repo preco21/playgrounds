@@ -68,6 +68,17 @@ Then, you can easily deploy your app with Serverless by running this single comm
 $ serverless deploy
 ```
 
+### Custom scripts
+
+You can use `custom-env` package command to populate serverless related environment variables to use in your scripts.
+
+It will take `serverless.yml` config as an input and process through `serverless print` command to pre-compute the resulting config, then pass the content of `self:provider.environment` via environment variables through to the given command.
+
+```bash
+$ npx custom-env node scripts/custom-script.js
+$ yarn run custom-script
+```
+
 ### Remove
 
 If you think the service is no longer needed, you can remove it from the cloud by running:

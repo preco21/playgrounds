@@ -5,6 +5,7 @@ provider:
   runtime: nodejs8.10
   stage: dev
   region: us-east-1
+  timeout: 30
   iamRoleStatements: ${file(config/iam-role-statements.yml):iamRoleStatements}
   environment:
     TARGET_REGION: ${self:provider.region}
@@ -14,7 +15,6 @@ resources:
   - ${file(config/dynamodb-resources.${self:provider.stage}.yml)}
 
 plugins:
-  - serverless-delete-loggroups
   - serverless-webpack
   - serverless-dynamodb-local
   - serverless-offline
@@ -30,6 +30,12 @@ custom:
       port: 8000
       inMemory: true
       migrate: true
+    seed:
+      default:
+        sources:
+          - table: ${self:custom.resourcePrefix}.default
+            sources:
+              - ./config/seeds/default.json
   resourcePrefix: ${self:service}-${self:provider.stage}
 
 functions:
@@ -38,5 +44,5 @@ functions:
     events:
       - http:
           path: hello
-          method: post
+          method: get
           cors: true
