@@ -18,6 +18,7 @@ module.exports = (api) => {
         },
         modules: false,
         useBuiltIns: 'usage',
+        corejs: 3,
       }],
       !isMain && ['next/babel', {
         'preset-env': {
@@ -25,6 +26,7 @@ module.exports = (api) => {
             electron: electronVersion,
           },
           useBuiltIns: 'usage',
+          corejs: 3,
         },
       }],
     ].filter(Boolean),
