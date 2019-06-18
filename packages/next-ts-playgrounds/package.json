@@ -1,0 +1,49 @@
+{
+  "name": "next-ts-playgrounds",
+  "version": "0.0.0",
+  "description": "Setup for Next.js typescript application",
+  "author": "Plusb Preco <plusb21@gmail.com>",
+  "private": true,
+  "scripts": {
+    "start": "npm run dev",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "cross-env NODE_ENV=development next src",
+    "build": "cross-env NODE_ENV=production npm-run-all build:build build:export build:copy-static",
+    "build:build": "next build src",
+    "build:export": "next export --outdir dist src",
+    "build:copy-static": "cpy static dist"
+  },
+  "engines": {
+    "node": ">=10"
+  },
+  "dependencies": {
+    "modern-normalize": "^0.5.0",
+    "nprogress": "^0.2.0",
+    "prop-types": "^15.7.2",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "styled-components": "^4.3.1"
+  },
+  "devDependencies": {
+    "@types/next": "^8.0.5",
+    "@types/nprogress": "^0.2.0",
+    "@types/prop-types": "^15.7.1",
+    "@types/react": "^16.8.20",
+    "@types/react-dom": "^16.8.4",
+    "@types/styled-components": "^4.1.16",
+    "@zeit/next-css": "^0.2.1-canary.4",
+    "@zeit/next-typescript": "^1.1.1",
+    "babel-plugin-styled-components": "^1.10.1",
+    "cpy-cli": "^2.0.0",
+    "cross-env": "^5.2.0",
+    "dotenv-webpack": "^1.7.0",
+    "fork-ts-checker-webpack-plugin": "^1.3.7",
+    "next": "^8.1.0",
+    "next-compose-plugins": "^2.2.0",
+    "next-fonts": "^0.17.0",
+    "next-images": "^1.1.2",
+    "next-plugin-custom-babel-config": "^1.0.2",
+    "npm-run-all": "^4.1.5",
+    "typescript": "^3.5.2"
+  }
+}

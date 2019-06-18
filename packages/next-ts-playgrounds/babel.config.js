@@ -6,12 +6,9 @@ module.exports = (api) => {
     presets: [
       [
         'next/babel',
-        {
-          'preset-env': {
-            targets: { browsers: 'last 2 version' },
-          },
-        },
+        { 'preset-env': { targets: { browsers: 'last 2 version' } } },
       ],
+      '@zeit/next-typescript/babel',
     ],
     plugins: [
       ['babel-plugin-styled-components', { ssr: true, displayName: isDev }],

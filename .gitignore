@@ -9,6 +9,8 @@ node_modules
 /packages/electron-playgrounds/dist
 /packages/next-playgrounds/src/.next
 /packages/next-playgrounds/build
+/packages/next-ts-playgrounds/src/.next
+/packages/next-ts-playgrounds/dist
 /packages/node-playgrounds/build
 /packages/serverless-playgrounds/_meta
 /packages/serverless-playgrounds/.dynamodb

@@ -29,6 +29,9 @@
     "lerna": "^3.15.0",
     "prettier": "^1.18.2"
   },
+  "workspaces": [
+    "packages/*"
+  ],
   "eslintConfig": {
     "root": true,
     "parser": "babel-eslint",
