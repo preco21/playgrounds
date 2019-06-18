@@ -11,7 +11,6 @@ module.exports = (api) => {
             targets: {
               browsers: 'last 2 version',
             },
-            useBuiltIns: 'usage',
           },
         },
       ],
