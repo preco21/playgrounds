@@ -1,16 +1,13 @@
 module.exports = (api) => {
   api.cache.using(() => process.env.NODE_ENV)
-  const isScript = api.env('script')
-
   return {
+    sourceMaps: true,
+    retainLines: true,
     presets: [
       [
         '@babel/preset-env',
         {
-          targets: {
-            node: '8.10',
-          },
-          modules: isScript && 'auto',
+          targets: { node: true },
         },
       ],
     ],

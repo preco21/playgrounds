@@ -1,6 +1,0 @@
-extends: prev/react
-env:
-  browser: true
-rules:
-  import/prefer-default-export: off
-  no-underscore-dangle: off

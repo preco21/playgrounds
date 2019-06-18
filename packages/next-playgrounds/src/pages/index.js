@@ -1,11 +1,11 @@
-import React from 'react';
-import styled from 'styled-components';
-import DefaultLayout from '../layouts/DefaultLayout';
+import React from 'react'
+import styled from 'styled-components'
+import DefaultLayout from '../layouts/DefaultLayout'
 
 const Centered = styled.div`
   display: flex;
   justify-content: center;
-`;
+`
 
 export default function IndexPage() {
   return (
@@ -14,5 +14,5 @@ export default function IndexPage() {
         <h1>Hello!</h1>
       </Centered>
     </DefaultLayout>
-  );
+  )
 }

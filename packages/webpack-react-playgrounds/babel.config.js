@@ -1,15 +1,16 @@
 module.exports = (api) => {
-  const isDev = api.env('development');
+  const isDev = api.env('development')
   return {
     presets: [
-      ['@babel/preset-env', {
-        targets: {
-          browsers: 'last 2 version',
+      [
+        '@babel/preset-env',
+        {
+          targets: {
+            browsers: 'last 2 version',
+          },
+          modules: false,
         },
-        modules: false,
-        useBuiltIns: 'usage',
-        loose: true,
-      }],
+      ],
       '@babel/preset-react',
     ],
     plugins: [
@@ -17,7 +18,7 @@ module.exports = (api) => {
       '@babel/plugin-proposal-class-properties',
       'react-hot-loader/babel',
       'react-imported-component/babel',
-      ['babel-plugin-styled-components', {ssr: true, displayName: isDev}],
+      ['babel-plugin-styled-components', { ssr: true, displayName: isDev }],
     ],
-  };
-};
+  }
+}

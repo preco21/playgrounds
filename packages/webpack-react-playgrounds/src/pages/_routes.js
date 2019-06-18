@@ -1,10 +1,10 @@
-import React from 'react';
-import {hot} from 'react-hot-loader';
-import {Switch, Route, Redirect} from 'react-router-dom';
-import importedComponent from 'react-imported-component';
+import React from 'react'
+import { hot } from 'react-hot-loader'
+import { Switch, Route, Redirect } from 'react-router-dom'
+import importedComponent from 'react-imported-component'
 
-const Index = importedComponent(() => import('./index'));
-const Second = importedComponent(() => import('./second'));
+const Index = importedComponent(() => import('./index'))
+const Second = importedComponent(() => import('./second'))
 
 function _Routes() {
   return (
@@ -13,7 +13,7 @@ function _Routes() {
       <Route path="/second" component={Second} exact />
       <Redirect to="/" />
     </Switch>
-  );
+  )
 }
 
-export const Routes = hot(module)(_Routes);
+export const Routes = hot(module)(_Routes)

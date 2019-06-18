@@ -1,38 +1,47 @@
-const execa = require('execa');
+const execa = require('execa')
 
 function getElectronVersion() {
-  const {stdout} = execa.sync('electron', ['--version'], {env: {ELECTRON_RUN_AS_NODE: true}});
-  return stdout && stdout.toString().trim().slice(1);
+  const { stdout } = execa.sync('electron', ['--version'], {
+    env: { ELECTRON_RUN_AS_NODE: true },
+  })
+  return (
+    stdout &&
+    stdout
+      .toString()
+      .trim()
+      .slice(1)
+  )
 }
 
 module.exports = (api) => {
-  const electronVersion = getElectronVersion();
-  const isMain = api.env((envName) => envName.startsWith('main'));
-  const isDev = api.env((envName) => envName.endsWith('development'));
+  const electronVersion = getElectronVersion()
+  const isMain = api.env((envName) => envName.startsWith('main'))
+  const isDev = api.env((envName) => envName.endsWith('development'))
 
   return {
     presets: [
-      isMain && ['@babel/preset-env', {
-        targets: {
-          electron: electronVersion,
+      isMain && [
+        '@babel/preset-env',
+        {
+          targets: { electron: electronVersion },
+          modules: false,
         },
-        modules: false,
-        useBuiltIns: 'usage',
-        corejs: 3,
-      }],
-      !isMain && ['next/babel', {
-        'preset-env': {
-          targets: {
-            electron: electronVersion,
+      ],
+      !isMain && [
+        'next/babel',
+        {
+          'preset-env': {
+            targets: { electron: electronVersion },
           },
-          useBuiltIns: 'usage',
-          corejs: 3,
         },
-      }],
+      ],
     ].filter(Boolean),
     plugins: [
       isMain && '@babel/plugin-proposal-class-properties',
-      !isMain && ['babel-plugin-styled-components', {ssr: true, displayName: isDev}],
+      !isMain && [
+        'babel-plugin-styled-components',
+        { ssr: true, displayName: isDev },
+      ],
     ].filter(Boolean),
-  };
-};
+  }
+}

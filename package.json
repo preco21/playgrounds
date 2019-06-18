@@ -5,11 +5,9 @@
   "private": true,
   "scripts": {
     "bootstrap": "lerna bootstrap",
-    "lint": "eslint .",
+    "lint": "eslint --ext .js,.ts .",
+    "prettier": "prettier --write --ignore-path .gitignore \"**/*.{js,jsx,json,ts,tsx,md,mdx,css,html,yml,yaml,scss,sass}\"",
     "clean": "rm -rf node_modules && lerna clean"
-  },
-  "engines": {
-    "node": ">=9"
   },
   "license": "MIT",
   "homepage": "https://github.com/preco21/playgrounds#readme",
@@ -18,11 +16,55 @@
     "url": "https://github.com/preco21/playgrounds/issues"
   },
   "devDependencies": {
-    "eslint": "^5.9.0",
-    "eslint-config-prev": "^7.0.0",
-    "lerna": "^3.4.3"
+    "babel-eslint": "^10.0.2",
+    "eslint": "^5.16.0",
+    "eslint-config-prettier": "^5.0.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-config-standard-react": "^7.0.2",
+    "eslint-plugin-import": "^2.17.3",
+    "eslint-plugin-node": "^9.1.0",
+    "eslint-plugin-promise": "^4.1.1",
+    "eslint-plugin-react": "^7.13.0",
+    "eslint-plugin-standard": "^4.0.0",
+    "lerna": "^3.15.0",
+    "prettier": "^1.18.2"
   },
-  "workspaces": [
-    "packages/*"
-  ]
+  "eslintConfig": {
+    "root": true,
+    "parser": "babel-eslint",
+    "env": {
+      "browser": true
+    },
+    "extends": [
+      "standard",
+      "standard-react",
+      "prettier",
+      "prettier/standard",
+      "prettier/react"
+    ],
+    "rules": {
+      "prefer-destructuring": "off",
+      "comma-dangle": [
+        "error",
+        "always-multiline"
+      ]
+    }
+  },
+  "eslintIgnore": [
+    "**/node_modules",
+    "packages/electron-playgrounds/renderer/.next",
+    "packages/electron-playgrounds/build",
+    "packages/next-playgrounds/src/.next",
+    "packages/next-playgrounds/build",
+    "packages/node-playgrounds/build",
+    "packages/serverless-playgrounds/.serverless",
+    "packages/serverless-playgrounds/.webpack",
+    "packages/webpack-react-playgrounds/build"
+  ],
+  "prettier": {
+    "semi": false,
+    "singleQuote": true,
+    "trailingComma": "all",
+    "arrowParens": "always"
+  }
 }

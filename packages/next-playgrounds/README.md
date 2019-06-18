@@ -4,9 +4,9 @@
 
 > :rocket: An opinionated setup for Next.js
 
-* Core setup from the original [playgrounds](https://github.com/preco21/playgrounds).
-* Clean and minimal setup to build React app with `next.js`.
-* Focused for a static web application.
+- Core setup from the original [playgrounds](https://github.com/preco21/playgrounds).
+- Clean and minimal setup to build React app with `next.js`.
+- Focused for a static web application.
 
 ## Install
 

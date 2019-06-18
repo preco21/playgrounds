@@ -1,6 +1,6 @@
-import React from 'react';
-import {hot} from 'react-hot-loader';
-import {Link} from 'react-router-dom';
+import React from 'react'
+import { hot } from 'react-hot-loader'
+import { Link } from 'react-router-dom'
 
 function SecondPage() {
   return (
@@ -11,7 +11,7 @@ function SecondPage() {
       </div>
       <Link to="/">Go to /</Link>
     </div>
-  );
+  )
 }
 
-export default hot(module)(SecondPage);
+export default hot(module)(SecondPage)

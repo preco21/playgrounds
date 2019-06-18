@@ -4,8 +4,8 @@
 
 > 🚀 Yet another minimal setup for Serverless app
 
-* Core setup for Serverless
-* Babel integrated via `serverless-webpack`.
+- Core setup for Serverless
+- Babel integrated via `serverless-webpack`.
 
 ## Install
 

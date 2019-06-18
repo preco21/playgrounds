@@ -4,11 +4,11 @@
 
 ## List of templates
 
-* [`electron-playgrounds`](packages/electron-playgrounds)
-* [`next-playgrounds`](packages/next-playgrounds)
-* [`node-playgrounds`](packages/node-playgrounds)
-* [`serverless-playgrounds`](packages/serverless-playgrounds)
-* [`webpack-react-playgrounds`](packages/webpack-react-playgrounds)
+- [`electron-playgrounds`](packages/electron-playgrounds)
+- [`next-playgrounds`](packages/next-playgrounds)
+- [`node-playgrounds`](packages/node-playgrounds)
+- [`serverless-playgrounds`](packages/serverless-playgrounds)
+- [`webpack-react-playgrounds`](packages/webpack-react-playgrounds)
 
 ## License
 

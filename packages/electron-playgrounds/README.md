@@ -4,20 +4,20 @@
 
 > :rocket: Yet another opinionated setup for Electron application
 
-* Utilize the power of [Next.js](https://nextjs.org/)
-* Fundamantal concepts to cover production-ready application.
-* Live-reloading (HMR) support for both `main` and `renderer` processes.
-* Non-trivial tasks made easy by using handy internal modules.
-* Painless packaging with rich configurations + full optimization of the bundle sizes.
-* Full `source-map` support for better debugging experiences.
+- Utilize the power of [Next.js](https://nextjs.org/)
+- Fundamantal concepts to cover production-ready application.
+- Live-reloading (HMR) support for both `main` and `renderer` processes.
+- Non-trivial tasks made easy by using handy internal modules.
+- Painless packaging with rich configurations + full optimization of the bundle sizes.
+- Full `source-map` support for better debugging experiences.
 
 ## Core ideas
 
-* Just Works™
-* Automate a process of the development cycle as much as possible.
-* Provide some util for common tasks.
-* Utilizing webpack and next.js to maximize tooling experiences and performances.
-* Exclude modules that is not necessary for the production being bundled into a final package.
+- Just Works™
+- Automate a process of the development cycle as much as possible.
+- Provide some util for common tasks.
+- Utilizing webpack and next.js to maximize tooling experiences and performances.
+- Exclude modules that is not necessary for the production being bundled into a final package.
 
 ## Install
 

@@ -1,13 +1,15 @@
-const {resolve} = require('path');
-const DotenvPlugin = require('dotenv-webpack');
-const WebpackBarPlugin = require('webpackbar');
-const slsw = require('serverless-webpack');
-const {dependencies = {}, externals = []} = require('./package.json');
+const { resolve } = require('path')
+const DotenvPlugin = require('dotenv-webpack')
+const WebpackBarPlugin = require('webpackbar')
+const slsw = require('serverless-webpack')
+const { dependencies = {}, externals = [] } = require('./package.json')
 
-const dependenciesToExclude = Object.keys(dependencies).filter((name) => externals.includes(name));
+const dependenciesToExclude = Object.keys(dependencies).filter((name) =>
+  externals.includes(name),
+)
 
 function optional(arr = []) {
-  return arr.filter(Boolean);
+  return arr.filter(Boolean)
 }
 
 module.exports = {
@@ -27,7 +29,7 @@ module.exports = {
       },
       !slsw.lib.webpack.isLocal && {
         test: /\.(js|mjs|node)$/,
-        parser: {amd: false},
+        parser: { amd: false },
         loader: '@zeit/webpack-asset-relocator-loader',
         options: {
           outputAssetBase: 'res',
@@ -35,14 +37,14 @@ module.exports = {
       },
     ]),
   },
-  plugins: [
-    new DotenvPlugin(),
-    new WebpackBarPlugin(),
-  ],
-  externals: dependenciesToExclude.reduce((res, name) => ({
-    ...res,
-    [name]: `commonjs ${name}`,
-  }), {}),
+  plugins: [new DotenvPlugin(), new WebpackBarPlugin()],
+  externals: dependenciesToExclude.reduce(
+    (res, name) => ({
+      ...res,
+      [name]: `commonjs ${name}`,
+    }),
+    {},
+  ),
   node: {
     __dirname: false,
     __filename: false,
@@ -54,4 +56,4 @@ module.exports = {
     hints: false,
   },
   stats: 'errors-only',
-};
+}

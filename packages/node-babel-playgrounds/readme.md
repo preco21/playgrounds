@@ -6,10 +6,10 @@
 
 > :rocket: An opinionated setup for writing ES2015+ code
 
-* Babel configuration that contains preset `env (current)`, `stage-1` and `minify` (used in production build).
-* Live-reloading code with `nodemon` and `babel-node`.
-* Debugging with [Chrome DevTools](https://medium.com/@paul_irish/debugging-node-js-nightlies-with-chrome-devtools-7c4a1b95ae27) out of box.
-* Package app to standalone executable via `pkg`.
+- Babel configuration that contains preset `env (current)`, `stage-1` and `minify` (used in production build).
+- Live-reloading code with `nodemon` and `babel-node`.
+- Debugging with [Chrome DevTools](https://medium.com/@paul_irish/debugging-node-js-nightlies-with-chrome-devtools-7c4a1b95ae27) out of box.
+- Package app to standalone executable via `pkg`.
 
 ## Install
 
@@ -48,20 +48,20 @@ Now you can place `debugger` keyword in your code to specify breakpoints:
 
 ```js
 function foo(a, b) {
-  return a * b;
+  return a * b
 }
 
-const bar = foo(1, 2);
-debugger;
+const bar = foo(1, 2)
+debugger
 ```
 
 **Note:** You can also use `npm run dev-inspect-brk` to break before the code starts.
 
 #### References
 
-* [Debugging Node.js with Chrome DevTools](https://medium.com/@paul_irish/debugging-node-js-nightlies-with-chrome-devtools-7c4a1b95ae27)
-* [Debugging Node.js with Google Chrome](https://medium.com/the-node-js-collection/debugging-node-js-with-google-chrome-4965b5f910f4)
-* [Can I get node --inspect to open Chrome automatically](https://stackoverflow.com/questions/41398970/can-i-get-node-inspect-to-open-chrome-automatically)
+- [Debugging Node.js with Chrome DevTools](https://medium.com/@paul_irish/debugging-node-js-nightlies-with-chrome-devtools-7c4a1b95ae27)
+- [Debugging Node.js with Google Chrome](https://medium.com/the-node-js-collection/debugging-node-js-with-google-chrome-4965b5f910f4)
+- [Can I get node --inspect to open Chrome automatically](https://stackoverflow.com/questions/41398970/can-i-get-node-inspect-to-open-chrome-automatically)
 
 ### Build
 

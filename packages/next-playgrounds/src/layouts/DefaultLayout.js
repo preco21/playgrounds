@@ -1,10 +1,10 @@
-import '../styles/style.css';
-import Head from 'next/head';
-import React from 'react';
-import PropTypes from 'prop-types';
-import iconImage from '../images/icon.png';
+import '../styles/style.css'
+import Head from 'next/head'
+import React from 'react'
+import PropTypes from 'prop-types'
+import iconImage from '../images/icon.png'
 
-export default function DefaultLayout({children, title}) {
+export default function DefaultLayout({ children, title }) {
   return (
     <>
       <Head>
@@ -17,14 +17,14 @@ export default function DefaultLayout({children, title}) {
       </Head>
       {children}
     </>
-  );
+  )
 }
 
 DefaultLayout.propTypes = {
   children: PropTypes.node.isRequired,
   title: PropTypes.string,
-};
+}
 
 DefaultLayout.defaultProps = {
   title: '',
-};
+}

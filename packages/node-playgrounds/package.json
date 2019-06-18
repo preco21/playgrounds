@@ -1,34 +1,21 @@
 {
-  "name": "node-playgrounds",
+  "name": "node-vanilla-playgrounds",
   "version": "0.0.0",
-  "description": "An opinionated setup for writing ES2015+ code",
+  "description": "Setup for vanilla node application",
   "author": "Plusb Preco <plusb21@gmail.com>",
   "private": true,
-  "main": "build/index.js",
+  "main": "index.js",
   "scripts": {
-    "prebuild": "npm run clean",
-    "start": "node --require source-map-support/register .",
+    "start": "node .",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "cross-env NODE_ENV=development nodemon --exec 'babel-node src/index.js'",
-    "dev:inspect": "cross-env NODE_ENV=development nodemon --exec 'babel-node --nolazy --inspect-brk src/index.js'",
-    "build": "cross-env NODE_ENV=production babel --source-maps --out-dir build src",
-    "clean": "rimraf build"
+    "dev": "cross-env NODE_ENV=development nodemon index.js",
+    "dev-inspect": "cross-env NODE_ENV=development nodemon --nolazy --inspect-brk index.js"
   },
   "engines": {
     "node": ">=10"
   },
-  "dependencies": {
-    "@babel/polyfill": "^7.2.5",
-    "source-map-support": "^0.5.9"
-  },
   "devDependencies": {
-    "@babel/cli": "^7.2.3",
-    "@babel/core": "^7.2.2",
-    "@babel/node": "^7.2.2",
-    "@babel/plugin-proposal-class-properties": "^7.2.3",
-    "@babel/preset-env": "^7.2.3",
     "cross-env": "^5.2.0",
-    "nodemon": "^1.18.9",
-    "rimraf": "^2.6.3"
+    "nodemon": "^1.19.1"
   }
 }

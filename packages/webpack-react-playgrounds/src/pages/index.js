@@ -1,6 +1,6 @@
-import React from 'react';
-import {hot} from 'react-hot-loader';
-import {Link} from 'react-router-dom';
+import React from 'react'
+import { hot } from 'react-hot-loader'
+import { Link } from 'react-router-dom'
 
 function IndexPage() {
   return (
@@ -11,7 +11,7 @@ function IndexPage() {
       </div>
       <Link to="/second">Go to /second</Link>
     </div>
-  );
+  )
 }
 
-export default hot(module)(IndexPage);
+export default hot(module)(IndexPage)

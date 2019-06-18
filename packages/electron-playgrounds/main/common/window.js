@@ -1,4 +1,4 @@
-import {preloadScript, isDev} from '../internals/constants';
+import { preloadScript, isDev } from '../internals/constants'
 
 export const defaultWindowOptions = {
   show: false,
@@ -13,12 +13,12 @@ export const defaultWindowOptions = {
     nodeIntegration: false,
     webviewTag: false,
   },
-};
+}
 
 export function showWhenReady(win) {
   if (isDev) {
-    win.showInactive();
+    win.showInactive()
   } else {
-    win.once('ready-to-show', () => win.show());
+    win.once('ready-to-show', () => win.show())
   }
 }
