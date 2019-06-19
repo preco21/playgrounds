@@ -7,11 +7,11 @@
   "scripts": {
     "start": "npm run dev",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "next src",
-    "build": "npm-run-all build:build build:export build:copy-static",
+    "dev": "cross-env NODE_ENV=development next src",
+    "build": "cross-env NODE_ENV=production npm-run-all build:build build:export build:copy-static",
     "build:build": "next build src",
-    "build:export": "next export --outdir build src",
-    "build:copy-static": "cpy static build"
+    "build:export": "next export --outdir dist src",
+    "build:copy-static": "cpy static dist"
   },
   "engines": {
     "node": ">=10"
@@ -28,6 +28,7 @@
     "@zeit/next-css": "^1.0.1",
     "babel-plugin-styled-components": "^1.10.1",
     "cpy-cli": "^2.0.0",
+    "cross-env": "^5.2.0",
     "dotenv-webpack": "^1.7.0",
     "next": "^8.1.0",
     "next-compose-plugins": "^2.2.0",
