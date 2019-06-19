@@ -22,4 +22,10 @@ node_modules
 /packages/serverless-playgrounds/.webpack
 /packages/serverless-playgrounds/.serverless.json
 
+/packages/serverless-ts-playgrounds/_meta
+/packages/serverless-ts-playgrounds/.dynamodb
+/packages/serverless-ts-playgrounds/.serverless
+/packages/serverless-ts-playgrounds/.webpack
+/packages/serverless-ts-playgrounds/.serverless.json
+
 /packages/webpack-react-playgrounds/dist
