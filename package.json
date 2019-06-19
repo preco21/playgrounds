@@ -55,14 +55,11 @@
   },
   "eslintIgnore": [
     "**/node_modules",
-    "packages/electron-playgrounds/renderer/.next",
-    "packages/electron-playgrounds/build",
-    "packages/next-playgrounds/src/.next",
-    "packages/next-playgrounds/build",
-    "packages/node-playgrounds/build",
-    "packages/serverless-playgrounds/.serverless",
-    "packages/serverless-playgrounds/.webpack",
-    "packages/webpack-react-playgrounds/build"
+    "**/dist",
+    "**/.next",
+    "**/.out",
+    "**/.serverless",
+    "**/.webpack"
   ],
   "prettier": {
     "semi": false,

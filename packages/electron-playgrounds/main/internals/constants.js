@@ -8,7 +8,7 @@ export const resourceBase = isElectronDev
   : process.resourcesPath
 export const appBase = isElectronDev ? process.cwd() : app.getAppPath()
 
-export const appContent = resolve(appBase, 'build')
+export const appContent = resolve(appBase, '.out')
 export const staticContent = resolve(appBase, 'static')
 export const rendererContent = resolve(appContent, 'renderer')
 

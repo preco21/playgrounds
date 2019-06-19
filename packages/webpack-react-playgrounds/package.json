@@ -48,9 +48,9 @@
   },
   "config": {
     "source": "src",
-    "dest": "build",
+    "dest": "dist",
     "clean": [
-      "build"
+      "dist"
     ],
     "copy": [
       "static"

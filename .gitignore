@@ -5,8 +5,8 @@ node_modules
 /packages/*/.env
 
 /packages/electron-playgrounds/renderer/.next
-/packages/electron-playgrounds/build
 /packages/electron-playgrounds/dist
+/packages/electron-playgrounds/.out
 
 /packages/next-playgrounds/src/.next
 /packages/next-playgrounds/dist
@@ -14,7 +14,7 @@ node_modules
 /packages/next-ts-playgrounds/src/.next
 /packages/next-ts-playgrounds/dist
 
-/packages/node-playgrounds/build
+/packages/node-babel-playgrounds/dist
 
 /packages/serverless-playgrounds/_meta
 /packages/serverless-playgrounds/.dynamodb
@@ -22,4 +22,4 @@ node_modules
 /packages/serverless-playgrounds/.webpack
 /packages/serverless-playgrounds/.serverless.json
 
-/packages/webpack-react-playgrounds/build
+/packages/webpack-react-playgrounds/dist

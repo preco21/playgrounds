@@ -5,7 +5,7 @@
   "description": "Setup for Electron application",
   "author": "Plusb Preco <plusb21@gmail.com>",
   "private": true,
-  "main": "build/index.js",
+  "main": ".out/index.js",
   "scripts": {
     "postinstall": "electron-rebuild",
     "prepackage": "yarn run build",
@@ -14,7 +14,7 @@
     "dev": "node scripts/serve.js",
     "build": "npm-run-all build:main build:renderer",
     "build:main": "webpack --mode production",
-    "build:renderer": "next build renderer && next export --outdir build/renderer renderer",
+    "build:renderer": "next build renderer && next export --outdir .out/renderer renderer",
     "package": "node scripts/package.js"
   },
   "engines": {
@@ -55,6 +55,7 @@
     "next-compose-plugins": "^2.1.1",
     "next-fonts": "^0.16.0",
     "next-images": "^1.0.4",
+    "next-plugin-custom-babel-config": "^1.0.2",
     "npm-run-all": "^4.1.2",
     "tree-kill": "^1.2.0",
     "url-loader": "^1.1.2",

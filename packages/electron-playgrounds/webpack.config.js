@@ -1,13 +1,12 @@
 const { resolve } = require('path')
 const { smart: webpackMergeSmart } = require('webpack-merge')
-const CleanPlugin = require('clean-webpack-plugin')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const DotenvPlugin = require('dotenv-webpack')
 const WebpackBarPlugin = require('webpackbar')
 const { dependencies = {}, externals = [] } = require('./package.json')
 
 const mainSource = 'main'
-const appDest = 'build'
-const cleanPaths = [appDest]
+const appDest = '.out'
 
 const dependenciesToExclude = Object.keys(dependencies).filter((name) =>
   externals.includes(name),
@@ -52,7 +51,11 @@ module.exports = (env = {}, argv = {}) => {
         },
       ]),
     },
-    plugins: [new DotenvPlugin(), new WebpackBarPlugin()],
+    plugins: [
+      new CleanWebpackPlugin(),
+      new DotenvPlugin(),
+      new WebpackBarPlugin(),
+    ],
     externals: dependenciesToExclude.reduce(
       (res, name) => ({
         ...res,
@@ -85,7 +88,6 @@ module.exports = (env = {}, argv = {}) => {
         output: {
           filename: 'index.js',
         },
-        plugins: [new CleanPlugin(cleanPaths, { verbose: false })],
       },
       sharedConfig,
     ),

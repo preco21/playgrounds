@@ -24,7 +24,7 @@ const {
   ...restPackageJSON
 } = packageJSON
 
-const appDest = 'build'
+const appDest = '.out'
 
 const tempDir = tempy.directory()
 const dependenciesToExclude = Object.keys(dependencies).filter((name) =>

@@ -20,8 +20,8 @@ const { loader: miniCSSExtractLoader } = MiniCSSExtractPlugin
 
 const buildConfig = {
   source: 'src',
-  dest: 'build',
-  clean: ['build'],
+  dest: 'dist',
+  clean: ['dist'],
   copy: ['static'],
   serve: {
     port: 3000,
