@@ -1,16 +1,16 @@
 /* eslint-disable no-console */
 const tempy = require('tempy')
 const cpy = require('cpy')
-const execa = require('execa')
 const writePkg = require('write-pkg')
+const npmPacklist = require('npm-packlist')
 const electronBuilder = require('electron-builder')
 const packageJSON = require('../package.json')
 
 const {
   dependencies = {},
+  bundledDependencies = [],
   build = {},
   resources = [],
-  externals = [],
   packagePropsWhitelist = [
     'name',
     'productName',
@@ -24,12 +24,8 @@ const {
   ...restPackageJSON
 } = packageJSON
 
-const appDest = '.out'
-
+const appDest = 'build'
 const tempDir = tempy.directory()
-const dependenciesToExclude = Object.keys(dependencies).filter((name) =>
-  externals.includes(name),
-)
 
 function pick(obj, filter) {
   return Object.entries(obj)
@@ -45,7 +41,7 @@ function pick(obj, filter) {
 
 function rebuildPackageJSON() {
   const rebuiltPackageJSON = pick(restPackageJSON, packagePropsWhitelist)
-  const deps = pick(dependencies, dependenciesToExclude)
+  const deps = pick(dependencies, bundledDependencies)
   return {
     ...rebuiltPackageJSON,
     dependencies: deps,
@@ -54,41 +50,15 @@ function rebuildPackageJSON() {
 
 async function copyDestFiles() {
   console.log('> Copying resources to destination...')
-  await cpy([appDest, ...resources], tempDir, { parents: true })
+  const packageFileList = await npmPacklist({ path: process.cwd() })
+  await cpy([appDest, ...packageFileList, ...resources], tempDir, {
+    parents: true,
+  })
 }
 
 async function processPackageJSON() {
   console.log('> Processing package.json...')
   await writePkg(tempDir, rebuildPackageJSON())
-}
-
-async function getInstallCommand() {
-  try {
-    const { stdout } = await execa('yarn', ['--version'])
-    if (!stdout || !stdout.toString().trim()) {
-      throw new Error('No yarn output detected')
-    }
-
-    return [
-      'yarn',
-      ['install', '--production', '--no-bin-links', '--no-lockfile'],
-    ]
-  } catch (err) {
-    return [
-      'npm',
-      ['install', '--production', '--no-bin-links', '--no-package-lock'],
-    ]
-  }
-}
-
-async function installPackages() {
-  console.log('> Installing dependencies...')
-
-  const installCommand = await getInstallCommand()
-  return execa(...installCommand, {
-    cwd: tempDir,
-    stdout: process.stdout,
-  })
 }
 
 function buildApp() {
@@ -108,10 +78,8 @@ function buildApp() {
 
 ;(async () => {
   try {
-    console.log(tempDir)
     await copyDestFiles()
     await processPackageJSON()
-    await installPackages()
     await buildApp()
   } catch (err) {
     console.error(err)

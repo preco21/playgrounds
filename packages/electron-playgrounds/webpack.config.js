@@ -3,14 +3,10 @@ const { smart: webpackMergeSmart } = require('webpack-merge')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const DotenvPlugin = require('dotenv-webpack')
 const WebpackBarPlugin = require('webpackbar')
-const { dependencies = {}, externals = [] } = require('./package.json')
+const { bundledDependencies } = require('./package.json')
 
 const mainSource = 'main'
 const appDest = '.out'
-
-const dependenciesToExclude = Object.keys(dependencies).filter((name) =>
-  externals.includes(name),
-)
 
 function optional(arr = []) {
   return arr.filter(Boolean)
@@ -56,7 +52,7 @@ module.exports = (env = {}, argv = {}) => {
       new DotenvPlugin(),
       new WebpackBarPlugin(),
     ],
-    externals: dependenciesToExclude.reduce(
+    externals: bundledDependencies.reduce(
       (res, name) => ({
         ...res,
         [name]: `commonjs ${name}`,
