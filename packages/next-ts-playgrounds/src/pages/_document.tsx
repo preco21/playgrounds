@@ -62,9 +62,6 @@ export default class _Document extends Document {
               )}; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self' https: http:`}
             />
           )}
-
-          {/* Google APIs */}
-          <script src="https://apis.google.com/js/api.js" />
         </Head>
         <body>
           <Main />
