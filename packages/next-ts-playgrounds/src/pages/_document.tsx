@@ -17,19 +17,28 @@ function createCSPHashOf(text: string) {
 export default class _Document extends Document {
   static async getInitialProps(ctx: NextDocumentContext) {
     const sheet = new ServerStyleSheet()
-    const originalRenderPage = ctx.renderPage
-    ctx.renderPage = () =>
-      originalRenderPage({
-        enhanceApp(App: React.ComponentType<any>) {
-          return (props) => sheet.collectStyles(<App {...props} />)
-        },
-      })
+    const _renderPage = ctx.renderPage
 
-    const initialProps = await Document.getInitialProps(ctx)
-    return {
-      ...initialProps,
-      // @ts-ignore
-      styles: [...initialProps.styles, ...sheet.getStyleElement()],
+    try {
+      ctx.renderPage = () =>
+        _renderPage({
+          enhanceApp(App: React.ComponentType<any>) {
+            return (props) => sheet.collectStyles(<App {...props} />)
+          },
+        })
+
+      const initialProps = await Document.getInitialProps(ctx)
+      return {
+        ...initialProps,
+        styles: (
+          <>
+            {initialProps.styles}
+            {sheet.getStyleElement()}
+          </>
+        ),
+      }
+    } finally {
+      sheet.seal()
     }
   }
 
@@ -37,8 +46,7 @@ export default class _Document extends Document {
     const isDev = process.env.NODE_ENV === 'development'
     const scriptCSPRule = isDev
       ? "'unsafe-eval' 'unsafe-inline'"
-      : /* @ts-ignore */
-        createCSPHashOf((NextScript as any).getInlineScriptSource(this.props))
+      : createCSPHashOf((NextScript as any).getInlineScriptSource(this.props))
     const cspRules = [
       "default-src 'self'",
       `script-src 'self' ${scriptCSPRule}`,
